@@ -10,10 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 
-public class Frame {
+public class OldFrame {
     
     private JFrame frame;
     private JPanel contentPane;
@@ -22,13 +21,13 @@ public class Frame {
     private Color BLUE;
     private JPanel middlePanel;
     
-    public Frame() {
+    public OldFrame() {
         BLUE = new Color(31, 38, 59);
 
         plusButton = new JButton();
         plusButton.setBackground(new Color(119, 52, 235));        
         plusButton.setLayout(new BorderLayout());
-        ImageIcon plus = new ImageIcon("plus.png");
+        ImageIcon plus = new ImageIcon("resources/images/plus.png");
         Image originalImage = plus.getImage();
         Image resizedImage = originalImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
@@ -40,8 +39,8 @@ public class Frame {
         PlaceholderTextField textArea = new PlaceholderTextField("Nachschlagen...");
         textArea.setSize(100, 20);
         textArea.setLayout(null);
-        textArea.setForeground(Color.WHITE);
-        textArea.setFont(new Font("Arial", 20, 40));
+        textArea.setForeground(Color.BLACK);
+        textArea.setFont(new Font("Times New Roman", 20, 40));
         textArea.setBackground(Color.PINK);
 
         middlePanel = new JPanel();
@@ -75,7 +74,7 @@ public class Frame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
-
-
+    public static void main(String[] args) {
+        new OldFrame();
+    }
 }
