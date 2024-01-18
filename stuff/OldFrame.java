@@ -1,4 +1,4 @@
-package src;
+package stuff;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import src.PlaceholderTextField;
 
 
 public class OldFrame {
@@ -39,7 +41,7 @@ public class OldFrame {
         PlaceholderTextField textArea = new PlaceholderTextField("Nachschlagen...");
         textArea.setSize(100, 20);
         textArea.setLayout(null);
-        textArea.setForeground(Color.BLACK);
+        textArea.setForeground(Color.WHITE);
         textArea.setFont(new Font("Times New Roman", 20, 40));
         textArea.setBackground(Color.PINK);
 

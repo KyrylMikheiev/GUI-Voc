@@ -13,19 +13,22 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class MainMenu {
+
     private int clickedElement = 0;
-    private JPanel globPanel;
+    private JPanel body;
     private JPanel contentPane;
 
     public int run(JPanel content)
     {
         // # create main menu
-        globPanel = content;
+        body = content;
         contentPane = new JPanel();
         //create elements and add them to the contentPane
 
+        JButton menuButton = new JButton();
 
-        globPanel.add(contentPane);
+
+        body.add(contentPane);
 
         return clickedElement;
     }
