@@ -20,7 +20,7 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
         // If the text field is empty, paint the placeholder text
         if (getText().isEmpty()) {
             Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setColor(Color.GRAY);
+            g2d.setColor(Color.WHITE);
             g2d.setFont(getFont().deriveFont(Font.ITALIC));
             int x = getInsets().left;
             int y = (getHeight() - g.getFontMetrics().getHeight()) / 2 + g.getFontMetrics().getAscent();
