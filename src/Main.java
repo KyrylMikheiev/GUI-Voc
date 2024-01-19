@@ -37,6 +37,7 @@ public class Main {
         PlaceholderTextField textArea = new PlaceholderTextField("Search");
         textArea.setFont(new java.awt.Font(Font.SANS_SERIF, 0, 28));
         textArea.setBorder(null);
+        textArea.setFont(new Font("Times New Roman", 20, 40));
         textArea.setForeground(Color.WHITE);
         textArea.setBackground(Color.BLUE);
 
