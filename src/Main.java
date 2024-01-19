@@ -34,7 +34,7 @@ public class Main {
         appName.setHorizontalAlignment(SwingConstants.CENTER);
         appNamePanel.add(appName, BorderLayout.CENTER);
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Search");
+        PlaceholderTextField textArea = new PlaceholderTextField("Search", Color.GRAY);
         textArea.setFont(new java.awt.Font(Font.SANS_SERIF, 0, 28));
         textArea.setBorder(null);
         textArea.setFont(new Font("Times New Roman", 20, 40));
