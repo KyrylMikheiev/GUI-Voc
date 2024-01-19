@@ -3,6 +3,7 @@ package src;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -33,9 +34,10 @@ public class Main {
         appName.setHorizontalAlignment(SwingConstants.CENTER);
         appNamePanel.add(appName, BorderLayout.CENTER);
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Search");
+        PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.GRAY);
         textArea.setSize(100, 20);
         textArea.setBorder(null);
+        textArea.setFont(new Font("Times New Roman", 20, 40));
         textArea.setForeground(Color.WHITE);
         textArea.setBackground(Color.BLUE);
 
@@ -64,40 +66,40 @@ public class Main {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
         
-        JButton learn = new JButton("Learn");
+        JButton learn = new JButton("Lernen");
         learn.setPreferredSize(new Dimension(100, 100));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 1;
         bodyPanel.add(learn, gbc);
 
-        JButton games = new JButton("Games");
+        JButton games = new JButton("Minispiele");
         games.setPreferredSize(new Dimension(100, 100));
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 1;
         bodyPanel.add(games, gbc);
 
-        JButton settings = new JButton("Settings");
-        settings.setPreferredSize(new Dimension(200, 100));
+        JButton widget = new JButton("Widget hinzufügen...");
+        widget.setPreferredSize(new Dimension(200, 100));
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridheight = 3;
-        bodyPanel.add(settings, gbc);
+        bodyPanel.add(widget, gbc);
 
-        JButton library = new JButton("Library");
+        JButton library = new JButton("Bibliothek");
         library.setPreferredSize(new Dimension(100, 100));
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         bodyPanel.add(library, gbc);
 
-        JButton widgets = new JButton("Widgets");
-        widgets.setPreferredSize(new Dimension(200, 100));
+        JButton setttings = new JButton("Einstellungen");
+        setttings.setPreferredSize(new Dimension(200, 100));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridheight = 1;
-        bodyPanel.add(widgets, gbc);
+        bodyPanel.add(setttings, gbc);
         
 
 

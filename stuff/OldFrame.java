@@ -38,7 +38,7 @@ public class OldFrame {
         plusButton.add(label);
         plusButton.setBorder(BorderFactory.createEmptyBorder());
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Nachschlagen...");
+        PlaceholderTextField textArea = new PlaceholderTextField("Nachschlagen...", Color.GRAY);
         textArea.setSize(100, 20);
         textArea.setLayout(null);
         textArea.setForeground(Color.WHITE);
