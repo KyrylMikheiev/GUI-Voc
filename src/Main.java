@@ -2,12 +2,26 @@ package src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.TextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,76 +29,161 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
-public class Main { 
+
+public class Main {
+    
+    private JButton learn, games, widgets, settings, library;
+    private Color BLUE = Color.decode("#4255FF");
+    private GridBagConstraints gbc = new GridBagConstraints();
+
     public Main() {
 
-        JPanel navBar = new JPanel();
-        navBar.setBackground(Color.decode("#FFFF00"));
-        navBar.setPreferredSize(new Dimension(20, 100));
-        navBar.setLayout(new BorderLayout());
+        //------------------navigationBar----------------
+        JPanel navigationBar = new JPanel();
+        navigationBar.setBackground(BLUE);
+        navigationBar.setPreferredSize(new Dimension(200, 80));
+        navigationBar.setLayout(new GridLayout(1, 3));
 
-        JPanel appNamePanel = new JPanel();
-        appNamePanel.setPreferredSize(new Dimension(200, 200));
-        appNamePanel.setLayout(new BorderLayout());
+        //---------------appName---------------
+        JPanel navigation_contentLeft = new JPanel();
+        navigation_contentLeft.setLayout(new BorderLayout(10, 0));
+        navigationBar.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        navigation_contentLeft.setOpaque(false);
 
         JLabel appName = new JLabel("AppName");
-        appName.setFont(new java.awt.Font("Times New Roman", 0, 28));
-        appName.setHorizontalAlignment(SwingConstants.CENTER);
-        appNamePanel.add(appName, BorderLayout.CENTER);
+        appName.setFont(new Font("Times New Roman", 0, 28));
+        navigation_contentLeft.add(appName, BorderLayout.CENTER);
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Search", Color.GRAY);
-        textArea.setFont(new java.awt.Font(Font.SANS_SERIF, 0, 28));
-        textArea.setBorder(null);
-        textArea.setFont(new Font("Times New Roman", 20, 40));
+        //---------------textArea---------------
+        JPanel navigation_contentMiddle = new JPanel();
+        navigation_contentMiddle.setLayout(new BorderLayout());
+        Border border = BorderFactory.createEmptyBorder(10, 0, 10, 0);
+        navigation_contentMiddle.setBorder(border);
+        navigation_contentMiddle.setOpaque(false);
+        navigation_contentMiddle.setBackground(Color.RED);
+
+        JPanel searchBar = new JPanel();
+        searchBar.setLayout(new BorderLayout(10, 0));
+        searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        searchBar.setOpaque(false);
+
+        PlaceholderTextField textArea = new PlaceholderTextField("Search", Color.WHITE);
+        textArea.setFont(new Font(Font.SANS_SERIF, 0, 18)); 
+        textArea.setBorder(null);       
+        textArea.setCaretColor(Color.WHITE);
+        textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         textArea.setForeground(Color.WHITE);
-        textArea.setBackground(Color.BLUE);
+        textArea.setBackground(BLUE);  
+
+        JLabel searchLabel = new JLabel();
+        ImageIcon searchIcon = new ImageIcon("resources/images/search.png");
+        Image searchImage = searchIcon.getImage();
+        searchImage = searchImage.getScaledInstance(25, 20, Image.SCALE_SMOOTH);
+        searchIcon = new ImageIcon(searchImage);
+        searchLabel.setIcon(searchIcon);
+
+        searchBar.add(searchLabel, BorderLayout.WEST);
+        searchBar.add(textArea, BorderLayout.CENTER);
+        navigation_contentMiddle.add(searchBar);
+
+        //------------------menu----------------
+        JPanel navigation_contentRight = new JPanel();
+        navigation_contentRight.setLayout(new BorderLayout());
+        navigation_contentRight.setOpaque(false);
 
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setPreferredSize(new Dimension(100, 100));
-        menuBar.setLayout(new GridLayout());
+        menuBar.setOpaque(false);
+        menuBar.setBorder(null);
 
-        JMenu burgerMenu = new JMenu("Burger");
+        ImageIcon burgerIcon = new ImageIcon("resources/images/burgerMenuIcon.png");
+        Image burgerImage = burgerIcon.getImage();
+        burgerImage = burgerImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        burgerIcon = new ImageIcon(burgerImage);
+
+        JMenu burgerMenu = new JMenu();
+        burgerMenu.setIcon(burgerIcon);
+        burgerMenu.setHorizontalAlignment(JMenu.RIGHT);
+        burgerMenu.setPreferredSize(new Dimension(90, 100));
+        burgerMenu.setFont(new Font("Times New Roman", 0, 24));
+        burgerMenu.setOpaque(false);
+        burgerMenu.setBorder(null);
+        burgerMenu.setIcon(burgerIcon);
+        burgerMenu.setHorizontalAlignment(JMenu.CENTER);
 
         JMenuItem cheese = new JMenuItem("Cheese");
         JMenuItem bacon = new JMenuItem("Bacon");
         JMenuItem lettuce = new JMenuItem("Lettuce");
+
         burgerMenu.add(lettuce);
         burgerMenu.add(bacon);
         burgerMenu.add(cheese);
         menuBar.add(burgerMenu);
+        navigation_contentRight.add(menuBar, BorderLayout.EAST);
 
-        navBar.add(appNamePanel, BorderLayout.WEST);
-        navBar.add(textArea, BorderLayout.CENTER);
-        navBar.add(menuBar, BorderLayout.EAST);	
+        navigationBar.add(navigation_contentLeft);
+        navigationBar.add(navigation_contentMiddle);
+        navigationBar.add(navigation_contentRight);	
 
+
+        //----------------body-----------------
         JPanel bodyPanel = new JPanel();
         bodyPanel.setBackground(Color.darkGray);        
         bodyPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
         
-        JButton learn = new JButton("Learn");
-        JButton games = new JButton("Games");
-        JButton widgets = new JButton("Widgets");
-        JButton settings = new JButton("Settings");
-        JButton library = new JButton("Library");
+        learn = new JButton("Learn");
+        games = new JButton("Games");
+        widgets = new JButton("Widgets");
+        settings = new JButton("Settings");
+        library = new JButton("Library");
+
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                e.getComponent().setBackground(Color.RED);
+                System.out.println("Entered");
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setBackground(Color.YELLOW);
+                System.out.println("Exited");
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                e.getComponent().setBackground(Color.GREEN);
+                System.out.println("Clicked");
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                e.getComponent().setBackground(Color.PINK);
+                System.out.println("Pressed ---");
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                e.getComponent().setBackground(Color.ORANGE);
+                System.out.println("Released");
+            }
+        };
 
         JButton[] buttons = {learn, games, widgets, settings, library};
         for(JButton button : buttons) {
-            button.setBackground(Color.decode("#FFFF00"));
             button.setBorder(null);
             button.setFont(new Font(Font.MONOSPACED, 0, 20));
             button.setFocusPainted(false);
+            // button.setContentAreaFilled(false);
+            button.setBackground(Color.YELLOW);
+            button.addMouseListener(mouseListener);
             if (button != widgets) {
                 button.setPreferredSize(new Dimension(100, 100));
             } else {
                 button.setPreferredSize(new Dimension(200, 100));
             }
         }
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 1;
@@ -109,13 +208,14 @@ public class Main {
         gbc.gridy = 1;
         gbc.gridheight = 1;
         bodyPanel.add(widgets, gbc);
-        
-
+  
+        //content pane
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(navBar, BorderLayout.NORTH);
+        contentPane.add(navigationBar, BorderLayout.NORTH);
         contentPane.add(bodyPanel, BorderLayout.CENTER);
 
+        //window
         JFrame frame = new JFrame();
         frame.setSize(1300, 900);
         frame.setLocationRelativeTo(null);
@@ -132,4 +232,5 @@ public class Main {
     public static void main(String[] args) {
         new Main();
     }
+
 }
