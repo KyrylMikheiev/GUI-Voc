@@ -6,10 +6,6 @@ import javax.swing.JPanel;
 
 
 public class Main {
-    
-    
-    
-    
 
     public Main() {
 

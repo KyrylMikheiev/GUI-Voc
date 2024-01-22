@@ -1,12 +1,7 @@
 package src;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.ComponentOrientation;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.SwingConstants;
 
 public class NavBar {
@@ -41,6 +37,11 @@ public class NavBar {
         appName.setFont(new Font("Times New Roman", 0, 28));
         navigation_contentLeft.add(appName, BorderLayout.CENTER);
 
+        JLabel plusLabel = new JLabel();
+        ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
+        plusLabel.setIcon(plusIcon);
+        navigation_contentLeft.add(plusLabel, BorderLayout.EAST);
+
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
         navigation_contentMiddle.setLayout(new BorderLayout());
@@ -51,12 +52,13 @@ public class NavBar {
 
         JPanel searchBar = new JPanel();
         searchBar.setLayout(new BorderLayout(10, 0));
-        searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        searchBar.setBorder(new PlaceholderBorder(40, Color.WHITE));
         searchBar.setOpaque(false);
 
         PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.WHITE);
+        // textArea.setStyle("-fx-border-radius: 10; -fx-background-radius: 10;");
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 18)); 
-        textArea.setBorder(null);       
+        // textArea.setBorder(null);       
         textArea.setCaretColor(Color.WHITE);
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         textArea.setForeground(Color.WHITE);
@@ -125,4 +127,32 @@ public class NavBar {
         menuItem.setHorizontalTextPosition(SwingConstants.RIGHT);
         menuItem.setBorder(new EmptyBorder(0, 0, 0, 0)); // Adjust the right padding as needed
     }
+
+    private static class PlaceholderBorder implements Border {
+        private final int borderRadius;
+        private final Color placeholderColor;
+
+        public PlaceholderBorder(int borderRadius, Color placeholderColor) {
+            this.borderRadius = borderRadius;
+            this.placeholderColor = placeholderColor;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(placeholderColor);
+            g2d.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, borderRadius, borderRadius));
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(borderRadius, borderRadius, borderRadius, borderRadius);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return false;
+        }
+    }
+    
 }
