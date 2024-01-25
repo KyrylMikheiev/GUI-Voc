@@ -1,21 +1,18 @@
 package src;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class NavBar {
 
-    private Color BLUE = Color.decode("#374151");
+    private Color GRAY = Color.decode("#374151");
 
     public NavBar(JPanel content)
     {
         //------------------navigationBar----------------
         JPanel navigationBar = new JPanel();
-        navigationBar.setBackground(BLUE);
+        navigationBar.setBackground(GRAY);
         navigationBar.setPreferredSize(new Dimension(200, 80));
         navigationBar.setLayout(new GridLayout(1, 3));
 
@@ -27,12 +24,13 @@ public class NavBar {
 
         JLabel appName = new JLabel("AppName");
         appName.setFont(new Font("Times New Roman", 0, 28));
+        appName.setForeground(Color.WHITE);
         
         JButton plusButton = new JButton();
         plusButton.setBorder(null);
         plusButton.setFocusPainted(false);
-        plusButton.setBackground(BLUE);
-        plusButton.setPreferredSize(new Dimension(120, 10));
+        plusButton.setBackground(GRAY);
+        plusButton.setPreferredSize(new Dimension(70, 10));
         plusButton.setOpaque(false);
         ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
         Image plusImage = plusIcon.getImage();
@@ -62,7 +60,7 @@ public class NavBar {
         textArea.setCaretColor(Color.WHITE);
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         textArea.setForeground(Color.WHITE);
-        textArea.setBackground(BLUE);  
+        textArea.setBackground(GRAY);  
 
         JLabel searchLabel = new JLabel();
         ImageIcon searchIcon = new ImageIcon("resources/images/search.png");
