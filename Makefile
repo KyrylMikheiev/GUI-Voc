@@ -6,5 +6,7 @@ del:
 compile: del
 	javac src/Main.java
 
-run: compile
+run: compile exec
+
+exec:
 	java src/Main
