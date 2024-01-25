@@ -1,10 +1,7 @@
 package src;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class NavBar {
@@ -32,7 +29,7 @@ public class NavBar {
         plusButton.setBorder(null);
         plusButton.setFocusPainted(false);
         plusButton.setBackground(BLUE);
-        plusButton.setPreferredSize(new Dimension(120, 10));
+        plusButton.setPreferredSize(new Dimension(70, 10));
         plusButton.setOpaque(false);
         ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
         Image plusImage = plusIcon.getImage();
