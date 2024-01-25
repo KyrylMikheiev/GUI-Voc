@@ -3,21 +3,13 @@ package src;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.SwingConstants;
-
 public class NavBar {
 
-    private Color BLUE = Color.decode("#4255FF");
+    private Color BLUE = Color.decode("#B7B7B7");
 
     public NavBar(JPanel content)
     {
@@ -30,35 +22,43 @@ public class NavBar {
         //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
-        navigationBar.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
         JLabel appName = new JLabel("AppName");
         appName.setFont(new Font("Times New Roman", 0, 28));
-        navigation_contentLeft.add(appName, BorderLayout.CENTER);
-
-        JLabel plusLabel = new JLabel();
+        
+        JButton plusButton = new JButton();
+        plusButton.setBorder(null);
+        plusButton.setFocusPainted(false);
+        plusButton.setBackground(BLUE);
+        plusButton.setPreferredSize(new Dimension(120, 10));
+        plusButton.setOpaque(false);
         ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
-        plusLabel.setIcon(plusIcon);
-        navigation_contentLeft.add(plusLabel, BorderLayout.EAST);
-
+        Image plusImage = plusIcon.getImage();
+        plusImage = plusImage.getScaledInstance(260, 200, Image.SCALE_SMOOTH);
+        plusIcon = new ImageIcon(plusImage); 
+        plusButton.setIcon(plusIcon);
+        
+        navigation_contentLeft.add(appName, BorderLayout.CENTER);
+        navigation_contentLeft.add(plusButton, BorderLayout.EAST);
+        
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
         navigation_contentMiddle.setLayout(new BorderLayout());
-        Border border = BorderFactory.createEmptyBorder(10, 0, 10, 0);
-        navigation_contentMiddle.setBorder(border);
+        navigation_contentMiddle.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         navigation_contentMiddle.setOpaque(false);
         navigation_contentMiddle.setBackground(Color.RED);
 
         JPanel searchBar = new JPanel();
         searchBar.setLayout(new BorderLayout(10, 0));
-        searchBar.setBorder(new PlaceholderBorder(40, Color.WHITE));
-        searchBar.setOpaque(false);
+        // searchBar.setBorder(new PlaceholderBorder(40, Color.WHITE));
+        searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        searchBar.setOpaque(false); 
 
         PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.WHITE);
-        // textArea.setStyle("-fx-border-radius: 10; -fx-background-radius: 10;");
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 18)); 
-        // textArea.setBorder(null);       
+        textArea.setBorder(null);       
         textArea.setCaretColor(Color.WHITE);
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         textArea.setForeground(Color.WHITE);
@@ -70,6 +70,7 @@ public class NavBar {
         searchImage = searchImage.getScaledInstance(25, 20, Image.SCALE_SMOOTH);
         searchIcon = new ImageIcon(searchImage);
         searchLabel.setIcon(searchIcon);
+        searchLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
         searchBar.add(searchLabel, BorderLayout.WEST);
         searchBar.add(textArea, BorderLayout.CENTER);
@@ -108,7 +109,7 @@ public class NavBar {
         JMenuItem[] menuItems = {learn, library, games, settings};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
-            menuItem.setFont(new Font("Unispace", 0, 28));
+            menuItem.setFont(new Font("Unispace", 0, 20));
             setRightAlignment(menuItem);
         }
 
@@ -126,33 +127,6 @@ public class NavBar {
         menuItem.setHorizontalAlignment(SwingConstants.RIGHT);
         menuItem.setHorizontalTextPosition(SwingConstants.RIGHT);
         menuItem.setBorder(new EmptyBorder(0, 0, 0, 0)); // Adjust the right padding as needed
-    }
-
-    private static class PlaceholderBorder implements Border {
-        private final int borderRadius;
-        private final Color placeholderColor;
-
-        public PlaceholderBorder(int borderRadius, Color placeholderColor) {
-            this.borderRadius = borderRadius;
-            this.placeholderColor = placeholderColor;
-        }
-
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(placeholderColor);
-            g2d.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, borderRadius, borderRadius));
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(borderRadius, borderRadius, borderRadius, borderRadius);
-        }
-
-        @Override
-        public boolean isBorderOpaque() {
-            return false;
-        }
     }
     
 }
