@@ -90,6 +90,7 @@ public class MainMenu {
         gbc.gridy = 0;
         gbc.gridheight = 3;
         gbc.gridwidth = 2;
+        widgets.setPreferredSize(new Dimension(150, 200));
         bodyPanel.add(widgets, gbc);
 
         gbc.gridx = 0;

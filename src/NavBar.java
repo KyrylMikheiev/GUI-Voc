@@ -1,23 +1,11 @@
 package src;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.ComponentOrientation;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.SwingConstants;
 
 public class NavBar {
 
@@ -34,26 +22,39 @@ public class NavBar {
         //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
-        navigationBar.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
-        JLabel appName = new JLabel("VokabelTrainer");
-        appName.setFont(new Font("Arial Roundet MT", 0, 28));
-        appName.setForeground(Color.WHITE);
+        JLabel appName = new JLabel("AppName");
+        appName.setFont(new Font("Times New Roman", 0, 28));
+        
+        JButton plusButton = new JButton();
+        plusButton.setBorder(null);
+        plusButton.setFocusPainted(false);
+        plusButton.setBackground(BLUE);
+        plusButton.setPreferredSize(new Dimension(120, 10));
+        plusButton.setOpaque(false);
+        ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
+        Image plusImage = plusIcon.getImage();
+        plusImage = plusImage.getScaledInstance(260, 200, Image.SCALE_SMOOTH);
+        plusIcon = new ImageIcon(plusImage); 
+        plusButton.setIcon(plusIcon);
+        
         navigation_contentLeft.add(appName, BorderLayout.CENTER);
-
+        navigation_contentLeft.add(plusButton, BorderLayout.EAST);
+        
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
         navigation_contentMiddle.setLayout(new BorderLayout());
-        Border border = BorderFactory.createEmptyBorder(10, 0, 10, 0);
-        navigation_contentMiddle.setBorder(border);
+        navigation_contentMiddle.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         navigation_contentMiddle.setOpaque(false);
         navigation_contentMiddle.setBackground(Color.RED);
 
         JPanel searchBar = new JPanel();
         searchBar.setLayout(new BorderLayout(10, 0));
+        // searchBar.setBorder(new PlaceholderBorder(40, Color.WHITE));
         searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-        searchBar.setOpaque(false);
+        searchBar.setOpaque(false); 
 
         PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.WHITE);
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 18)); 
@@ -69,6 +70,7 @@ public class NavBar {
         searchImage = searchImage.getScaledInstance(25, 20, Image.SCALE_SMOOTH);
         searchIcon = new ImageIcon(searchImage);
         searchLabel.setIcon(searchIcon);
+        searchLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
         searchBar.add(searchLabel, BorderLayout.WEST);
         searchBar.add(textArea, BorderLayout.CENTER);
@@ -107,7 +109,7 @@ public class NavBar {
         JMenuItem[] menuItems = {learn, library, games, settings};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
-            menuItem.setFont(new Font("Unispace", 0, 28));
+            menuItem.setFont(new Font("Unispace", 0, 20));
             setRightAlignment(menuItem);
         }
 
@@ -126,4 +128,5 @@ public class NavBar {
         menuItem.setHorizontalTextPosition(SwingConstants.RIGHT);
         menuItem.setBorder(new EmptyBorder(0, 0, 0, 0)); // Adjust the right padding as needed
     }
+    
 }
