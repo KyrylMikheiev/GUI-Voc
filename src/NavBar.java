@@ -19,7 +19,7 @@ public class NavBar {
         //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
-        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30)); // adjustment for appname
+        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 10, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
         JLabel appName = new JLabel("AppName");
@@ -30,7 +30,7 @@ public class NavBar {
         plusButton.setBorder(null);
         plusButton.setFocusPainted(false);
         plusButton.setBackground(GRAY);
-        plusButton.setPreferredSize(new Dimension(70, 10));
+        plusButton.setPreferredSize(new Dimension(60, 10));
         plusButton.setOpaque(false);
         ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
         Image plusImage = plusIcon.getImage();
