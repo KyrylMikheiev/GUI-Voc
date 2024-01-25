@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 
 public class NavBar {
 
-    private Color BLUE = Color.decode("#4255FF");
+    private Color BLUE = Color.decode("#374151");
 
     public NavBar(JPanel content)
     {
@@ -37,8 +37,9 @@ public class NavBar {
         navigationBar.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         navigation_contentLeft.setOpaque(false);
 
-        JLabel appName = new JLabel("AppName");
-        appName.setFont(new Font("Times New Roman", 0, 28));
+        JLabel appName = new JLabel("VokabelTrainer");
+        appName.setFont(new Font("Arial Roundet MT", 0, 28));
+        appName.setForeground(Color.WHITE);
         navigation_contentLeft.add(appName, BorderLayout.CENTER);
 
         //---------------textArea---------------

@@ -25,7 +25,7 @@ public class MainMenu {
         //create elements and add them to the contentPane
         //----------------body-----------------
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setBackground(Color.darkGray);        
+        bodyPanel.setBackground(Color.decode("#111827"));        
         bodyPanel.setLayout(new GridBagLayout());
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
@@ -36,20 +36,25 @@ public class MainMenu {
         widgets = new JButton("Widgets");
         library = new JButton("Library");
 
+        //button colors
+        Color defaultButton = Color.decode("#4d6190");
+        Color hoverButton = Color.decode("#4255ff");
+        Color clickButton = Color.decode("#2f3990");
+
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                e.getComponent().setBackground(Color.RED);
+                e.getComponent().setBackground(hoverButton);
                 //System.out.println("Entered");
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                e.getComponent().setBackground(Color.YELLOW);
+                e.getComponent().setBackground(defaultButton);
                 //System.out.println("Exited");
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                e.getComponent().setBackground(Color.GREEN);
+                e.getComponent().setBackground(clickButton);
                 //System.out.println("Clicked");
             }
         };
@@ -57,10 +62,11 @@ public class MainMenu {
         JButton[] buttons = {learn, games, settings, widgets, library};
         for(JButton button : buttons) {
             button.setBorder(null);
-            button.setFont(new Font(Font.MONOSPACED, 0, 20));
+            button.setFont(new Font("Arial Rounded MT", 0, 20));
             button.setFocusPainted(false);
             // button.setContentAreaFilled(false);
-            button.setBackground(Color.YELLOW);
+            button.setBackground(defaultButton);
+            button.setForeground(Color.WHITE);
             button.addMouseListener(mouseListener);
             if (button != settings) {
                 button.setPreferredSize(new Dimension(100, 100));
