@@ -19,10 +19,8 @@ public class SettingsMenu {
         Color clickButton = Color.decode("#2f3990");
         
         JLabel changeName = new JLabel("Name ändern");
-        changeName.setFont(new Font("Arial Rounded MT", 0, 20));
-
-
-
+        changeName.setFont(new Font(Font.SANS_SERIF, 0, 20));
+        bodyPanel.add(changeName);
 
         content.add(bodyPanel);
     }

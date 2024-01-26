@@ -1,5 +1,6 @@
 package src;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,9 +18,9 @@ public class Main {
             e.printStackTrace();
         }
 
-        // Content pane
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
+        // Global Content pane (including navbar)
+        JPanel globalPane = new JPanel();
+        globalPane.setLayout(new BorderLayout());
 
         // Window
         JFrame frame = new JFrame();
@@ -28,21 +29,33 @@ public class Main {
         frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(contentPane);
+        frame.setContentPane(globalPane);
         frame.setVisible(true);
 
+        // UI Content Pane
+        JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        globalPane.add(contentPane, BorderLayout.CENTER);
+
         // Navigation bar
-        NavBar nav = new NavBar(contentPane);
+        NavBar nav = new NavBar(globalPane);
 
         // Create UI's (in a cardPanel later?)
         MainMenu menu = new MainMenu(contentPane);
+        //SettingsMenu settings = new SettingsMenu(contentPane);
 
         // Refresh screen to make stuff show up
-        contentPane.revalidate();
-        contentPane.repaint();
+        globalPane.revalidate();
+        globalPane.repaint();
     }
 
     public static void main(String[] args) {
         new Main();
+    }
+
+    public static void newUI(JPanel content) {
+        content.removeAll();
+        content.revalidate();
+        content.repaint();
     }
 }

@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import java.awt.*;
@@ -28,7 +29,7 @@ public class MainMenu {
         //----------------body-----------------
 
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new GridLayout(1, 2, 20, 0));
+        bodyPanel.setLayout(new GridLayout(1, 2, 0, 0));
         bodyPanel.setBackground(darkModeBodyColor);
 
         JPanel body_contentLeft = new JPanel();
@@ -37,10 +38,9 @@ public class MainMenu {
         body_contentLeft.setLayout(new GridLayout(5, 1, 0, 20));
 
         learn = new JButton("Lernen");     
+        library = new JButton("Bibliothek");
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");
-        widgets = new JButton("Widgets");
-        library = new JButton("Library");
 
 
         MouseListener mouseListener = new MouseAdapter() {
@@ -54,24 +54,37 @@ public class MainMenu {
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                e.getComponent().setBackground(clickButton);
+                SwingUtilities.invokeLater(() -> {
+                    e.getComponent().setBackground(clickButton);
+                    //do something
+                    if (e.getComponent() == learn) {
+                        System.out.println("learn clicked");
+                    }
+                    else if (e.getComponent() == library) {
+                        System.out.println("library clicked");
+                    }
+                    else if (e.getComponent() == games) {
+                        System.out.println("games clicked");
+                    }
+                    else if (e.getComponent() == settings) {
+                        //remove mainMenu and start settings
+                        Main.newUI(content);
+                        new SettingsMenu(content);
+                    }
+                });
             }
+
         };
 
-        JButton[] buttons = {learn, games, settings, widgets, library};
+        JButton[] buttons = {learn, library, games, settings};
         for(JButton button : buttons) {
             button.setBorder(null);
-            button.setFont(new Font("Proxima Nova", 0, 20));
+            button.setFont(new Font(Font.SANS_SERIF, 0, 20));
             button.setFocusPainted(false);
             button.setLayout(new BorderLayout());
             button.setBackground(defaultButton);
             button.setForeground(Color.WHITE);
             button.addMouseListener(mouseListener);
-            if (button != settings) {
-                button.setPreferredSize(new Dimension(100, 100));
-            } else {
-                button.setPreferredSize(new Dimension(300, 100));
-            }
             body_contentLeft.add(button);
         }
         
@@ -89,13 +102,13 @@ public class MainMenu {
         textArea.setOpaque(false);
         textArea.setEditable(true);
         textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        textArea.setFont(new Font("Arial", 0, 25));
+        textArea.setFont(new Font(Font.SANS_SERIF, 0, 25));
         textArea.setForeground(Color.WHITE);
         textArea.setText("Hallo!");
 
         textAreaPanel.add(textArea, BorderLayout.CENTER);
         bodyPanel_contentRight.add(textAreaPanel, BorderLayout.CENTER);
-           
+        
         bodyPanel.add(body_contentLeft);
         bodyPanel.add(bodyPanel_contentRight);
 

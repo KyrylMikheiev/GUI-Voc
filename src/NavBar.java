@@ -57,8 +57,8 @@ public class NavBar {
         searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         searchBar.setOpaque(false); 
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.WHITE);
-        textArea.setFont(new Font(Font.SANS_SERIF, 0, 18)); 
+        PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.GRAY);
+        textArea.setFont(new Font(Font.SANS_SERIF, 0, 18));
         textArea.setBorder(null);       
         textArea.setCaretColor(Color.WHITE);
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
@@ -95,7 +95,7 @@ public class NavBar {
         burgerMenu.setIcon(burgerIcon);
         burgerMenu.setHorizontalAlignment(JMenu.RIGHT);
         burgerMenu.setPreferredSize(new Dimension(90, 100));
-        burgerMenu.setFont(new Font("Times New Roman", 0, 24));
+        burgerMenu.setFont(new Font(Font.SANS_SERIF, 0, 24));
         burgerMenu.setOpaque(false);
         burgerMenu.setBorder(null);
         burgerMenu.setIcon(burgerIcon);
@@ -106,11 +106,12 @@ public class NavBar {
         JMenuItem library = new JMenuItem("Bibliothek");
         JMenuItem games = new JMenuItem("Minispiele");
         JMenuItem settings = new JMenuItem("Einstellungen");
+        JMenuItem exit = new JMenuItem("Beenden");
 
-        JMenuItem[] menuItems = {learn, library, games, settings};
+        JMenuItem[] menuItems = {learn, library, games, settings, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
-            menuItem.setFont(new Font("Unispace", 0, 20));
+            menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));
             setRightAlignment(menuItem);
         }
 

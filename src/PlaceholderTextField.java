@@ -23,7 +23,8 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
         if (getText().isEmpty()) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(placeholderColor);
-            g2d.setFont(getFont().deriveFont(Font.PLAIN));
+            g2d.setFont(getFont().deriveFont(Font.ITALIC));
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             int x = getInsets().left;
             int y = (getHeight() - g.getFontMetrics().getHeight()) / 2 + g.getFontMetrics().getAscent();
             g2d.drawString(placeholder, x, y);
