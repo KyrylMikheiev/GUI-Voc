@@ -1,6 +1,12 @@
 package src;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -8,7 +14,7 @@ public class NavBar {
 
     private Color GRAY = Color.decode("#374151");
 
-    public NavBar(JPanel content)
+    public NavBar(JPanel globalPanel, JPanel content)
     {
         //------------------navigationBar----------------
         JPanel navigationBar = new JPanel();
@@ -101,18 +107,58 @@ public class NavBar {
         burgerMenu.setIcon(burgerIcon);
         burgerMenu.setHorizontalAlignment(JMenu.CENTER);
         burgerMenu.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        burgerMenu.setForeground(Main.BodyColor);
 
+        JMenuItem main = new JMenuItem("Hauptmenü");
         JMenuItem learn = new JMenuItem("Lernen");
         JMenuItem library = new JMenuItem("Bibliothek");
         JMenuItem games = new JMenuItem("Minispiele");
         JMenuItem settings = new JMenuItem("Einstellungen");
         JMenuItem exit = new JMenuItem("Beenden");
 
-        JMenuItem[] menuItems = {learn, library, games, settings, exit};
+        // MouseListener for hovering and unhovering menuItems
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // e.getComponent().setBackground(Main.hoverButton);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // e.getComponent().setBackground(Main.defaultButton);
+            }
+        };
+        //actionLister bc mouseListener can't detect clicks of menuItems for some reason
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JMenuItem source = (JMenuItem) e.getSource(); // Identify the source of the event
+                if (source == main) {
+                    Main.newUI(content);
+                    new MainMenu(content);
+                } else if (source == learn) {
+                    System.out.println("learn clicked");
+                } else if (source == library) {
+                    System.out.println("library clicked");
+                } else if (source == games) {
+                    System.out.println("games clicked");
+                } else if (source == settings) {
+                    Main.newUI(content);
+                    new SettingsMenu(content);
+                } else if (source == exit) {
+                    System.exit(0);
+                }
+            }
+        };
+
+        JMenuItem[] menuItems = {main, learn, library, games, settings, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
             menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));
             setRightAlignment(menuItem);
+            //menuItem.setBackground(Main.defaultButton);
+            //menuItem.setForeground(Color.WHITE);
+            menuItem.addMouseListener(mouseListener);
+            menuItem.addActionListener(actionListener);
         }
 
         menuBar.add(burgerMenu);
@@ -122,7 +168,7 @@ public class NavBar {
         navigationBar.add(navigation_contentMiddle);
         navigationBar.add(navigation_contentRight);
 
-        content.add(navigationBar, BorderLayout.NORTH);
+        globalPanel.add(navigationBar, BorderLayout.NORTH);
     }
     // Custom method to set right alignment for JMenuItem
     private static void setRightAlignment(JMenuItem menuItem) {

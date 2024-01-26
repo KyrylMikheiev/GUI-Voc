@@ -1,14 +1,28 @@
 package src;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class Main {
+
+    //button colors
+    static Color defaultButton = Color.decode("#4d6190");
+    static Color hoverButton = Color.decode("#4255ff");
+    static Color clickButton = Color.decode("#2f3990");
+    static Color BodyColor = Color.decode("#111827");
+    static Color TextColor = Color.decode("#f9fafb");
 
     public Main() {
         // Set the cross-platform look and feel
@@ -30,6 +44,17 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
+        // temp?: press esc to quit
+        KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+        Action escapeAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0); // Quit the application
+            }
+        };
+        frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, "ESCAPE");
+        frame.getRootPane().getActionMap().put("ESCAPE", escapeAction);
+        
         frame.setVisible(true);
 
         // UI Content Pane
@@ -38,7 +63,7 @@ public class Main {
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
-        NavBar nav = new NavBar(globalPane);
+        NavBar nav = new NavBar(globalPane, contentPane);
 
         // Create UI's (in a cardPanel later?)
         MainMenu menu = new MainMenu(contentPane);

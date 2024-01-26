@@ -13,13 +13,11 @@ public class SettingsMenu {
     public SettingsMenu(JPanel content)
     {
         JPanel bodyPanel = new JPanel();
-
-        Color defaultButton = Color.decode("#4d6190");
-        Color hoverButton = Color.decode("#4255ff");
-        Color clickButton = Color.decode("#2f3990");
+        bodyPanel.setBackground(Main.BodyColor);
         
         JLabel changeName = new JLabel("Name ändern");
         changeName.setFont(new Font(Font.SANS_SERIF, 0, 20));
+        changeName.setForeground(Main.TextColor);
         bodyPanel.add(changeName);
 
         content.add(bodyPanel);

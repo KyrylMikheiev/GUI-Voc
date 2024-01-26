@@ -15,11 +15,8 @@ import java.awt.event.MouseListener;
 
 public class MainMenu {
     
-    //button colors
-    Color defaultButton = Color.decode("#4d6190");
-    Color hoverButton = Color.decode("#4255ff");
-    Color clickButton = Color.decode("#2f3990");
-    Color darkModeBodyColor = Color.decode("#111827");
+    
+
     private JButton learn, games, settings, widgets, library;
 
     public MainMenu(JPanel content)
@@ -30,7 +27,7 @@ public class MainMenu {
 
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        bodyPanel.setBackground(darkModeBodyColor);
+        bodyPanel.setBackground(Main.BodyColor);
 
         JPanel body_contentLeft = new JPanel();
         body_contentLeft.setOpaque(false);
@@ -46,16 +43,16 @@ public class MainMenu {
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                e.getComponent().setBackground(hoverButton);
+                e.getComponent().setBackground(Main.hoverButton);
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                e.getComponent().setBackground(defaultButton);
+                e.getComponent().setBackground(Main.defaultButton);
             }
             @Override
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(() -> {
-                    e.getComponent().setBackground(clickButton);
+                    e.getComponent().setBackground(Main.clickButton);
                     //do something
                     if (e.getComponent() == learn) {
                         System.out.println("learn clicked");
@@ -82,8 +79,8 @@ public class MainMenu {
             button.setFont(new Font(Font.SANS_SERIF, 0, 20));
             button.setFocusPainted(false);
             button.setLayout(new BorderLayout());
-            button.setBackground(defaultButton);
-            button.setForeground(Color.WHITE);
+            button.setBackground(Main.defaultButton);
+            button.setForeground(Main.TextColor);
             button.addMouseListener(mouseListener);
             body_contentLeft.add(button);
         }
@@ -96,14 +93,14 @@ public class MainMenu {
         JPanel textAreaPanel = new JPanel();
         textAreaPanel.setLayout(new BorderLayout());
         textAreaPanel.setOpaque(false);
-        textAreaPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        textAreaPanel.setBorder(BorderFactory.createLineBorder(Main.TextColor, 3));
 
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
         textArea.setEditable(true);
         textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 25));
-        textArea.setForeground(Color.WHITE);
+        textArea.setForeground(Main.TextColor);
         textArea.setText("Hallo!");
 
         textAreaPanel.add(textArea, BorderLayout.CENTER);
