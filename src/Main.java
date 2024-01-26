@@ -1,5 +1,6 @@
 package src;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -22,6 +23,8 @@ public class Main {
 
         // Window
         JFrame frame = new JFrame();
+        frame.setIconImage(new ImageIcon("resources/images/logo.png").getImage());
+        frame.setTitle("Vokabeltrainer");
         frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

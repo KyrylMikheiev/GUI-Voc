@@ -19,11 +19,15 @@ public class NavBar {
         //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
-        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 10, 9, 30)); // adjustment for appname
+        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 0, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
-        JLabel appName = new JLabel("AppName");
+
+        JLabel appName = new JLabel("Vokabeltrainer");
         appName.setFont(new Font("Times New Roman", 0, 28));
+        appName.setOpaque(false);
+        Image logoImage = new ImageIcon("resources/images/logo.png").getImage().getScaledInstance(100, 100, 0);      
+        appName.setIcon(new ImageIcon(logoImage));
         appName.setForeground(Color.WHITE);
         
         JButton plusButton = new JButton();
@@ -50,7 +54,6 @@ public class NavBar {
 
         JPanel searchBar = new JPanel();
         searchBar.setLayout(new BorderLayout(10, 0));
-        // searchBar.setBorder(new PlaceholderBorder(40, Color.WHITE));
         searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         searchBar.setOpaque(false); 
 

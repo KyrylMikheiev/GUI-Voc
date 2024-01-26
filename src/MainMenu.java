@@ -1,7 +1,12 @@
 package src;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,25 +14,29 @@ import java.awt.event.MouseListener;
 
 public class MainMenu {
     
-    private GridBagConstraints gbc = new GridBagConstraints();
-    private JButton learn, games, settings, widgets, library;
     //button colors
     Color defaultButton = Color.decode("#4d6190");
     Color hoverButton = Color.decode("#4255ff");
     Color clickButton = Color.decode("#2f3990");
+    Color darkModeBodyColor = Color.decode("#111827");
+    private JButton learn, games, settings, widgets, library;
 
     public MainMenu(JPanel content)
     {
         // # create main menu
         //create elements and add them to the contentPane
         //----------------body-----------------
+
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setBackground(Color.decode("#111827"));        
-        bodyPanel.setLayout(new GridBagLayout());
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.BOTH;
-        
-        learn = new JButton("Lernen");
+        bodyPanel.setLayout(new GridLayout(1, 2, 20, 0));
+        bodyPanel.setBackground(darkModeBodyColor);
+
+        JPanel body_contentLeft = new JPanel();
+        body_contentLeft.setOpaque(false);
+        body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
+        body_contentLeft.setLayout(new GridLayout(5, 1, 0, 20));
+
+        learn = new JButton("Lernen");     
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");
         widgets = new JButton("Widgets");
@@ -52,9 +61,9 @@ public class MainMenu {
         JButton[] buttons = {learn, games, settings, widgets, library};
         for(JButton button : buttons) {
             button.setBorder(null);
-            button.setFont(new Font("Arial Rounded MT", 0, 20));
+            button.setFont(new Font("Proxima Nova", 0, 20));
             button.setFocusPainted(false);
-            // button.setContentAreaFilled(false);
+            button.setLayout(new BorderLayout());
             button.setBackground(defaultButton);
             button.setForeground(Color.WHITE);
             button.addMouseListener(mouseListener);
@@ -63,37 +72,32 @@ public class MainMenu {
             } else {
                 button.setPreferredSize(new Dimension(300, 100));
             }
+            body_contentLeft.add(button);
         }
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        bodyPanel.add(learn, gbc);
+        
+        JPanel bodyPanel_contentRight = new JPanel();
+        bodyPanel_contentRight.setOpaque(false);
+        bodyPanel_contentRight.setBorder(BorderFactory.createEmptyBorder(100, 30, 100, 80));
+        bodyPanel_contentRight.setLayout(new BorderLayout());
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        bodyPanel.add(games, gbc);
+        JPanel textAreaPanel = new JPanel();
+        textAreaPanel.setLayout(new BorderLayout());
+        textAreaPanel.setOpaque(false);
+        textAreaPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.gridheight = 3;
-        gbc.gridwidth = 2;
-        widgets.setPreferredSize(new Dimension(150, 200));
-        bodyPanel.add(widgets, gbc);
+        JTextArea textArea = new JTextArea();
+        textArea.setOpaque(false);
+        textArea.setEditable(true);
+        textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        textArea.setFont(new Font("Arial", 0, 25));
+        textArea.setForeground(Color.WHITE);
+        textArea.setText("Hallo!");
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        bodyPanel.add(library, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        bodyPanel.add(settings, gbc);
+        textAreaPanel.add(textArea, BorderLayout.CENTER);
+        bodyPanel_contentRight.add(textAreaPanel, BorderLayout.CENTER);
+           
+        bodyPanel.add(body_contentLeft);
+        bodyPanel.add(bodyPanel_contentRight);
 
         content.add(bodyPanel, BorderLayout.CENTER);
 
