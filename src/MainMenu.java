@@ -2,12 +2,9 @@ package src;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,9 +14,9 @@ public class MainMenu {
     
     
 
-    private JButton learn, games, settings, widgets, library;
+    private JButton learn, games, settings, library;
 
-    public MainMenu(JPanel content)
+    public MainMenu(JPanel content, Main main)
     {
         // # create main menu
         //create elements and add them to the contentPane
@@ -55,18 +52,17 @@ public class MainMenu {
                     e.getComponent().setBackground(Main.clickButton);
                     //do something
                     if (e.getComponent() == learn) {
-                        System.out.println("learn clicked");
+                        main.newLearnMenu();
                     }
                     else if (e.getComponent() == library) {
-                        System.out.println("library clicked");
+                        main.newLibraryMenu();
                     }
                     else if (e.getComponent() == games) {
-                        System.out.println("games clicked");
+                        main.newGamesMenu();
                     }
                     else if (e.getComponent() == settings) {
                         //remove mainMenu and start settings
-                        Main.newUI(content);
-                        new SettingsMenu(content);
+                        main.newSettingsMenu();
                     }
                 });
             }

@@ -14,7 +14,7 @@ public class NavBar {
 
     private Color GRAY = Color.decode("#374151");
 
-    public NavBar(JPanel globalPanel, JPanel content)
+    public NavBar(JPanel globalPanel, JPanel content, Main main)
     {
         //------------------navigationBar----------------
         JPanel navigationBar = new JPanel();
@@ -109,7 +109,7 @@ public class NavBar {
         burgerMenu.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         burgerMenu.setForeground(Main.BodyColor);
 
-        JMenuItem main = new JMenuItem("Hauptmenü");
+        JMenuItem mainmenu = new JMenuItem("Hauptmenü");
         JMenuItem learn = new JMenuItem("Lernen");
         JMenuItem library = new JMenuItem("Bibliothek");
         JMenuItem games = new JMenuItem("Minispiele");
@@ -132,25 +132,23 @@ public class NavBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JMenuItem source = (JMenuItem) e.getSource(); // Identify the source of the event
-                if (source == main) {
-                    Main.newUI(content);
-                    new MainMenu(content);
+                if (source == mainmenu) {
+                    main.newMainMenu();
                 } else if (source == learn) {
-                    System.out.println("learn clicked");
+                    main.newLearnMenu();
                 } else if (source == library) {
-                    System.out.println("library clicked");
+                    main.newLibraryMenu();
                 } else if (source == games) {
-                    System.out.println("games clicked");
+                    main.newGamesMenu();
                 } else if (source == settings) {
-                    Main.newUI(content);
-                    new SettingsMenu(content);
+                    main.newSettingsMenu();
                 } else if (source == exit) {
                     System.exit(0);
                 }
             }
         };
 
-        JMenuItem[] menuItems = {main, learn, library, games, settings, exit};
+        JMenuItem[] menuItems = {mainmenu, learn, library, games, settings, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
             menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));

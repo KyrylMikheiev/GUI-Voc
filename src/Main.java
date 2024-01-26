@@ -24,6 +24,8 @@ public class Main {
     static Color BodyColor = Color.decode("#111827");
     static Color TextColor = Color.decode("#f9fafb");
 
+    private JPanel contentPane;
+    
     public Main() {
         // Set the cross-platform look and feel
         try {
@@ -58,16 +60,16 @@ public class Main {
         frame.setVisible(true);
 
         // UI Content Pane
-        JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane = new JPanel(new BorderLayout());
         contentPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
-        NavBar nav = new NavBar(globalPane, contentPane);
+        new NavBar(globalPane, contentPane, this);
 
-        // Create UI's (in a cardPanel later?)
-        MainMenu menu = new MainMenu(contentPane);
-        //SettingsMenu settings = new SettingsMenu(contentPane);
+        // create the mainMenu
+        new MainMenu(contentPane, this);
+
 
         // Refresh screen to make stuff show up
         globalPane.revalidate();
@@ -78,9 +80,34 @@ public class Main {
         new Main();
     }
 
-    public static void newUI(JPanel content) {
-        content.removeAll();
-        content.revalidate();
-        content.repaint();
+    public void newUI() {
+        try {
+            contentPane.removeAll();
+        }
+        catch (Exception e) {
+            
+        }
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    public void newMainMenu() {
+        newUI();
+        new MainMenu(contentPane, this);
+    }
+    public void newSettingsMenu() {
+        newUI();
+        new SettingsMenu(contentPane);
+    }
+    public void newLearnMenu() {
+        newUI();
+        System.out.println("newLearnMenu");
+    }
+    public void newLibraryMenu() {
+        newUI();
+        System.out.println("newLibraryMenu");
+    }
+    public void newGamesMenu() {
+        newUI();
+        System.out.println("newGamesMenu");
     }
 }
