@@ -8,31 +8,34 @@ import java.awt.event.ActionListener;
 public class SettingsMenu {
 
     public SettingsMenu(JPanel content) {
-        content.setLayout(new GridLayout(6, 2, 10, 10)); // GridLayout with 6 rows and 2 columns
+        
+        JPanel bodyPanel = new JPanel();
+        
+        bodyPanel.setLayout(new GridLayout(6, 2, 10, 10)); // GridLayout with 6 rows and 2 columns
 
-        content.setBackground(Main.BodyColor);
+        bodyPanel.setBackground(Main.BodyColor);
 
         JLabel changeName = new JLabel("Name ändern");
         changeName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         changeName.setForeground(Main.TextColor);
-        content.add(changeName);
+        bodyPanel.add(changeName);
 
         PlaceholderTextField textArea = new PlaceholderTextField("Max Mustermann", Color.GRAY);
         textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        content.add(textArea);
+        bodyPanel.add(textArea);
 
         JLabel darkModeLabel = new JLabel("Dunkelmodus");
         JButton darkModeButton = new JButton("Toggle");
-        content.add(darkModeLabel);
-        content.add(darkModeButton);
+        bodyPanel.add(darkModeLabel);
+        bodyPanel.add(darkModeButton);
 
         JLabel deleteDataLabel = new JLabel("Daten Löschen");
         JButton deleteDataButton = new JButton("Delete");
-        content.add(deleteDataLabel);
-        content.add(deleteDataButton);
+        bodyPanel.add(deleteDataLabel);
+        bodyPanel.add(deleteDataButton);
 
         JButton creditsButton = new JButton("Mitwirkende und Copyright");
-        content.add(creditsButton);
+        bodyPanel.add(creditsButton);
 
         ActionListener buttonActionListener = new ActionListener() {
             @Override
@@ -50,5 +53,7 @@ public class SettingsMenu {
         darkModeButton.addActionListener(buttonActionListener);
         deleteDataButton.addActionListener(buttonActionListener);
         creditsButton.addActionListener(buttonActionListener);
+
+        content.add(bodyPanel);
     }
 }
