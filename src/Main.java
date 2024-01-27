@@ -98,12 +98,12 @@ public class Main {
     }
     public void newSettingsMenu() {
         newUI();
-        new SettingsMenu(contentPane);
+        new Settings(contentPane);
         repaint();
     }
     public void newLearnMenu() {
         newUI();
-        System.out.println("newLearnMenu");
+        new LearningView(contentPane);
         repaint();
     }
     public void newLibraryMenu() {

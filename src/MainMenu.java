@@ -31,7 +31,7 @@ public class MainMenu {
         body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
         body_contentLeft.setLayout(new GridLayout(5, 1, 0, 15));
 
-        learn = new JButton("Lernen");     
+        learn = new JButton("Lernen");
         library = new JButton("Bibliothek");
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");

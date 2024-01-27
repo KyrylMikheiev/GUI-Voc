@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsMenu {
+public class Settings {
 
-    public SettingsMenu(JPanel content) {
+    public Settings(JPanel content) {
         
         JPanel bodyPanel = new JPanel();
         
