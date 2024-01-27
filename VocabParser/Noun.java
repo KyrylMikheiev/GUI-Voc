@@ -27,6 +27,8 @@ public class Noun extends Vocab {
         String nominativ = givenForms.get(0);
         String genitiv = "";
 
+        setBasicForm(nominativ);
+
         HashMap<String, HashMap<String, ArrayList<String>>> irregularities = new HashMap<>();
 
         HashMap<String, ArrayList<String>> visForms = new HashMap<>();
