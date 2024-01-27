@@ -14,7 +14,7 @@ public class NavBar {
 
     private Color GRAY = Color.decode("#374151");
 
-    public NavBar(JPanel globalPanel, JPanel content, Main main)
+    public NavBar(JPanel globalPanel, Main main)
     {
         //------------------navigationBar----------------
         JPanel navigationBar = new JPanel();

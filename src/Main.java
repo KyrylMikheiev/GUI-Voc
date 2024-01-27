@@ -46,6 +46,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
+        
         // temp?: press esc to quit
         KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
         Action escapeAction = new AbstractAction() {
@@ -65,7 +66,7 @@ public class Main {
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
-        new NavBar(globalPane, contentPane, this);
+        new NavBar(globalPane, this);
 
         // create the mainMenu
         new MainMenu(contentPane, this);
