@@ -3,9 +3,13 @@ package src;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import VocabParser.Vocab;
+import VocabParser.VocabParser;
 
 
 public class LearningSelection {
@@ -14,17 +18,26 @@ public class LearningSelection {
         bodyPanel.setLayout(new GridLayout(4, 2, 20, 20));
         bodyPanel.setBackground(Main.BodyColor);
         
-        JButton lektion1 = new JButton("Lektion 1");
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == lektion1) {
-                    main.newLearningView("1");
-                }
+        //get all lessons
+        ArrayList<String> lessons = new ArrayList<>();
+        for (Vocab i: VocabParser.getAllVocabs()) {
+            if (!lessons.contains(i.getLesson())) {
+                lessons.add(i.getLesson());
             }
-        };
-        lektion1.addActionListener(actionListener);
-        bodyPanel.add(lektion1);
+        }
+
+        //create buttons for each lesson
+        for (String lesson: lessons) {
+            JButton button = new JButton(lesson);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    main.newLearningView(lesson);
+                }
+            });
+            bodyPanel.add(button);
+        }
+
 
         content.add(bodyPanel);
     }
