@@ -135,7 +135,7 @@ public class NavBar {
                 if (source == mainmenu) {
                     main.newMainMenu();
                 } else if (source == learn) {
-                    main.newLearnMenu();
+                    main.newLearningSelection();
                 } else if (source == library) {
                     main.newLibraryMenu();
                 } else if (source == games) {

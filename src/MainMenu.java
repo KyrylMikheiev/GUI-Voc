@@ -53,7 +53,7 @@ public class MainMenu {
                     e.getComponent().setBackground(Main.clickButton);
                     //do something
                     if (e.getComponent() == learn) {
-                        main.newLearnMenu();
+                        main.newLearningSelection();
                     }
                     else if (e.getComponent() == library) {
                         main.newLibraryMenu();

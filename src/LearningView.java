@@ -1,25 +1,26 @@
 package src;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import VocabParser.Vocab;
 import VocabParser.VocabParser;
 public class LearningView {
     
 
-    public LearningView(JPanel content) {
+    public LearningView(JPanel content, String lektion) {
         
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new GridLayout(4, 2, 20, 20));
+        bodyPanel.setLayout(new GridLayout(10, 4, 20, 20));
         bodyPanel.setBackground(Main.BodyColor);
 
         //communicate with vocab api (sql?)
-        VocabParser vP = new VocabParser();
-        JLabel word = new JLabel(vP.parseToVocab().get(0).getGerman().get(0));
-        word.setForeground(Main.TextColor);
-        bodyPanel.add(word);
+        for (Vocab i: VocabParser.getVocabsFromLesson(lektion)) {
+            bodyPanel.add(new JLabel(i.getGerman().get(0)));
+        }
 
         content.add(bodyPanel);
     }

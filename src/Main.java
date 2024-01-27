@@ -102,19 +102,24 @@ public class Main {
         new Settings(contentPane);
         repaint();
     }
-    public void newLearnMenu() {
+    public void newLearningView(String lektion) {
         newUI();
-        new LearningView(contentPane);
+        new LearningView(contentPane, lektion);
         repaint();
     }
     public void newLibraryMenu() {
         newUI();
-        System.out.println("newLibraryMenu");
+        new LibraryView(contentPane);
         repaint();
     }
     public void newGamesMenu() {
         newUI();
-        System.out.println("newGamesMenu");
+        new GameSelection(contentPane);
+        repaint();
+    }
+    public void newLearningSelection() {
+        newUI();
+        new LearningSelection(contentPane, this);
         repaint();
     }
 }

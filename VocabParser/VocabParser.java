@@ -2,20 +2,25 @@ package VocabParser;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class VocabParser {
-   public List<List<String>> getData() {
-      CSVParser parser = new CSVParser("VocabParser/voc_list.csv", ";");
+   private static ArrayList<Vocab> vocabulary;
+   private static HashMap<String, ArrayList<Vocab>> vocabsByLesson;
+
+   private static List<List<String>> getData() {
+      CSVParser parser = new CSVParser("voc_list.csv", ";");
       List<List<String>> data = parser.parse();
 
       return data;
    }
 
 
-   public List<Vocab> parseToVocab() {
+   private static void parseToVocab() {
       List<List<String>> rawData = getData();
-      List<Vocab> vocabulary = new ArrayList<Vocab>();
+      vocabulary = new ArrayList<Vocab>();
+      vocabsByLesson = new HashMap<String, ArrayList<Vocab>>();
 
       Iterator<List<String>> it = rawData.iterator();
       it.next(); //Skip head
@@ -45,8 +50,25 @@ public class VocabParser {
          // Weiterhin zu beachten sind alle möglichen andere Worttypen (Adverben, Konjuktionen, etc.) und erweiterte (sowas wie Verb, unpersönlich)
 
          vocabulary.add(tmpVocab);
-      }
+         if (!vocabsByLesson.containsKey(vocab.get(3))) {
+            vocabsByLesson.put(vocab.get(3), new ArrayList<Vocab>());
+         }
 
+         vocabsByLesson.get(vocab.get(3)).add(tmpVocab);
+      }
+   }
+
+   public static ArrayList<Vocab> getAllVocabs(){
+      if (vocabulary == null) {
+         parseToVocab();
+      }
       return vocabulary;
+   }
+
+   public static ArrayList<Vocab> getVocabsFromLesson(String lesson){
+      if (vocabulary == null) {
+         parseToVocab();
+      }
+      return vocabsByLesson.get(lesson);
    }
 }
