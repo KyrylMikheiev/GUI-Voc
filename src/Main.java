@@ -85,29 +85,35 @@ public class Main {
             contentPane.removeAll();
         }
         catch (Exception e) {
-            
         }
+    }
+    public void repaint() {
         contentPane.revalidate();
         contentPane.repaint();
     }
     public void newMainMenu() {
         newUI();
         new MainMenu(contentPane, this);
+        repaint();
     }
     public void newSettingsMenu() {
         newUI();
         new SettingsMenu(contentPane);
+        repaint();
     }
     public void newLearnMenu() {
         newUI();
         System.out.println("newLearnMenu");
+        repaint();
     }
     public void newLibraryMenu() {
         newUI();
         System.out.println("newLibraryMenu");
+        repaint();
     }
     public void newGamesMenu() {
         newUI();
         System.out.println("newGamesMenu");
+        repaint();
     }
 }
