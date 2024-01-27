@@ -14,7 +14,7 @@ public class MainMenu {
     
     
 
-    private JButton learn, games, settings, library, exit;
+    private JButton learn, games, settings, library, test, text;
 
     public MainMenu(JPanel content, Main main)
     {
@@ -29,13 +29,14 @@ public class MainMenu {
         JPanel body_contentLeft = new JPanel();
         body_contentLeft.setOpaque(false);
         body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
-        body_contentLeft.setLayout(new GridLayout(5, 1, 0, 15));
+        body_contentLeft.setLayout(new GridLayout(6, 1, 0, 15));
 
         learn = new JButton("Lernen");
+        test = new JButton("Testen");
         library = new JButton("Bibliothek");
+        text = new JButton("Textchecker");
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");
-        exit = new JButton("Beenden");
 
 
         MouseListener mouseListener = new MouseAdapter() {
@@ -65,15 +66,18 @@ public class MainMenu {
                         //remove mainMenu and start settings
                         main.newSettingsMenu();
                     }
-                    else if (e.getComponent() == exit) {
-                        System.exit(0);
+                    else if (e.getComponent() == test) {
+                        main.newTestSelection();
+                    }
+                    else if (e.getComponent() == text) {
+                        main.newTextChecker();
                     }
                 });
             }
 
         };
 
-        JButton[] buttons = {learn, library, games, settings, exit};
+        JButton[] buttons = {learn, test, library, text, games, settings};
         for(JButton button : buttons) {
             button.setBorder(null);
             button.setFont(new Font(Font.SANS_SERIF, 0, 20));

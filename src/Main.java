@@ -122,4 +122,19 @@ public class Main {
         new LearningSelection(contentPane, this);
         repaint();
     }
+    public void newTestView(String lektion, int type) {
+        newUI();
+        new Test(contentPane, lektion, type);
+        repaint();
+    }
+    public void newTextChecker() {
+        newUI();
+        new TextChecker(contentPane);
+        repaint();
+    }
+    public void newTestSelection() {
+        newUI();
+        new TestSelection(contentPane);
+        repaint();
+    }
 }
