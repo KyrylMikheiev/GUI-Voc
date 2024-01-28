@@ -11,7 +11,7 @@ public class VocabParser {
    private static HashMap<String, ArrayList<Vocab>> vocabsByLesson;
 
    private static List<List<String>> getData() {
-      CSVParser parser = new CSVParser("voc_list.csv", ";");
+      CSVParser parser = new CSVParser("resources/voc_list.csv", ";");
       List<List<String>> data = parser.parse();
 
       return data;

@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Settings {
 
-    public Settings(JPanel content) {
+    public Settings(JPanel content, Main main) {
         
         JPanel bodyPanel = new JPanel();
         
@@ -45,7 +45,7 @@ public class Settings {
                 } else if (e.getSource() == deleteDataButton) {
                     // Add delete data functionality
                 } else if (e.getSource() == creditsButton) {
-                    // Add credits functionality
+                    main.newCredits(content);
                 }
             }
         };

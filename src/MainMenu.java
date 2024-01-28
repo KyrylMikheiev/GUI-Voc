@@ -1,6 +1,7 @@
 package src;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,30 +15,44 @@ public class MainMenu {
     
     
 
-    private JButton learn, games, settings, library, test, text;
-
+    
     public MainMenu(JPanel content, Main main)
     {
         // # create main menu
         //create elements and add them to the contentPane
         //----------------body-----------------
-
+        
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(1, 2, 0, 0));
         bodyPanel.setBackground(Main.BodyColor);
-
+        
         JPanel body_contentLeft = new JPanel();
         body_contentLeft.setOpaque(false);
         body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
         body_contentLeft.setLayout(new GridLayout(4, 1, 0, main.getFrame().getHeight() / 30));
         body_contentLeft.setLayout(new GridLayout(6, 1, 0, 15));
+        
+        //icons
+        ImageIcon learnI, testI, libraryI, textI, gamesI, settingsI;
+        learnI = new ImageIcon("resources/images/card-index.png");
+        testI = new ImageIcon("resources/images/exam-results.png");
+        libraryI = new ImageIcon("resources/images/digital-library.png");
+        textI = new ImageIcon("resources/images/text-frame.png");
+        gamesI = new ImageIcon("resources/images/gamepad.png");
+        settingsI = new ImageIcon("resources/images/settings-gear-icon.png");
 
-        learn = new JButton("Lernen");
-        test = new JButton("Testen");
-        library = new JButton("Bibliothek");
-        text = new JButton("Textchecker");
-        games = new JButton("Minispiele");
-        settings = new JButton("Einstellungen");
+        ImageIcon[] icons = {learnI, testI, libraryI, textI, gamesI, settingsI};
+        for (ImageIcon icon : icons) {
+            icon.setImage(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        }
+
+        JButton learn, games, settings, library, test, text;
+        learn = new JButton("Lernen", learnI);
+        test = new JButton("Testen", testI);
+        library = new JButton("Bibliothek", libraryI);
+        text = new JButton("Textchecker", textI);
+        games = new JButton("Minispiele", gamesI);
+        settings = new JButton("Einstellungen", settingsI);
 
 
         MouseListener mouseListener = new MouseAdapter() {
@@ -86,6 +101,8 @@ public class MainMenu {
             button.setLayout(new BorderLayout());
             button.setBackground(Main.defaultButton);
             button.setForeground(Main.TextColor);
+            button.setHorizontalTextPosition(JButton.RIGHT);
+            button.setVerticalTextPosition(JButton.CENTER);
             button.addMouseListener(mouseListener);
             body_contentLeft.add(button);
         }

@@ -107,7 +107,7 @@ public class Main {
     }
     public void newSettingsMenu() {
         newUI();
-        new Settings(contentPane);
+        new Settings(contentPane, this);
         repaint();
     }
     public void newLearningView(String lektion) {
@@ -143,6 +143,16 @@ public class Main {
     public void newTestSelection() {
         newUI();
         new TestSelection(contentPane);
+        repaint();
+    }
+    public void newCredits(JPanel content) {
+        newUI();
+        new Credits(content);
+        repaint();
+    }
+    public void newSetup() {
+        newUI();
+        new Setup(contentPane);
         repaint();
     }
 
