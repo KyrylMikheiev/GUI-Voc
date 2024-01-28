@@ -23,7 +23,7 @@ public class Main {
     static Color clickButton = Color.decode("#2f3990");
     static Color BodyColor = Color.decode("#111827");
     static Color TextColor = Color.decode("#f9fafb");
-
+    private JFrame frame;
     private JPanel contentPane;
     
     public Main() {
@@ -39,7 +39,7 @@ public class Main {
         globalPane.setLayout(new BorderLayout());
 
         // Window
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setIconImage(new ImageIcon("resources/images/logo.png").getImage());
         frame.setTitle("Vokabeltrainer");
         frame.setSize(1280, 720);
@@ -115,5 +115,9 @@ public class Main {
         newUI();
         System.out.println("newGamesMenu");
         repaint();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }

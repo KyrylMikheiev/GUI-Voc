@@ -29,13 +29,13 @@ public class MainMenu {
         JPanel body_contentLeft = new JPanel();
         body_contentLeft.setOpaque(false);
         body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
-        body_contentLeft.setLayout(new GridLayout(5, 1, 0, 15));
+        body_contentLeft.setLayout(new GridLayout(4, 1, 0, main.getFrame().getHeight() / 30));
 
         learn = new JButton("Lernen");
         library = new JButton("Bibliothek");
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");
-        exit = new JButton("Beenden");
+        // exit = new JButton("Beenden");
 
 
         MouseListener mouseListener = new MouseAdapter() {
@@ -73,7 +73,7 @@ public class MainMenu {
 
         };
 
-        JButton[] buttons = {learn, library, games, settings, exit};
+        JButton[] buttons = {learn, library, games, settings};
         for(JButton button : buttons) {
             button.setBorder(null);
             button.setFont(new Font(Font.SANS_SERIF, 0, 20));
