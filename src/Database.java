@@ -34,9 +34,10 @@ public class Database {
                 // Example: retrieve data from columns "column1" and "column2"
                 String column1Data = resultSet.getString("latin");
                 String column2Data = resultSet.getString("german");
+                String column3Data = resultSet.getString("lesson");
 
                 // Process retrieved data (e.g., print it)
-                System.out.println("Column 1: " + column1Data + ", Column 2: " + column2Data);
+                System.out.println("Column 1: " + column1Data + ", Column 2: " + column2Data + ", Column 3: " + column3Data);
             }
 
             // Close the result set and statement
@@ -44,15 +45,16 @@ public class Database {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
-                    System.out.println("MySQL connection is closed");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        }
+    }
+    public void close() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
             }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
