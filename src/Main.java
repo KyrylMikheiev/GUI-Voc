@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -114,6 +115,11 @@ public class Main {
         new LearningView(contentPane, lektion);
         repaint();
     }
+    public void newLearningSelection() {
+        newUI();
+        new LearningSelection(contentPane, this);
+        repaint();
+    }
     public void newLibraryMenu() {
         newUI();
         new LibraryView(contentPane);
@@ -122,11 +128,6 @@ public class Main {
     public void newGamesMenu() {
         newUI();
         new GameSelection(contentPane);
-        repaint();
-    }
-    public void newLearningSelection() {
-        newUI();
-        new LearningSelection(contentPane, this);
         repaint();
     }
     public void newTestView(String lektion, int type) {
