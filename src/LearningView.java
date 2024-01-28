@@ -2,6 +2,8 @@ package src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -24,30 +26,28 @@ public class LearningView {
         // }
 
         // content.add(bodyPanel);
-
-        
-        
-        
-        JPanel contentUp_ProgressText = new JPanel();
-        contentUp_ProgressText.setOpaque(false);
         JLabel progress = new JLabel("Progress");
         progress.setForeground(Main.TextColor);
+
+        JPanel contentUp_ProgressText = new JPanel();
+        contentUp_ProgressText.setOpaque(false);
         contentUp_ProgressText.add(progress);
         
         JPanel contentUp_LessonAndProgressBar = new JPanel();
-        contentUp_LessonAndProgressBar.setOpaque(false);
-    
+        contentUp_LessonAndProgressBar.setOpaque(false);   
         contentUp_LessonAndProgressBar.setLayout(new GridLayout(1, 3));
 
-        JPanel lessonNumberPanel = new JPanel();
-        lessonNumberPanel.setOpaque(false);
         JLabel lessonNumber = new JLabel("Lektion");
-        lessonNumber.setForeground(Main.TextColor);
-        JPanel progressBarPanel = new JPanel();
-        progressBarPanel.setOpaque(false);
         JLabel progressBar = new JLabel("ProgressBar");
+        // progressBar.setFont(new Font(Font.SANS_SERIF, 0, 28));
+        lessonNumber.setForeground(Main.TextColor);
         progressBar.setForeground(Main.TextColor);
+
+        JPanel lessonNumberPanel = new JPanel();
+        JPanel progressBarPanel = new JPanel();
         JPanel amountFailsPanel = new JPanel();
+        lessonNumberPanel.setOpaque(false);
+        progressBarPanel.setOpaque(false);
         amountFailsPanel.setOpaque(false);
 
         progressBarPanel.add(progressBar);
@@ -64,9 +64,41 @@ public class LearningView {
         bodyPanel_contentUp.add(contentUp_ProgressText);
         bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);
         
+        
+        JPanel contentDown_leftEmptyPanel1 = new JPanel();
+        JPanel contentDown_leftEmptyPanel2 = new JPanel();
+        JPanel flashcardWithArrowsPanel = new JPanel();
+        contentDown_leftEmptyPanel1.setOpaque(false);
+        contentDown_leftEmptyPanel2.setOpaque(false);
+        flashcardWithArrowsPanel.setOpaque(false);
+        
+        flashcardWithArrowsPanel.setLayout(new BorderLayout());
+
+        JPanel flashcard_UpEmptyPanel = new JPanel();
+        JPanel flashcard = new JPanel();
+        JPanel arrowsPanel = new JPanel();
+
+        flashcard_UpEmptyPanel.setOpaque(false);
+        arrowsPanel.setOpaque(false);
+
+        flashcard_UpEmptyPanel.setPreferredSize(new Dimension(200, 50));
+        arrowsPanel.setPreferredSize(new Dimension(200, 70));
+
+        JLabel phrase = new JLabel("Phrase");
+        phrase.setForeground(Main.TextColor);
+        phrase.setFont(new Font(Font.SANS_SERIF, 0, 28));
+        flashcard.add(phrase);
+        flashcard.setBackground(Main.defaultButton);
+        flashcardWithArrowsPanel.add(flashcard_UpEmptyPanel, BorderLayout.NORTH);
+        flashcardWithArrowsPanel.add(flashcard, BorderLayout.CENTER);
+        flashcardWithArrowsPanel.add(arrowsPanel, BorderLayout.SOUTH);
+        
         JPanel bodyPanel_contentDown = new JPanel();
         bodyPanel_contentDown.setBackground(Main.BodyColor);
         bodyPanel_contentDown.setLayout(new GridLayout(1, 3));
+        bodyPanel_contentDown.add(contentDown_leftEmptyPanel1);
+        bodyPanel_contentDown.add(flashcardWithArrowsPanel);
+        bodyPanel_contentDown.add(contentDown_leftEmptyPanel2);
         
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());

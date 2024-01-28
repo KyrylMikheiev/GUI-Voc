@@ -51,7 +51,7 @@ public class Main {
         //for testing gui
         // frame.setSize(900, 800);
         // frame.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth(), 200);
-        
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
         
