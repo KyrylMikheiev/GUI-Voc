@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -23,6 +24,10 @@ public class LearningView {
         // }
 
         // content.add(bodyPanel);
+
+        
+        
+        
         JPanel contentUp_ProgressText = new JPanel();
         contentUp_ProgressText.setOpaque(false);
         JLabel progress = new JLabel("Progress");
