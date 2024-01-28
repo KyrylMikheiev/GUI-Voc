@@ -14,7 +14,7 @@ public class NavBar {
 
     private Color GRAY = Color.decode("#374151");
 
-    public NavBar(JPanel globalPanel, JPanel content, Main main)
+    public NavBar(JPanel globalPanel, Main main)
     {
         //------------------navigationBar----------------
         JPanel navigationBar = new JPanel();
@@ -111,7 +111,9 @@ public class NavBar {
 
         JMenuItem mainmenu = new JMenuItem("Hauptmenü");
         JMenuItem learn = new JMenuItem("Lernen");
+        JMenuItem test = new JMenuItem("Testen");
         JMenuItem library = new JMenuItem("Bibliothek");
+        JMenuItem text = new JMenuItem("Textchecker");
         JMenuItem games = new JMenuItem("Minispiele");
         JMenuItem settings = new JMenuItem("Einstellungen");
         JMenuItem exit = new JMenuItem("Beenden");
@@ -135,7 +137,7 @@ public class NavBar {
                 if (source == mainmenu) {
                     main.newMainMenu();
                 } else if (source == learn) {
-                    main.newLearnMenu();
+                    main.newLearningSelection();
                 } else if (source == library) {
                     main.newLibraryMenu();
                 } else if (source == games) {
@@ -144,11 +146,15 @@ public class NavBar {
                     main.newSettingsMenu();
                 } else if (source == exit) {
                     System.exit(0);
+                } else if (source == test) {
+                    main.newTestSelection();
+                } else if (source == text) {
+                    main.newTextChecker();
                 }
             }
         };
 
-        JMenuItem[] menuItems = {mainmenu, learn, library, games, settings, exit};
+        JMenuItem[] menuItems = {mainmenu, learn, test, library, text, games, settings, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
             menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));

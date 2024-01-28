@@ -14,7 +14,7 @@ public class MainMenu {
     
     
 
-    private JButton learn, games, settings, library, exit;
+    private JButton learn, games, settings, library, test, text;
 
     public MainMenu(JPanel content, Main main)
     {
@@ -30,12 +30,14 @@ public class MainMenu {
         body_contentLeft.setOpaque(false);
         body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
         body_contentLeft.setLayout(new GridLayout(4, 1, 0, main.getFrame().getHeight() / 30));
+        body_contentLeft.setLayout(new GridLayout(6, 1, 0, 15));
 
         learn = new JButton("Lernen");
+        test = new JButton("Testen");
         library = new JButton("Bibliothek");
+        text = new JButton("Textchecker");
         games = new JButton("Minispiele");
         settings = new JButton("Einstellungen");
-        // exit = new JButton("Beenden");
 
 
         MouseListener mouseListener = new MouseAdapter() {
@@ -53,7 +55,7 @@ public class MainMenu {
                     e.getComponent().setBackground(Main.clickButton);
                     //do something
                     if (e.getComponent() == learn) {
-                        main.newLearnMenu();
+                        main.newLearningSelection();
                     }
                     else if (e.getComponent() == library) {
                         main.newLibraryMenu();
@@ -65,15 +67,18 @@ public class MainMenu {
                         //remove mainMenu and start settings
                         main.newSettingsMenu();
                     }
-                    else if (e.getComponent() == exit) {
-                        System.exit(0);
+                    else if (e.getComponent() == test) {
+                        main.newTestSelection();
+                    }
+                    else if (e.getComponent() == text) {
+                        main.newTextChecker();
                     }
                 });
             }
 
         };
 
-        JButton[] buttons = {learn, library, games, settings};
+        JButton[] buttons = {learn, test, library, text, games, settings};
         for(JButton button : buttons) {
             button.setBorder(null);
             button.setFont(new Font(Font.SANS_SERIF, 0, 20));

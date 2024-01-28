@@ -46,6 +46,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
+        
         // temp?: press esc to quit
         KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
         Action escapeAction = new AbstractAction() {
@@ -65,7 +66,7 @@ public class Main {
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
-        new NavBar(globalPane, contentPane, this);
+        new NavBar(globalPane, this);
 
         // create the mainMenu
         new MainMenu(contentPane, this);
@@ -101,19 +102,39 @@ public class Main {
         new Settings(contentPane);
         repaint();
     }
-    public void newLearnMenu() {
+    public void newLearningView(String lektion) {
         newUI();
-        new LearningView(contentPane);
+        new LearningView(contentPane, lektion);
         repaint();
     }
     public void newLibraryMenu() {
         newUI();
-        System.out.println("newLibraryMenu");
+        new LibraryView(contentPane);
         repaint();
     }
     public void newGamesMenu() {
         newUI();
-        System.out.println("newGamesMenu");
+        new GameSelection(contentPane);
+        repaint();
+    }
+    public void newLearningSelection() {
+        newUI();
+        new LearningSelection(contentPane, this);
+        repaint();
+    }
+    public void newTestView(String lektion, int type) {
+        newUI();
+        new Test(contentPane, lektion, type);
+        repaint();
+    }
+    public void newTextChecker() {
+        newUI();
+        new TextChecker(contentPane);
+        repaint();
+    }
+    public void newTestSelection() {
+        newUI();
+        new TestSelection(contentPane);
         repaint();
     }
 
