@@ -42,6 +42,8 @@ public class LearningSelection {
         //create buttons for each lesson
         for (String lesson: lessons) {
             JButton button = new JButton(lesson);
+            button.setBackground(Main.defaultButton);
+            button.setForeground(Main.TextColor);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
