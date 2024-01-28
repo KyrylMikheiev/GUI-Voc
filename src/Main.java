@@ -43,7 +43,13 @@ public class Main {
         frame = new JFrame();
         frame.setIconImage(new ImageIcon("resources/images/logo.png").getImage());
         frame.setTitle("Vokabeltrainer");
+        //default settings
         frame.setSize(1280, 720);
+        frame.setLocationRelativeTo(null);
+
+        //for testing gui
+        // frame.setSize(900, 800);
+        // frame.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth(), 200);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
