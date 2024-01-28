@@ -5,8 +5,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        VocabParser vocabParser = new VocabParser();
-        List<Vocab> vocabulary = vocabParser.parseToVocab();
+        List<Vocab> vocabulary = VocabParser.getAllVocabs();
 
         /*VocabTestParser parser = new VocabTestParser();
         List<Vocab> vocabulary = parser.getAllVocabs();

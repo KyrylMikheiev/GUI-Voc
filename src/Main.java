@@ -27,6 +27,7 @@ public class Main {
     private JPanel contentPane;
     
     public Main() {
+        new Database();
         // Set the cross-platform look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

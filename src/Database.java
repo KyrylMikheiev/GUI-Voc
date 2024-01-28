@@ -9,17 +9,20 @@ public class Database {
     private Connection connection;
 
     public Database() {
-        String url = "jdbc:mysql://localhost:3306/vocabtrainerdb?useSSL=false";
-        String user = "root";
+        String url = "jdbc:mysql://localhost:3306/vocabdb";
+        String user = "username";
         String password = "password";
 
         try {
+            // Load the MySQL JDBC driver
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to MySQL database");
 
             // Perform database operations (e.g., execute queries)
             // Example: executing a SELECT query
-            String query = "SELECT * FROM your_table";
+            String query = "SELECT * FROM vocabs";
             PreparedStatement statement = connection.prepareStatement(query);
 
             // Execute the query and retrieve the results
@@ -29,8 +32,8 @@ public class Database {
             while (resultSet.next()) {
                 // Retrieve data from the result set
                 // Example: retrieve data from columns "column1" and "column2"
-                String column1Data = resultSet.getString("column1");
-                String column2Data = resultSet.getString("column2");
+                String column1Data = resultSet.getString("latin");
+                String column2Data = resultSet.getString("german");
 
                 // Process retrieved data (e.g., print it)
                 System.out.println("Column 1: " + column1Data + ", Column 2: " + column2Data);

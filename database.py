@@ -3,10 +3,10 @@ import mysql.connector
 # Connect to MySQL
 try:
     connection = mysql.connector.connect(
-        host="your_host",
-        user="your_username",
-        password="your_password",
-        database="your_database"
+        host="localhost",
+        user="username",
+        password="password",
+        database="vocabdb"
     )
 
     if connection.is_connected():
@@ -16,7 +16,7 @@ try:
     cursor = connection.cursor()
 
     # Execute a query
-    query = "SELECT * FROM your_table"
+    query = "SELECT * FROM vocabs"
     cursor.execute(query)
 
     # Fetch the results
