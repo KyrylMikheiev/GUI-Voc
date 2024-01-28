@@ -1,4 +1,5 @@
-package VocabParser;
+package VocabParsing;
+
 import java.util.Arrays;
 import java.util.List;
 

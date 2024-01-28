@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import VocabParser.Vocab;
-import VocabParser.VocabParser;
+import VocabParsing.Vocab;
+import VocabParsing.VocabParser;
 
 
 public class LearningSelection {

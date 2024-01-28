@@ -5,8 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import VocabParser.Vocab;
-import VocabParser.VocabParser;
+import VocabParsing.Vocab;
+import VocabParsing.VocabParser;
 public class LearningView {
     
 
