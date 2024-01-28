@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -42,8 +43,14 @@ public class Main {
         JFrame frame = new JFrame();
         frame.setIconImage(new ImageIcon("resources/images/logo.png").getImage());
         frame.setTitle("Vokabeltrainer");
+        //default settings
         frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
+
+        //for testing gui
+        // frame.setSize(900, 800);
+        // frame.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth(), 200);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(globalPane);
         
@@ -107,6 +114,11 @@ public class Main {
         new LearningView(contentPane, lektion);
         repaint();
     }
+    public void newLearningSelection() {
+        newUI();
+        new LearningSelection(contentPane, this);
+        repaint();
+    }
     public void newLibraryMenu() {
         newUI();
         new LibraryView(contentPane);
@@ -115,11 +127,6 @@ public class Main {
     public void newGamesMenu() {
         newUI();
         new GameSelection(contentPane);
-        repaint();
-    }
-    public void newLearningSelection() {
-        newUI();
-        new LearningSelection(contentPane, this);
         repaint();
     }
     public void newTestView(String lektion, int type) {
