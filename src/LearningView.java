@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
@@ -26,7 +28,8 @@ public class LearningView {
         // }
 
         // content.add(bodyPanel);
-        JLabel progress = new JLabel("Progress");
+        JLabel progress = new JLabel("Progress:");
+        progress.setFont(new Font(Font.SANS_SERIF, 0, 28));
         progress.setForeground(Main.TextColor);
 
         JPanel contentUp_ProgressText = new JPanel();
@@ -38,13 +41,25 @@ public class LearningView {
         contentUp_LessonAndProgressBar.setLayout(new GridLayout(1, 3));
 
         JLabel lessonNumber = new JLabel("Lektion");
-        JLabel progressBar = new JLabel("ProgressBar");
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        progressBar.setOpaque(false);
+        progressBar.setStringPainted(true);
+        progressBar.setUI(new CustomProgressBarUI());
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(100);
+        progressBar.setValue(16);
+        progressBar.setForeground(Color.WHITE);
+        progressBar.setString("16%");
+        
+        // JLabel progressBar = new JLabel("ProgressBar");
         // progressBar.setFont(new Font(Font.SANS_SERIF, 0, 28));
         lessonNumber.setForeground(Main.TextColor);
         progressBar.setForeground(Main.TextColor);
 
         JPanel lessonNumberPanel = new JPanel();
         JPanel progressBarPanel = new JPanel();
+        progressBarPanel.setLayout(new GridLayout());
         JPanel amountFailsPanel = new JPanel();
         lessonNumberPanel.setOpaque(false);
         progressBarPanel.setOpaque(false);
