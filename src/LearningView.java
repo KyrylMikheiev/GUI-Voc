@@ -40,7 +40,9 @@ public class LearningView {
         contentUp_LessonAndProgressBar.setOpaque(false);   
         contentUp_LessonAndProgressBar.setLayout(new GridLayout(1, 3));
 
-        JLabel lessonNumber = new JLabel("Lektion");
+        JLabel lessonNumber = new JLabel("Lektion 1");
+        lessonNumber.setFont(new Font(Font.SANS_SERIF, 0, 28));
+        lessonNumber.setHorizontalAlignment(JLabel.CENTER);
         JProgressBar progressBar = new JProgressBar();
         progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         progressBar.setOpaque(false);
@@ -51,16 +53,13 @@ public class LearningView {
         progressBar.setValue(16);
         progressBar.setForeground(Color.WHITE);
         progressBar.setString("16%");
-        
-        // JLabel progressBar = new JLabel("ProgressBar");
-        // progressBar.setFont(new Font(Font.SANS_SERIF, 0, 28));
         lessonNumber.setForeground(Main.TextColor);
-        progressBar.setForeground(Main.TextColor);
 
         JPanel lessonNumberPanel = new JPanel();
         JPanel progressBarPanel = new JPanel();
-        progressBarPanel.setLayout(new GridLayout());
         JPanel amountFailsPanel = new JPanel();
+        lessonNumberPanel.setLayout(new GridLayout());
+        progressBarPanel.setLayout(new GridLayout());
         lessonNumberPanel.setOpaque(false);
         progressBarPanel.setOpaque(false);
         amountFailsPanel.setOpaque(false);
