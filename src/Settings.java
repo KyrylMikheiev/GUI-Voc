@@ -37,6 +37,9 @@ public class Settings {
         JButton creditsButton = new JButton("Mitwirkende und Copyright");
         bodyPanel.add(creditsButton);
 
+        JButton privacyButton = new JButton("Datenschutzerklärung");
+        bodyPanel.add(privacyButton);
+
         ActionListener buttonActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +49,8 @@ public class Settings {
                     // Add delete data functionality
                 } else if (e.getSource() == creditsButton) {
                     main.newCredits(content);
+                } else if (e.getSource() == privacyButton) {
+                    main.newPrivacyStatement();
                 }
             }
         };
@@ -53,6 +58,7 @@ public class Settings {
         darkModeButton.addActionListener(buttonActionListener);
         deleteDataButton.addActionListener(buttonActionListener);
         creditsButton.addActionListener(buttonActionListener);
+        privacyButton.addActionListener(buttonActionListener);
 
         content.add(bodyPanel);
     }

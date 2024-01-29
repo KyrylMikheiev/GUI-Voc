@@ -10,9 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
+import VocabParsing.Vocab;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -28,7 +29,7 @@ public class Main {
     private JPanel contentPane;
     
     public Main() {
-        new Database();
+        //new Database();
         // Set the cross-platform look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -112,7 +113,7 @@ public class Main {
     }
     public void newLearningView(String lektion) {
         newUI();
-        new LearningView(contentPane, lektion);
+        new LearningView(contentPane, lektion, this);
         repaint();
     }
     public void newLearningSelection() {
@@ -153,6 +154,16 @@ public class Main {
     public void newSetup() {
         newUI();
         new Setup(contentPane);
+        repaint();
+    }
+    public void newPrivacyStatement() {
+        newUI();
+        new PrivacyStatement(contentPane);
+        repaint();
+    }
+    public void newVocabView(Vocab v) {
+        newUI();
+        new VocabView(contentPane, v);
         repaint();
     }
 

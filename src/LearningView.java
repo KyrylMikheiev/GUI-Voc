@@ -1,48 +1,50 @@
 package src;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
+
 public class LearningView {
-    
+    private JPanel content;
+    private String lektion;
+    private int currentVocabIndex;
+    private JLabel phrase;
+    private boolean isFront;
+    private Main main;
 
-    public LearningView(JPanel content, String lektion) {
-        
-        // JPanel bodyPanel = new JPanel();
-        // bodyPanel.setLayout(new GridLayout(10, 4, 20, 20));
-        // bodyPanel.setBackground(Main.BodyColor);
+    public LearningView(JPanel content, String lektion, Main main) {
+        this.content = content;
+        this.lektion = lektion;
+        this.currentVocabIndex = 0;
+        this.isFront = true;
+        this.main = main;
 
-        // //communicate with vocab api (sql?)
-        // for (Vocab i: VocabParser.getVocabsFromLesson(lektion)) {
-        //     bodyPanel.add(new JLabel(i.getGerman().get(0)));
-        // }
+        setupUI();
+        updateFlashcard();
+    }
 
-        // content.add(bodyPanel);
+    private void setupUI() {
+        content.setLayout(new BorderLayout());
+        content.setBackground(Main.BodyColor);
+
+        JPanel bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.setBackground(Main.BodyColor);
+
+        JPanel contentUp = new JPanel(new GridLayout(2, 1));
+        contentUp.setOpaque(false);
+
         JLabel progress = new JLabel("Progress:");
-        progress.setFont(new Font(Font.SANS_SERIF, 0, 28));
+        progress.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
         progress.setForeground(Main.TextColor);
 
-        JPanel contentUp_ProgressText = new JPanel();
-        contentUp_ProgressText.setOpaque(false);
-        contentUp_ProgressText.add(progress);
-        
-        JPanel contentUp_LessonAndProgressBar = new JPanel();
-        contentUp_LessonAndProgressBar.setOpaque(false);   
-        contentUp_LessonAndProgressBar.setLayout(new GridLayout(1, 3));
-
-        JLabel lessonNumber = new JLabel("Lektion 1");
-        lessonNumber.setFont(new Font(Font.SANS_SERIF, 0, 28));
+        JLabel lessonNumber = new JLabel("Lektion: " + lektion);
+        lessonNumber.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
         lessonNumber.setHorizontalAlignment(JLabel.CENTER);
+        lessonNumber.setForeground(Main.TextColor);
+
         JProgressBar progressBar = new JProgressBar();
         progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         progressBar.setOpaque(false);
@@ -53,74 +55,108 @@ public class LearningView {
         progressBar.setValue(16);
         progressBar.setForeground(Color.WHITE);
         progressBar.setString("16%");
-        lessonNumber.setForeground(Main.TextColor);
 
-        JPanel lessonNumberPanel = new JPanel();
-        JPanel progressBarPanel = new JPanel();
-        JPanel amountFailsPanel = new JPanel();
-        lessonNumberPanel.setLayout(new GridLayout());
-        progressBarPanel.setLayout(new GridLayout());
-        lessonNumberPanel.setOpaque(false);
-        progressBarPanel.setOpaque(false);
-        amountFailsPanel.setOpaque(false);
+        JButton info = new JButton("?");
+        info.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                main.newVocabView(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex));
+            }
+        });
 
-        progressBarPanel.add(progressBar);
-        lessonNumberPanel.add(lessonNumber);
-        contentUp_LessonAndProgressBar.add(lessonNumberPanel);
-        contentUp_LessonAndProgressBar.add(progressBarPanel);
-        contentUp_LessonAndProgressBar.add(amountFailsPanel);
+        JPanel lessonAndProgressPanel = new JPanel(new GridLayout(1, 3));
+        lessonAndProgressPanel.setOpaque(false);
+        lessonAndProgressPanel.add(lessonNumber);
+        lessonAndProgressPanel.add(progressBar);
+        lessonAndProgressPanel.add(new JPanel()); // Empty panel for amount fails
+        lessonAndProgressPanel.add(info);
 
+        contentUp.add(progress);
+        contentUp.add(lessonAndProgressPanel);
 
-        JPanel bodyPanel_contentUp = new JPanel();
-        bodyPanel_contentUp.setLayout(new GridLayout(2, 1));
-        bodyPanel_contentUp.setBackground(Main.BodyColor);
-        bodyPanel_contentUp.setOpaque(false);
-        bodyPanel_contentUp.add(contentUp_ProgressText);
-        bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);
-        
-        
-        JPanel contentDown_leftEmptyPanel1 = new JPanel();
-        JPanel contentDown_leftEmptyPanel2 = new JPanel();
-        JPanel flashcardWithArrowsPanel = new JPanel();
-        contentDown_leftEmptyPanel1.setOpaque(false);
-        contentDown_leftEmptyPanel2.setOpaque(false);
-        flashcardWithArrowsPanel.setOpaque(false);
-        
-        flashcardWithArrowsPanel.setLayout(new BorderLayout());
+        JPanel contentDown = new JPanel(new GridLayout(1, 3));
+        contentDown.setBackground(Main.BodyColor);
 
-        JPanel flashcard_UpEmptyPanel = new JPanel();
-        JPanel flashcard = new JPanel();
-        JPanel arrowsPanel = new JPanel();
+        JPanel flashcardPanel = new JPanel(new BorderLayout());
+        flashcardPanel.setBackground(Main.BodyColor);
 
-        flashcard_UpEmptyPanel.setOpaque(false);
-        arrowsPanel.setOpaque(false);
+        JPanel flashcardContainer = new JPanel(new BorderLayout());
+        flashcardContainer.setBackground(Main.BodyColor);
+        flashcardContainer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        flashcard_UpEmptyPanel.setPreferredSize(new Dimension(200, 50));
-        arrowsPanel.setPreferredSize(new Dimension(200, 70));
-
-        JLabel phrase = new JLabel("Phrase");
+        phrase = new JLabel();
         phrase.setForeground(Main.TextColor);
-        phrase.setFont(new Font(Font.SANS_SERIF, 0, 28));
-        flashcard.add(phrase);
-        flashcard.setBackground(Main.defaultButton);
-        flashcardWithArrowsPanel.add(flashcard_UpEmptyPanel, BorderLayout.NORTH);
-        flashcardWithArrowsPanel.add(flashcard, BorderLayout.CENTER);
-        flashcardWithArrowsPanel.add(arrowsPanel, BorderLayout.SOUTH);
-        
-        JPanel bodyPanel_contentDown = new JPanel();
-        bodyPanel_contentDown.setBackground(Main.BodyColor);
-        bodyPanel_contentDown.setLayout(new GridLayout(1, 3));
-        bodyPanel_contentDown.add(contentDown_leftEmptyPanel1);
-        bodyPanel_contentDown.add(flashcardWithArrowsPanel);
-        bodyPanel_contentDown.add(contentDown_leftEmptyPanel2);
-        
-        JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new BorderLayout());
-        bodyPanel.setBackground(Main.BodyColor);
-        bodyPanel.add(bodyPanel_contentUp, BorderLayout.NORTH);
-        bodyPanel.add(bodyPanel_contentDown, BorderLayout.CENTER);
+        phrase.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
+        phrase.setHorizontalAlignment(JLabel.CENTER);
 
-        
+        flashcardContainer.add(phrase, BorderLayout.CENTER);
+        flashcardPanel.add(flashcardContainer, BorderLayout.CENTER);
+
+        JButton flipButton = new JButton("Flip");
+        flipButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                flipFlashcard();
+            }
+        });
+
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showPreviousVocab();
+            }
+        });
+
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showNextVocab();
+            }
+        });
+
+        JPanel buttonsPanel = new JPanel(new GridLayout(1, 3));
+        buttonsPanel.setBackground(Main.BodyColor);
+        buttonsPanel.add(prevButton);
+        buttonsPanel.add(flipButton);
+        buttonsPanel.add(nextButton);
+        bodyPanel.add(buttonsPanel, BorderLayout.SOUTH);
+
+        contentDown.add(new JPanel());
+        contentDown.add(flashcardPanel);
+        contentDown.add(new JPanel());
+
+        bodyPanel.add(contentUp, BorderLayout.NORTH);
+        bodyPanel.add(contentDown, BorderLayout.CENTER);
+
         content.add(bodyPanel, BorderLayout.CENTER);
+    }
+
+    private void flipFlashcard() {
+        isFront = !isFront;
+        updateFlashcard();
+    }
+
+    private void showPreviousVocab() {
+        if (currentVocabIndex > 0) {
+            currentVocabIndex--;
+            updateFlashcard();
+        }
+        isFront = true;
+    }
+
+    private void showNextVocab() {
+        // Assuming VocabParser.getVocabsFromLesson(lektion) returns a list of vocabs
+        // and lektion is correctly initialized.
+        if (currentVocabIndex < VocabParser.getVocabsFromLesson(lektion).size() - 1) {
+            currentVocabIndex++;
+            updateFlashcard();
+        }
+        isFront = true;
+    }
+
+    private void updateFlashcard() {
+        if (isFront) {
+            phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getBasicForm());
+        } else {
+            phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
+        }
     }
 }
