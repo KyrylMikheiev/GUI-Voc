@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
+import javax.swing.JScrollPane;
 import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
 
@@ -15,7 +15,7 @@ import VocabParsing.VocabParser;
 public class LearningSelection {
     public LearningSelection(JPanel content, Main main) {
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new GridLayout(4, 2, 20, 20));
+        bodyPanel.setLayout(new GridLayout());
         bodyPanel.setBackground(Main.BodyColor);
         
         //get all lessons
@@ -38,7 +38,9 @@ public class LearningSelection {
                 return s1.compareToIgnoreCase(s2);
             }
         });
-
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Main.BodyColor);
+        buttonPanel.setLayout(new GridLayout(0, 1, 0, 10));
         //create buttons for each lesson
         for (String lesson: lessons) {
             JButton button = new JButton("Lektion " + lesson);
@@ -50,8 +52,12 @@ public class LearningSelection {
                     main.newLearningView(lesson);
                 }
             });
-            bodyPanel.add(button);
+            buttonPanel.add(button);
         }
+        bodyPanel.add(buttonPanel);
+        JScrollPane scrollPane = new JScrollPane(buttonPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        bodyPanel.add(scrollPane);
 
 
         content.add(bodyPanel);

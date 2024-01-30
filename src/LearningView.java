@@ -2,6 +2,7 @@ package src;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
@@ -13,6 +14,10 @@ public class LearningView {
     private JLabel phrase;
     private boolean isFront;
     private Main main;
+    private JProgressBar progressBar;
+    private ArrayList<Integer> wrongVocabs;
+    private ArrayList<Integer> rightVocabs;
+
 
     public LearningView(JPanel content, String lektion, Main main) {
         this.content = content;
@@ -23,6 +28,9 @@ public class LearningView {
 
         setupUI();
         updateFlashcard();
+
+        wrongVocabs = new ArrayList<>();
+        rightVocabs = new ArrayList<>();
     }
 
     private void setupUI() {
@@ -45,16 +53,15 @@ public class LearningView {
         lessonNumber.setHorizontalAlignment(JLabel.CENTER);
         lessonNumber.setForeground(Main.TextColor);
 
-        JProgressBar progressBar = new JProgressBar();
+        progressBar = new JProgressBar();
         progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         progressBar.setOpaque(false);
         progressBar.setStringPainted(true);
         progressBar.setUI(new CustomProgressBarUI());
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
-        progressBar.setValue(16);
+        progressBar.setValue(0);
         progressBar.setForeground(Color.WHITE);
-        progressBar.setString("16%");
 
         JButton info = new JButton("?");
         info.addActionListener(new ActionListener() {
@@ -98,17 +105,23 @@ public class LearningView {
             }
         });
 
-        JButton prevButton = new JButton("Prev");
+        JButton prevButton = new JButton("false");
         prevButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showPreviousVocab();
+                falseVocab();
             }
         });
 
-        JButton nextButton = new JButton("Next");
+        JButton nextButton = new JButton("true");
         nextButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showNextVocab();
+                trueVocab();
+            }
+        });
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showPreviousVocab();
             }
         });
 
@@ -138,8 +151,16 @@ public class LearningView {
         if (currentVocabIndex > 0) {
             currentVocabIndex--;
             updateFlashcard();
+            updateProgressBar();
         }
         isFront = true;
+        //try to remove the vocab from wrongVocabs/rightVocabs
+        if (wrongVocabs.contains(currentVocabIndex)) {
+            wrongVocabs.remove(currentVocabIndex);
+        }
+        if (rightVocabs.contains(currentVocabIndex)) {
+            rightVocabs.remove(currentVocabIndex);
+        }
     }
 
     private void showNextVocab() {
@@ -148,10 +169,15 @@ public class LearningView {
         if (currentVocabIndex < VocabParser.getVocabsFromLesson(lektion).size() - 1) {
             currentVocabIndex++;
             updateFlashcard();
+            updateProgressBar();
         }
         isFront = true;
     }
 
+    private void updateProgressBar() {
+        int progress = (currentVocabIndex + 1) * 100 / VocabParser.getVocabsFromLesson(lektion).size();
+        progressBar.setValue(progress);
+    }
     private void updateFlashcard() {
         if (isFront) {
             phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getBasicForm());
@@ -159,4 +185,15 @@ public class LearningView {
             phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
         }
     }
+
+    private void falseVocab() {
+        wrongVocabs.add(currentVocabIndex);
+        showNextVocab();
+    }
+
+    private void trueVocab() {
+        rightVocabs.add(currentVocabIndex);
+        showNextVocab();
+    }
+
 }

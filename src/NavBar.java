@@ -48,8 +48,16 @@ public class NavBar {
         plusIcon = new ImageIcon(plusImage); 
         plusButton.setIcon(plusIcon);
         
-        navigation_contentLeft.add(appName, BorderLayout.CENTER);
         navigation_contentLeft.add(plusButton, BorderLayout.EAST);
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                main.newMainMenu();
+            }
+        };
+        appName.addMouseListener(mouseListener);
+        appName.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        navigation_contentLeft.add(appName, BorderLayout.CENTER);
         
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
@@ -119,7 +127,7 @@ public class NavBar {
         JMenuItem exit = new JMenuItem("Beenden");
 
         // MouseListener for hovering and unhovering menuItems
-        MouseListener mouseListener = new MouseAdapter() {
+        MouseListener menuMouseListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 // e.getComponent().setBackground(Main.hoverButton);
@@ -161,7 +169,7 @@ public class NavBar {
             setRightAlignment(menuItem);
             //menuItem.setBackground(Main.defaultButton);
             //menuItem.setForeground(Color.WHITE);
-            menuItem.addMouseListener(mouseListener);
+            menuItem.addMouseListener(menuMouseListener);
             menuItem.addActionListener(actionListener);
         }
 
