@@ -63,7 +63,7 @@ public class LearningView {
         progressBar.setValue(0);
         progressBar.setForeground(Color.WHITE);
 
-        JButton info = new JButton("?");
+        JButton info = new JButton("Vokabel anzeigen");
         info.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 main.newVocabView(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex));
@@ -196,4 +196,13 @@ public class LearningView {
         showNextVocab();
     }
 
+    private boolean uploadData() {
+        try {
+            //connect to database/rest api and upload the vocab data
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

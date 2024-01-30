@@ -1,11 +1,13 @@
 package src;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import VocabParsing.Vocab;
@@ -25,6 +27,11 @@ public class LearningSelection {
                 lessons.add(i.getLesson());
             }
         }
+
+        JLabel title = new JLabel("Bitte wählen Sie eine Lektion aus:");
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        title.setForeground(Main.TextColor);
+        bodyPanel.add(title);
 
         // sort lessons alphabetically
         lessons.sort((s1, s2) -> {
@@ -55,7 +62,7 @@ public class LearningSelection {
             buttonPanel.add(button);
         }
         bodyPanel.add(buttonPanel);
-        JScrollPane scrollPane = new JScrollPane(buttonPanel);
+        FasterScrollPane scrollPane = new FasterScrollPane(buttonPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         bodyPanel.add(scrollPane);
 
