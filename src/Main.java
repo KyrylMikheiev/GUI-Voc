@@ -11,6 +11,7 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import VocabParsing.Vocab;
+import minigames.GameM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,11 +21,11 @@ import java.awt.event.KeyEvent;
 public class Main {
 
     //button colors
-    static Color defaultButton = Color.decode("#4d6190");
-    static Color hoverButton = Color.decode("#4255ff");
-    static Color clickButton = Color.decode("#2f3990");
-    static Color BodyColor = Color.decode("#111827");
-    static Color TextColor = Color.decode("#f9fafb");
+    public static Color defaultButton = Color.decode("#4d6190");
+    public static Color hoverButton = Color.decode("#4255ff");
+    public static Color clickButton = Color.decode("#2f3990");
+    public static Color BodyColor = Color.decode("#111827");
+    public static Color TextColor = Color.decode("#f9fafb");
     private JFrame frame;
     private JPanel contentPane;
     
@@ -128,7 +129,7 @@ public class Main {
     }
     public void newGamesMenu() {
         newUI();
-        new GameSelection(contentPane);
+        new GameSelection(contentPane, this);
         repaint();
     }
     public void newTestView(String lektion, int type) {
@@ -164,6 +165,16 @@ public class Main {
     public void newVocabView(Vocab v) {
         newUI();
         new VocabView(contentPane, v);
+        repaint();
+    }
+    public void newGameM(String lektion) {
+        newUI();
+        new GameM(contentPane, lektion);
+        repaint();
+    }
+    public void newMemorySelection() {
+        newUI();
+        new MemorySelection(contentPane, this);
         repaint();
     }
 

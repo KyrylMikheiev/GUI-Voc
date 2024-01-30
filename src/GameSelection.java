@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class GameSelection {
-    public GameSelection(JPanel content) {
+    public GameSelection(JPanel content, Main main) {
         
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(4, 2, 20, 20));
@@ -14,6 +14,7 @@ public class GameSelection {
 
         JButton memory = new JButton("Memory");
         memory.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        memory.addActionListener(e -> main.newMemorySelection());
         bodyPanel.add(memory);
         
 

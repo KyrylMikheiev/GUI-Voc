@@ -15,8 +15,8 @@ import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
 
 
-public class LearningSelection {
-    public LearningSelection(JPanel content, Main main) {
+public class MemorySelection {
+    public MemorySelection(JPanel content, Main main) {
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS));
         bodyPanel.setBackground(Main.BodyColor);
@@ -57,7 +57,7 @@ public class LearningSelection {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    main.newLearningView(lesson);
+                    main.newGameM(lesson);
                 }
             });
             buttonPanel.add(button);

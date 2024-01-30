@@ -3,13 +3,15 @@ package minigames;
 
 import javax.swing.*;
 
+import VocabParsing.VocabParser;
+import src.Main;
+
 import java.awt.*;
 import java.awt.event.*;
 //import java.io.*;
 import java.util.*;
 //btn1.setBackground(colors[index]
 public class GameM implements ActionListener{ 
-	JFrame frame = new JFrame("Memory Game");
 	
 	JPanel field = new JPanel();
 	JPanel menu = new JPanel();
@@ -21,7 +23,7 @@ public class GameM implements ActionListener{
 	JPanel end_screen = new JPanel();
 	JPanel instruct_screen = new JPanel();
 
-	JButton btn[] = new JButton[20];
+	JButton btn[];
 	JButton start = new JButton("Start");
     JButton over = new JButton("Exit");
     JButton inst = new JButton("Instructions");
@@ -36,29 +38,33 @@ public class GameM implements ActionListener{
 	int level=0;
 	int clicks=0;
 	
+	JPanel content;
+
+	ArrayList<String> vocabGerman;
+    ArrayList<String> vocabLatin;
+
+	String lesson;
+
 	String[] board;
-	int[] boardQ=new int[20];
+	int[] boardQ;
 	Boolean shown = true;
 	int temp=30;
 	int temp2=30;
 
 	int Abfrageanzahl=0;
 
-	String Inhalt[]=new String[Abfrageanzahl];
-	boolean eh=true;
+	//String Inhalt[]=new String[Abfrageanzahl];
 	
-	private JLabel label = new JLabel("Enter level from 1 to 10");
+	private JLabel label = new JLabel("Geben Sie eine Anzahl an Pärchen ein:");
 	private JTextField text = new JTextField(10);
-	private JTextArea instructM = new JTextArea("When the game begins, the screen will be filled\nwith pairs of buttons.\n Memorize their placement.\nOnce you press any button, they will all clear. \n Your goal is to click the matching buttons in a row.\nWhen you finish that, you win.\nEvery incorrect click gives you a point (those are bad).\n GOOD LUCK! \n"+"for a single level: enter a level between 1 and 10,\nselect easy or hard, then press start.");
+	private JTextArea instructM = new JTextArea("Wenn das Spiel beginnt, ist der Bildschirm voller Tastenpaare.\n Merken Sie sich deren Anordnung.\n Sobald Sie eine Taste drücken, verschwinden sie alle. \n Ihr Ziel ist es, die übereinstimmenden Tasten in einer Reihe anzuklicken. \n Wenn Sie das geschafft haben, haben Sie gewonnen. \n Für jeden falschen Klick bekommen Sie einen Punkt (die sind schlecht). \n Viel Glück! \n "+"für ein einzelnes Level: Geben Sie ein Level zwischen 1 und 10 ein,\nwählen Sie leicht oder schwer, und drücken Sie dann Start.");
 	//instructM.setEditable(false);
 	//instructW.setEditable(false);
 	//instructM.setLineWrap(true);
 	//instructW.setWrapStyleWord(true);
-	public GameM(){
-		frame.setSize(500,300);
-		frame.setLocation(500,300);
-		frame.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public GameM(JPanel content, String lektion){
+		this.content = content;
+		EventQueue.invokeLater(()->{
 		start_screen.setLayout(new BorderLayout());
 		menu.setLayout(new FlowLayout(FlowLayout.CENTER));
 		menu2.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -73,6 +79,7 @@ public class GameM implements ActionListener{
 		menu.add(text);
 		mini.add(inst, BorderLayout.SOUTH);
 		
+		this.lesson = lektion;
 		
 		start.addActionListener(this);
 		start.setEnabled(true);
@@ -82,33 +89,49 @@ public class GameM implements ActionListener{
 		menu2.add(over);
 		inst.addActionListener(this);
 		inst.setEnabled(true);
+		vocabGerman = new ArrayList<String>();
+		vocabLatin = new ArrayList<String>();
 		
-		
-		frame.add(start_screen, BorderLayout.CENTER);
-		frame.setVisible(true);
-	}	
-	public void setUpGame(int x,Boolean what){
+		content.add(start_screen, BorderLayout.CENTER);
+	});
+}	
+
+	public void fillData(int vocabCount){
+		for (int i = 0; i < vocabCount; i++) {
+			vocabGerman.add(VocabParser.getVocabsFromLesson(lesson).get(i).getGerman().get(0));
+			vocabLatin.add(VocabParser.getVocabsFromLesson(lesson).get(i).getBasicForm());
+		}
+	}
+	
+	public void setUpGame(int x){
+
+		if (x > VocabParser.getVocabsFromLesson(lesson).size()){
+			x = VocabParser.getVocabsFromLesson(lesson).size();
+		}
+
+		btn = new JButton[x*2];
 		level=x;
 		clearMain();
+		boardQ = new int[x*2];
+		fillData(x);
 		
 		board = new String[2*x];
 		for(int i=0;i<(x*2);i++){
 			btn[i] = new JButton("");
-			btn[i].setBackground(new Color(250, 250, 250));
+			btn[i].setBackground(Main.defaultButton);
+			btn[i].setForeground(Main.TextColor);
 			btn[i].addActionListener(this);
 			btn[i].setEnabled(true);
 			field.add(btn[i]);
-		
+			
 		}
-
-
-
-
-
+		
 
 		 
 		//lesson
-		String[]Inhalt = {"a","b","c","d","e","f","g","h","i","j"};//harder version
+		//for(int i=0;i<x/2;i++){
+		//	String[]Inhalt = {vocabGerman.get(i),vocabLatin.get(i)};
+		//}
 
 	//	for(int vokabelindex=0;vokabelindex<(Abfrageanzahl);vokabelindex++){
 			
@@ -116,18 +139,30 @@ public class GameM implements ActionListener{
 		
 	//	}
 
-		for(int i=0;i<x;i++){
-			for(int z=0;z<2;z++){
-				while(true){	
-					int y = randomGenerator.nextInt(x*2);
-					if(board[y]==null){
-						btn[y].setText(Inhalt[i]);
-						board[y]=Inhalt[i];
-						break;
-					}
-				}
+	for (int i = 0; i < x; i++) {
+		boolean placed = false;
+		while (!placed) {
+			int y = randomGenerator.nextInt(2*x);
+			int y2 = randomGenerator.nextInt(2*x); // Assuming y2 is properly defined
+			if (board[y] == null && board[y2] == null && y != y2) {
+				btn[y].setText(vocabGerman.get(i));
+				board[y] = vocabGerman.get(i);
+				boardQ[y] = i;
+				btn[y2].setText(vocabLatin.get(i));
+				board[y2] = vocabLatin.get(i);
+				boardQ[y2] = i;
+				placed = true; // Set placed to true to exit the while loop
 			}
 		}
+	}
+		// while(true){	
+			// 	int y = randomGenerator.nextInt(x);
+			// 	if(board[y]==null){
+			// 		btn[y].setText(vocabLatin.get(i));
+			// 		board[y]=vocabLatin.get(i);
+			// 		break;
+			// 	}
+			// }
 
 		createBoard();
 		
@@ -184,7 +219,7 @@ public class GameM implements ActionListener{
 			goBack.addActionListener(this);
 	}
 	public void goToMainScreen(){
-		new GameM();
+		new GameM(content, lesson);
 	}
 	public void createBoard(){//this is just gui stuff to show the board
 		field.setLayout(new BorderLayout());
@@ -218,7 +253,7 @@ public void actionPerformed(ActionEvent click){
 			} catch (Exception e){
 				level=1;
 			}
-			setUpGame(level, eh);//level between 1 and 2, eh is true or false
+			setUpGame(level);//level between 1 and 2, eh is true or false
 		}
 		if(source==over){//quits
 			System.exit(0);
@@ -242,7 +277,7 @@ public void actionPerformed(ActionEvent click){
 			goBack.setEnabled(true);
 		}
 		if(source==goBack){//back to main screen
-		    frame.dispose();  
+		    
 		    goToMainScreen();
 		}
 		
@@ -263,7 +298,7 @@ public void actionPerformed(ActionEvent click){
 					if(temp>=(level*2)){
 						temp=i;
 					} else {
-						if((board[temp]!=board[i])||(temp==i)){
+						if((boardQ[temp]!=boardQ[i])||(temp==i)){
 							temp2=i;
 							purgatory=true;
 						} else {
@@ -284,9 +319,6 @@ public void actionPerformed(ActionEvent click){
 
 
 
-	}
-	public static void main(String[] args) {
-		new GameM();// Calling the class construtor.
 	}
 }
 	
