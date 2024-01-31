@@ -124,7 +124,7 @@ public class Main {
     }
     public void newLibraryMenu() {
         newUI();
-        new LibraryView(contentPane);
+        new LibraryView(contentPane, this);
         repaint();
     }
     public void newGamesMenu() {

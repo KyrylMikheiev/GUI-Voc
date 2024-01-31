@@ -277,18 +277,11 @@ public void actionPerformed(ActionEvent click){
 			goBack.setEnabled(true);
 		}
 		if(source==goBack){//back to main screen
-		    
-		    goToMainScreen();
+			
+			goToMainScreen();
 		}
 		
 		
-
-
-
-
-
-
-
 		for(int i =0;i<(level*2);i++){//gameplay when a button is pressed
 			if(source==btn[i]){
 				if(shown){
@@ -312,13 +305,5 @@ public void actionPerformed(ActionEvent click){
 			}
 		}
 
-
-
-
-
-
-
-
 	}
 }
-	
