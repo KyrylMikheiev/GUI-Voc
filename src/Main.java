@@ -177,6 +177,11 @@ public class Main {
         new MemorySelection(contentPane, this);
         repaint();
     }
+    public void newSearchView() {
+        newUI();
+        new SearchView(contentPane, this);
+        repaint();
+    }
 
     public JFrame getFrame() {
         return frame;
