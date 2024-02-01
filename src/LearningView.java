@@ -4,7 +4,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-import VocabParsing.Vocab;
 import VocabParsing.VocabParser;
 
 public class LearningView {
@@ -177,6 +176,11 @@ public class LearningView {
     private void updateProgressBar() {
         int progress = (currentVocabIndex + 1) * 100 / VocabParser.getVocabsFromLesson(lektion).size();
         progressBar.setValue(progress);
+        if (progress == 100) {
+            // lesson finished, upload data
+            uploadData();
+            showFinishedScreen();
+        }
     }
     private void updateFlashcard() {
         if (isFront) {
@@ -204,5 +208,12 @@ public class LearningView {
             return false;
         }
         return true;
+    }
+    private void showFinishedScreen() {
+        // show finished screen
+        // show right/all ratio
+        // show wrong vocabs
+        // show button to go to start screen
+        // show button to re-learn wrong vocabs
     }
 }
