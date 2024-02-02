@@ -39,7 +39,7 @@ public class Credits {
         //apply margin to everything
         JLabel[] labels = {title, people, icons, flaticons};
         for (JLabel label : labels) {
-            label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            label.setBorder(new ResponsiveBorder(10, 10, 10, 10));
         }
 
         bodyPanel.add(title);

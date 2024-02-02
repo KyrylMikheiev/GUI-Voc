@@ -28,7 +28,7 @@ public class MainMenu {
         
         JPanel body_contentLeft = new JPanel();
         body_contentLeft.setOpaque(false);
-        body_contentLeft.setBorder(BorderFactory.createEmptyBorder(100, 80, 100, 80));       
+        body_contentLeft.setBorder(new ResponsiveBorder(100, 80, 100, 80));       
         body_contentLeft.setLayout(new GridLayout(4, 1, 0, main.getFrame().getHeight() / 30));
         body_contentLeft.setLayout(new GridLayout(6, 1, 0, 15));
         
@@ -109,7 +109,7 @@ public class MainMenu {
         
         JPanel bodyPanel_contentRight = new JPanel();
         bodyPanel_contentRight.setOpaque(false);
-        bodyPanel_contentRight.setBorder(BorderFactory.createEmptyBorder(100, 30, 100, 80));
+        bodyPanel_contentRight.setBorder(new ResponsiveBorder(100, 30, 100, 80));
         bodyPanel_contentRight.setLayout(new BorderLayout());
 
         JPanel textAreaPanel = new JPanel();
@@ -120,7 +120,7 @@ public class MainMenu {
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
         textArea.setEditable(true);
-        textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        textArea.setBorder(new ResponsiveBorder(10, 10, 10, 10));
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 25));
         textArea.setForeground(Main.TextColor);
         textArea.setText("Hallo!");

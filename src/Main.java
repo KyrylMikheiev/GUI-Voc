@@ -2,7 +2,6 @@ package src;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -25,6 +24,7 @@ public class Main {
     public static Color hoverButton = Color.decode("#4255ff");
     public static Color clickButton = Color.decode("#2f3990");
     public static Color BodyColor = Color.decode("#111827");
+    public static Color SecondBodyColor = Color.decode("#1f2937");
     public static Color TextColor = Color.decode("#f9fafb");
     private JFrame frame;
     private JPanel contentPane;
@@ -72,7 +72,7 @@ public class Main {
 
         // UI Content Pane
         contentPane = new JPanel(new BorderLayout());
-        contentPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        //contentPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
