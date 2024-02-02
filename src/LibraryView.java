@@ -1,5 +1,6 @@
 package src;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 import VocabParsing.VocabParser;
 import VocabParsing.Vocab;
@@ -38,31 +40,33 @@ public class LibraryView {
             }
         });
 
-        //set up stuff
+        // set up stuff
         JPanel vocabPanel = new JPanel();
         vocabPanel.setLayout(new GridLayout(0, 1, 0, 10));
         vocabPanel.setBackground(Main.BodyColor);
 
-        //put all lesson titles and the vocabs of it into a scrollable panel
-        for (String lesson: lessons) {
+        // put all lesson titles and the vocabs of it into a scrollable panel
+        for (String lesson : lessons) {
             JLabel title = new JLabel("Lektion " + lesson);
             title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
             title.setForeground(Main.TextColor);
             vocabPanel.add(title);
-            for (Vocab i: VocabParser.getVocabsFromLesson(lesson)) {
-                JButton vocab = new JButton(i.getBasicForm() + " - " + i.getGerman().toString().replace("[", "").replace("]", "")); 
+            for (Vocab i : VocabParser.getVocabsFromLesson(lesson)) {
+                JButton vocab = new JButton(i.getBasicForm() + " - " + i.getGerman().toString().replace("[", "").replace("]", ""));
                 vocab.setBackground(Main.defaultButton);
                 vocab.setForeground(Main.TextColor);
+                vocab.setHorizontalAlignment(SwingConstants.LEFT); // Set text alignment to left
                 vocab.addActionListener(e -> main.newVocabView(i));
-                vocabPanel.add(vocab);
+                vocabPanel.add(vocab); // No need for BorderLayout.EAST
             }
         }
         bodyPanel.add(vocabPanel);
 
-        //scroll stuff
+        // scroll stuff
         FasterScrollPane scrollPane = new FasterScrollPane(vocabPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         bodyPanel.add(scrollPane);
+
 
         content.add(bodyPanel);
     }

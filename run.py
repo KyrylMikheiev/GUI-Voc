@@ -8,11 +8,11 @@ def delete():
 
 def compile():
     delete()
-    os.system('javac -cp ".;.\src\mysql-connector-j-8.3.0.jar" src/Main.java')
+    os.system('javac src/Main.java')
 
 def run():
     compile()
-    os.system('java -cp ".;.\src\mysql-connector-j-8.3.0.jar" src.Main')
+    os.system('java src.Main')
 
 if __name__ == "__main__":
     run()
