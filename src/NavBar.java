@@ -25,7 +25,7 @@ public class NavBar {
         //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
-        navigation_contentLeft.setBorder(new ResponsiveBorder(9, 0, 9, 30)); // adjustment for appname
+        navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 0, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
 
@@ -62,7 +62,7 @@ public class NavBar {
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
         navigation_contentMiddle.setLayout(new BorderLayout());
-        navigation_contentMiddle.setBorder(new ResponsiveBorder(10, 0, 10, 0));
+        navigation_contentMiddle.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         navigation_contentMiddle.setOpaque(false);
         navigation_contentMiddle.setBackground(Color.RED);
 
@@ -85,7 +85,7 @@ public class NavBar {
         searchImage = searchImage.getScaledInstance(25, 20, Image.SCALE_SMOOTH);
         searchIcon = new ImageIcon(searchImage);
         searchLabel.setIcon(searchIcon);
-        searchLabel.setBorder(new ResponsiveBorder(0, 10, 0, 0));
+        searchLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
         searchBar.add(searchLabel, BorderLayout.WEST);
         searchBar.add(textArea, BorderLayout.CENTER);
