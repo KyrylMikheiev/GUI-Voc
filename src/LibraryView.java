@@ -2,8 +2,8 @@ package src;
 
 import javax.swing.*;
 
-import VocabParsing.Vocab;
-import VocabParsing.VocabParser;
+import VocabAPI.Vocab;
+import VocabAPI.VocabParser;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,6 @@ public class LibraryView {
     private int currentIndex;
     private ArrayList<JButton> vocabButtons = new ArrayList<>();
     private JPanel bodyPanel;
-   
 
 
     
@@ -53,7 +52,7 @@ public class LibraryView {
             bodyPanel.repaint();
 
             bodyPanel.add(scrollbar);
-     
+
         updateLessonPanel(bodyPanel, main);
         content.add(bodyPanel);
     }
@@ -115,7 +114,6 @@ public class LibraryView {
         });
         
         
-       
         JPanel vocabButtonsPanel = createVocabButtonsPanel(main);
         bodyPanel.add(vocabButtonsPanel);
 

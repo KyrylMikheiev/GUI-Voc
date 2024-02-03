@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-import VocabParsing.VocabParser;
+import VocabAPI.VocabParser;
 
 public class LearningView {
     private JPanel content;
@@ -33,7 +33,7 @@ public class LearningView {
     }
 
     private void setupUI() {
-          
+        
         //------------------------------------------------------------
         //----------------start of "bodyPanel_contentUp"----------------
         //------------------------------------------------------------
@@ -98,7 +98,7 @@ public class LearningView {
         
         lessonNumberPanel.add(lessonNumber);
         //--------------end of lessonNumberPanel----------------
-         
+        
         
         //--------------From "contentUp_LessonAndProgressBar": 
         //              progressBarPanel

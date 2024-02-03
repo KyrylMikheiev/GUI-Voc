@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import VocabParsing.Vocab;
+import VocabAPI.Vocab;
 import minigames.GameM;
 
 import java.awt.BorderLayout;

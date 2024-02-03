@@ -3,12 +3,13 @@ package minigames;
 
 import javax.swing.*;
 
-import VocabParsing.VocabParser;
+import VocabAPI.VocabParser;
+
 import src.Main;
 
 import java.awt.*;
 import java.awt.event.*;
-//import java.io.*;
+
 import java.util.*;
 //btn1.setBackground(colors[index]
 public class GameM implements ActionListener{ 

@@ -11,8 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import VocabParsing.Vocab;
-import VocabParsing.VocabParser;
+
+import VocabAPI.Vocab;
+import VocabAPI.VocabParser;
 
 
 public class LearningSelection {
