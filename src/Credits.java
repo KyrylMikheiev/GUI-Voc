@@ -16,9 +16,10 @@ public class Credits {
         title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         title.setForeground(Main.TextColor);
         
-        JLabel people = new JLabel("Jonah Emme, Adrian Steyer, Kyryl Mikheiev");
+        JLabel people = new JLabel("Kyryl Mikheiev, Jonah Emme, Adrian Steyer");
         people.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         people.setForeground(Main.TextColor);
+        
         
         JLabel icons = new JLabel("Icons von Flaticon:");
         icons.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
