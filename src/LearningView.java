@@ -33,25 +33,83 @@ public class LearningView {
     }
 
     private void setupUI() {
-        content.setLayout(new BorderLayout());
-        content.setBackground(Main.BodyColor);
+          
+        //------------------------------------------------------------
+        //----------------start of "bodyPanel_contentUp"----------------
+        //------------------------------------------------------------
+        //      2 inhirated objects: 
+        //          1) contentUp_ProgressText;
+        //          2) contentUp_LessonAndProgressBar 
+        //------------------------------------------------------------- 
+        JPanel bodyPanel_contentUp = new JPanel();
+        bodyPanel_contentUp.setLayout(new GridLayout(2, 1));
+        bodyPanel_contentUp.setBackground(Main.BodyColor);
+        bodyPanel_contentUp.setOpaque(false);
+        
 
-        JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new BorderLayout());
-        bodyPanel.setBackground(Main.BodyColor);
+        //--------------from "bodyPanel_contentUp":
+        //              contentUp_ProgressText
+        //
+        //              1 inhirated object:
+        //                  1) progress
+        //---------------------------------------------------
+        JPanel contentUp_ProgressText = new JPanel();
+        contentUp_ProgressText.setOpaque(false);   
 
-        JPanel contentUp = new JPanel(new GridLayout(2, 1));
-        contentUp.setOpaque(false);
-
+        //progress  
         JLabel progress = new JLabel("Progress:");
-        progress.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
+        progress.setFont(new Font(Font.SANS_SERIF, 0, 28));
         progress.setForeground(Main.TextColor);
+        //end of progress
 
-        JLabel lessonNumber = new JLabel("Lektion: " + lektion);
-        lessonNumber.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
+        contentUp_ProgressText.add(progress);
+        //-----------end of contentUp_ProgressText----------------
+        
+        
+
+        //--------------from "bodyPanel_contentUp":
+        //              contentUp_LessonAndProgressBar
+        //
+        //            3 inhirated objects: 
+        //              1) lessonNumberPanel; 
+        //              2) progressBarPanel; 
+        //              3) amountFailsPanel
+        //-------------------------------------------------------------------------
+        JPanel contentUp_LessonAndProgressBar = new JPanel();    
+        contentUp_LessonAndProgressBar.setOpaque(false);         
+        contentUp_LessonAndProgressBar.setLayout(new GridLayout(1, 3));
+        
+        //---------------From "contentUp_LessonAndProgressBar": 
+        //           lessonNumberPanel
+        //
+        //           1 inhirated object: 
+        //              1) lessonNumber
+
+        JPanel lessonNumberPanel = new JPanel();
+        lessonNumberPanel.setOpaque(false);
+        lessonNumberPanel.setLayout(new GridLayout());
+        
+        //lessonNumber
+        JLabel lessonNumber = new JLabel("Lektion "+ lektion);
+        lessonNumber.setFont(new Font(Font.SANS_SERIF, 0, 28));
         lessonNumber.setHorizontalAlignment(JLabel.CENTER);
         lessonNumber.setForeground(Main.TextColor);
-
+        //end of lessonNumber
+        
+        lessonNumberPanel.add(lessonNumber);
+        //--------------end of lessonNumberPanel----------------
+         
+        
+        //--------------From "contentUp_LessonAndProgressBar": 
+        //              progressBarPanel
+        //
+        //           1 inhirated object: 
+        //              1) progressBar
+        JPanel progressBarPanel = new JPanel();
+        progressBarPanel.setLayout(new GridLayout());
+        progressBarPanel.setOpaque(false);
+        
+        //progressBar
         progressBar = new JProgressBar();
         progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         progressBar.setOpaque(false);
@@ -61,83 +119,194 @@ public class LearningView {
         progressBar.setMaximum(100);
         progressBar.setValue(0);
         progressBar.setForeground(Color.WHITE);
+        //end of progressBar
+        
+        progressBarPanel.add(progressBar);
+        //--------------end of progressBarPanel----------------
+        
 
-        JButton info = new JButton("Vokabel anzeigen");
-        info.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                main.newVocabView(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex));
+        
+        //--------------From "contentUp_LessonAndProgressBar": 
+        //              amountFailsPanel
+        //----------------------------------------
+        JPanel amountFailsPanel = new JPanel();
+        amountFailsPanel.setOpaque(false);
+        //end of amountFailsPanel
+        
+        contentUp_LessonAndProgressBar.add(lessonNumberPanel);
+        contentUp_LessonAndProgressBar.add(progressBarPanel);
+        contentUp_LessonAndProgressBar.add(amountFailsPanel);
+        //--------------end of contentUp_LessonAndProgressBar----------------
+        
+        bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);    
+        bodyPanel_contentUp.add(contentUp_ProgressText);
+        
+        //--------------end of bodyPanel_contentUp-------------------
+        
+        
+
+
+
+
+
+        
+        //--------------center panels----------------
+        JPanel crossPanel = new JPanel();
+        JPanel flashcardPanel = new JPanel();
+        JPanel checkmarkPanel = new JPanel();
+        
+        crossPanel.setOpaque(false);
+        checkmarkPanel.setOpaque(false);
+        flashcardPanel.setOpaque(false);
+        
+        crossPanel.setLayout(new BorderLayout());
+        flashcardPanel.setLayout(new BorderLayout());
+        checkmarkPanel.setLayout(new BorderLayout());
+
+        JLabel backArrowLabel = new JLabel("Eine Aktion zurück");
+        backArrowLabel.setFont(new Font(Font.SANS_SERIF, 0, 18));
+        backArrowLabel.setForeground(Main.TextColor);
+
+        JPanel backArrowPanel = new JPanel();
+        backArrowPanel.setOpaque(false);
+        backArrowPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 0));
+        backArrowPanel.setLayout(new BorderLayout(20, 0));
+
+        //---------------backArrowButton---------------
+        JPanel backArrowButtonPanel = new JPanel(); 
+        backArrowButtonPanel.setOpaque(false);
+        backArrowButtonPanel.setLayout(new BorderLayout());
+        backArrowButtonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
+
+        JButton backArrowButton = new JButton();
+        backArrowButton.setBorder(null);
+        backArrowButton.setBorder(BorderFactory.createEmptyBorder(200, 0, 200, 0));
+        backArrowButton.setContentAreaFilled(false);
+        backArrowButton.setFocusPainted(false);
+        backArrowButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                showPreviousVocab();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backArrowButton.setContentAreaFilled(true);
+                backArrowButton.setBackground(Main.hoverButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backArrowButton.setContentAreaFilled(false);
             }
         });
+        Image image = new ImageIcon("./resources/images/arrow.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        backArrowButton.setIcon(new ImageIcon(image)); 
+        backArrowButtonPanel.add(backArrowButton, BorderLayout.CENTER);
+        backArrowPanel.add(backArrowLabel, BorderLayout.CENTER);
+        backArrowPanel.add(backArrowButtonPanel, BorderLayout.WEST);
 
-        JPanel lessonAndProgressPanel = new JPanel(new GridLayout(1, 3));
-        lessonAndProgressPanel.setOpaque(false);
-        lessonAndProgressPanel.add(lessonNumber);
-        lessonAndProgressPanel.add(progressBar);
-        lessonAndProgressPanel.add(new JPanel()); // Empty panel for amount fails
-        lessonAndProgressPanel.add(info);
+        JButton cross = new JButton();
+        Image crossImage = new ImageIcon("./resources/images/close.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        cross.setIcon(new ImageIcon(crossImage));
+        cross.setBorder(null);
+        cross.setContentAreaFilled(false);
+        cross.setFocusPainted(false);
+        cross.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    falseVocab();
+                }
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    cross.setContentAreaFilled(true);
+                    cross.setBackground(Main.hoverButton);
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    cross.setContentAreaFilled(false);
+                }
+        });
+        crossPanel.add(cross, BorderLayout.CENTER);
 
-        contentUp.add(progress);
-        contentUp.add(lessonAndProgressPanel);
 
-        JPanel contentDown = new JPanel(new GridLayout(1, 3));
-        contentDown.setBackground(Main.BodyColor);
 
-        JPanel flashcardPanel = new JPanel(new BorderLayout());
-        flashcardPanel.setBackground(Main.BodyColor);
+        //----adding to leftPanel_Center
 
-        JPanel flashcardContainer = new JPanel(new BorderLayout());
-        flashcardContainer.setBackground(Main.BodyColor);
-        flashcardContainer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        phrase = new JLabel();
+        
+        phrase = new JLabel("Phrase");
         phrase.setForeground(Main.TextColor);
-        phrase.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
-        phrase.setHorizontalAlignment(JLabel.CENTER);
+        phrase.setFont(new Font(Font.SANS_SERIF, 0, 28));
 
-        flashcardContainer.add(phrase, BorderLayout.CENTER);
-        flashcardPanel.add(flashcardContainer, BorderLayout.CENTER);
-
-        JButton flipButton = new JButton("Flip");
-        flipButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        JPanel flashcard = new JPanel();
+        flashcard.add(phrase);
+        flashcard.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 flipFlashcard();
             }
         });
-
-        JButton prevButton = new JButton("false");
-        prevButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                falseVocab();
-            }
+        flashcard.setBackground(Main.defaultButton);
+        flashcardPanel.add(flashcard, BorderLayout.CENTER);
+        
+        checkmarkPanel.setLayout(new BorderLayout());
+        JButton checkmark = new JButton();
+        Image checkmarkImage = new ImageIcon("./resources/images/checkmark.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        checkmark.setIcon(new ImageIcon(checkmarkImage));
+        checkmark.setBorder(null);
+        checkmark.setContentAreaFilled(false);
+        checkmark.setFocusPainted(false);
+        checkmark.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    trueVocab();
+                }  
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    checkmark.setContentAreaFilled(true);
+                    checkmark.setBackground(Main.hoverButton);
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    checkmark.setContentAreaFilled(false);
+                }
         });
+        checkmarkPanel.add(checkmark, BorderLayout.CENTER);
 
-        JButton nextButton = new JButton("true");
-        nextButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                trueVocab();
-            }
-        });
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showPreviousVocab();
-            }
-        });
+        JPanel bodyPanel_contentDown = new JPanel();
+        bodyPanel_contentDown.setBackground(Main.BodyColor);
+        bodyPanel_contentDown.setLayout(new BorderLayout()); 
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(1, 3));
-        buttonsPanel.setBackground(Main.BodyColor);
-        buttonsPanel.add(prevButton);
-        buttonsPanel.add(flipButton);
-        buttonsPanel.add(nextButton);
-        bodyPanel.add(buttonsPanel, BorderLayout.SOUTH);
+        JPanel contentDown_center = new JPanel();
+        contentDown_center.setOpaque(false);
+        contentDown_center.setLayout(new GridLayout(1, 3));
+        contentDown_center.add(crossPanel);
+        contentDown_center.add(flashcardPanel);
+        contentDown_center.add(checkmarkPanel);
 
-        contentDown.add(new JPanel());
-        contentDown.add(flashcardPanel);
-        contentDown.add(new JPanel());
+        JPanel emptyPanelSouth = new JPanel();
+        emptyPanelSouth.setOpaque(false);
+        emptyPanelSouth.setPreferredSize(new Dimension(200, 90)); 
 
-        bodyPanel.add(contentUp, BorderLayout.NORTH);
-        bodyPanel.add(contentDown, BorderLayout.CENTER);
+        JPanel emptyPanelNorth = new JPanel();
+        emptyPanelNorth.setOpaque(false);
+        emptyPanelNorth.setPreferredSize(new Dimension(200, 70));
+        emptyPanelNorth.setLayout(new BorderLayout());
+        emptyPanelNorth.add(backArrowPanel, BorderLayout.WEST);
 
+
+        bodyPanel_contentDown.add(emptyPanelNorth, BorderLayout.NORTH);
+        bodyPanel_contentDown.add(contentDown_center, BorderLayout.CENTER);
+        bodyPanel_contentDown.add(emptyPanelSouth, BorderLayout.SOUTH);
+
+        JPanel bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.setBackground(Main.BodyColor);
+        bodyPanel.add(bodyPanel_contentUp, BorderLayout.NORTH);
+        bodyPanel.add(bodyPanel_contentDown, BorderLayout.CENTER);
+
+        
         content.add(bodyPanel, BorderLayout.CENTER);
     }
 
