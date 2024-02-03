@@ -138,8 +138,8 @@ public class LearningView {
         contentUp_LessonAndProgressBar.add(amountFailsPanel);
         //--------------end of contentUp_LessonAndProgressBar----------------
         
-        bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);    
         bodyPanel_contentUp.add(contentUp_ProgressText);
+        bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);    
         
         //--------------end of bodyPanel_contentUp-------------------
         
