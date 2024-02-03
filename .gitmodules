@@ -1,0 +1,3 @@
+[submodule "LatinVocabParser"]
+	path = LatinVocabParser
+	url = https://github.com/Jonah987654321/LatinVocabParser
