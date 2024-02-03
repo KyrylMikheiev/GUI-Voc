@@ -320,14 +320,14 @@ public class LearningView {
             currentVocabIndex--;
             updateFlashcard();
             updateProgressBar();
-        }
-        isFront = true;
-        //try to remove the vocab from wrongVocabs/rightVocabs
-        if (wrongVocabs.contains(currentVocabIndex)) {
-            wrongVocabs.remove(currentVocabIndex);
-        }
-        if (rightVocabs.contains(currentVocabIndex)) {
-            rightVocabs.remove(currentVocabIndex);
+
+            isFront = true;
+            //try to remove the vocab from wrongVocabs/rightVocabs
+            if (wrongVocabs.indexOf(currentVocabIndex + 1) != -1) 
+                wrongVocabs.remove(wrongVocabs.indexOf(currentVocabIndex + 1));
+            if (rightVocabs.indexOf(currentVocabIndex + 1) != -1) 
+                rightVocabs.remove(rightVocabs.indexOf(currentVocabIndex + 1));
+
         }
     }
 
@@ -343,7 +343,7 @@ public class LearningView {
     }
 
     private void updateProgressBar() {
-        int progress = (currentVocabIndex + 1) * 100 / VocabParser.getVocabsFromLesson(lektion).size();
+        int progress = (currentVocabIndex) * 100 / (VocabParser.getVocabsFromLesson(lektion).size() - 1);
         progressBar.setValue(progress);
         if (progress == 100) {
             // lesson finished, upload data
