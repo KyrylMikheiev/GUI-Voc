@@ -48,7 +48,7 @@ public class LearningSelection {
         });
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Main.BodyColor);
-        buttonPanel.setLayout(new GridLayout(0, 1, 0, 10));
+        buttonPanel.setLayout(new GridLayout(4, 1, 10, 10));
         //create buttons for each lesson
         for (String lesson: lessons) {
             JButton button = new JButton("Lektion " + lesson);

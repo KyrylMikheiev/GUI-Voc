@@ -150,17 +150,17 @@ public class LearningView {
 
 
         
-        //--------------center panels----------------
+        
         JPanel crossPanel = new JPanel();
-        JPanel flashcardPanel = new JPanel();
-        JPanel checkmarkPanel = new JPanel();
-        
         crossPanel.setOpaque(false);
-        checkmarkPanel.setOpaque(false);
-        flashcardPanel.setOpaque(false);
-        
         crossPanel.setLayout(new BorderLayout());
+        
+        JPanel flashcardPanel = new JPanel();
+        flashcardPanel.setOpaque(false);
         flashcardPanel.setLayout(new BorderLayout());
+
+        JPanel checkmarkPanel = new JPanel();      
+        checkmarkPanel.setOpaque(false);
         checkmarkPanel.setLayout(new BorderLayout());
 
         JLabel backArrowLabel = new JLabel("Eine Aktion zurück");

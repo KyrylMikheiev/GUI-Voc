@@ -3,6 +3,7 @@ package src;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -119,11 +120,11 @@ public class MainMenu {
 
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
-        textArea.setEditable(true);
+        textArea.setEditable(false);
         textArea.setBorder(new ResponsiveBorder(10, 10, 10, 10));
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 25));
         textArea.setForeground(Main.TextColor);
-        textArea.setText("Hallo!");
+        textArea.setText("Hier kommt die Erklärung für jede Button und\ndas Widget Fenster zu");
 
         textAreaPanel.add(textArea, BorderLayout.CENTER);
         bodyPanel_contentRight.add(textAreaPanel, BorderLayout.CENTER);
