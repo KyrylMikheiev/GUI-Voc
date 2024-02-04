@@ -10,7 +10,7 @@ try:
     )
 
     if connection.is_connected():
-        print("Connected to MySQL database")
+        print("Connected to MySQL database") #KKKKKK
 
     # Create a cursor object
     cursor = connection.cursor()
