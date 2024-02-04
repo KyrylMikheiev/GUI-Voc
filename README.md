@@ -9,6 +9,7 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
 - [ ] database
   - [ ] add mainMenuWidget (integer) column to users db
   - [ ] add daily login streak logger thing
+  - [ ] bind tokens to MAC address (provided by connector during login and verify)
   - [X] rest api
     - [X] register
     - [X] verify
@@ -23,8 +24,10 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
     - [X] register
     - [X] login
       - [ ] save token to file
+      - [ ] send MAC address
     - [X] verify
       - [ ] save token to file
+      - [ ] send MAC address
     - [X] delete account
     - [ ] updateUserVocabStats
     - [ ] forgotPasswd

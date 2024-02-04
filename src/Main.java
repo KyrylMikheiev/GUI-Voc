@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -132,11 +133,11 @@ public class Main {
         new GameSelection(contentPane, this);
         repaint();
     }
-    public void newTestView(String lektion, int type) {
-        newUI();
-        new Test(contentPane, lektion, type);
-        repaint();
-    }
+    public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2, boolean isCrossVisible3, boolean isCrossVisible4, boolean isCrossVisible5) {
+    newUI();
+    new TestView(contentPane, this , selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5);
+    repaint();
+}
     public void newTextChecker() {
         newUI();
         new TextChecker(contentPane);
@@ -144,7 +145,7 @@ public class Main {
     }
     public void newTestSelection() {
         newUI();
-        new TestSelection(contentPane);
+        new TestSelection(contentPane, this);
         repaint();
     }
     public void newCredits(JPanel content) {
