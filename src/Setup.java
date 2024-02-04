@@ -53,20 +53,22 @@ public class Setup {
 
     private String token = "";
 
-    public String startRegistration(JPanel content) {
+    public String startRegistration(JPanel content, Main main) {
         contentPanel = content;
         bodyPanel = new JPanel();
         contentPanel.add(bodyPanel);
         
         designSelect();
+        // main.newMainMenu();
         return token;
     }
-    public String startLogin(JPanel content) {
+    public String startLogin(JPanel content, Main main) {
         contentPanel = content;
         bodyPanel = new JPanel();
         contentPanel.add(bodyPanel);
 
         login();
+        // main.newMainMenu();
         return token;
     }
 
@@ -270,17 +272,5 @@ public class Setup {
         } else {
             System.out.println("Account creation failed.");
         }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        JFrame frame = new JFrame("Login Page");
-        JPanel contentPane = new JPanel();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(contentPane);
-        frame.setSize(400, 300);
-        frame.setVisible(true);
-
-        System.out.println(new Setup().startLogin(contentPane));
     }
 }
