@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
@@ -63,181 +62,158 @@ public class TestSelection extends JPanel {
     
         // Erstelle und füge vier separate Buttons hinzu
 
-        JButton button1 = new JButton("");
-        button1.setPreferredSize(new Dimension(50, 50));
-        button1.setBackground(Main.defaultButton);
-        button1.setForeground(Main.TextColor);
-    
-        button1.addActionListener(new ActionListener() {
-          
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isCrossVisible1 = !isCrossVisible1;
-    
-                if (isCrossVisible1) {
-                    // Ändere die Hintergrundfarbe des Buttons auf Weiß
-                    button1.setBackground(Main.defaultButton);
-    
-                    // Zeige das Kreuz auf dem Button
-                    button1.setText("");
-                    button1.setIcon(new ImageIcon(createCrossImage()));
-                } else {
-                    // Setze die Hintergrundfarbe des Buttons zurück
-                    button1.setBackground(Main.defaultButton);
-    
-                    // Entferne das Kreuz vom Button
-                    button1.setText("");
-                    button1.setIcon(null);
-                }
-            }
-        });
+        JCheckBox checkBox1 = new JCheckBox("Alle Übersetzungen abfragen");
 
-        JButton button2 = new JButton("");
-        button2.setPreferredSize(new Dimension(50, 50));
-        button2.setBackground(Main.defaultButton);
-        button2.setForeground(Main.TextColor);
-    
-        button2.addActionListener(new ActionListener() {
-          
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isCrossVisible2 = !isCrossVisible2;
-    
-                if (isCrossVisible2) {
-                    // Ändere die Hintergrundfarbe des Buttons auf Weiß
-                    button2.setBackground(Main.defaultButton);
-    
-                    // Zeige das Kreuz auf dem Button
-                    button2.setText("");
-                    button2.setIcon(new ImageIcon(createCrossImage()));
-                } else {
-                    // Setze die Hintergrundfarbe des Buttons zurück
-                    button2.setBackground(Main.defaultButton);
-    
-                    // Entferne das Kreuz vom Button
-                    button2.setText("");
-                    button2.setIcon(null);
-                }
-            }
-        });
-
-        JButton button3 = new JButton("");
-        button3.setPreferredSize(new Dimension(50, 50));
-        button3.setBackground(Main.defaultButton);
-        button3.setForeground(Main.TextColor);
-    
-        button3.addActionListener(new ActionListener() {
-          
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isCrossVisible3 = !isCrossVisible3;
-    
-                if (isCrossVisible3) {
-                    // Ändere die Hintergrundfarbe des Buttons auf Weiß
-                    button3.setBackground(Main.defaultButton);
-    
-                    // Zeige das Kreuz auf dem Button
-                    button3.setText("");
-                    button3.setIcon(new ImageIcon(createCrossImage()));
-                } else {
-                    // Setze die Hintergrundfarbe des Buttons zurück
-                    button3.setBackground(Main.defaultButton);
-    
-                    // Entferne das Kreuz vom Button
-                    button3.setText("");
-                    button3.setIcon(null);
-                }
-            }
-        });
-
-        JButton button4 = new JButton("");
-        button4.setPreferredSize(new Dimension(50, 50));
-        button4.setBackground(Main.defaultButton);
-        button4.setForeground(Main.TextColor);
-    
-        button4.addActionListener(new ActionListener() {
-          
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isCrossVisible4 = !isCrossVisible4;
-    
-                if (isCrossVisible4) {
-                    // Ändere die Hintergrundfarbe des Buttons auf Weiß
-                    button2.setBackground(Main.defaultButton);
-    
-                    // Zeige das Kreuz auf dem Button
-                    button4.setText("");
-                    button4.setIcon(new ImageIcon(createCrossImage()));
-                } else {
-                    // Setze die Hintergrundfarbe des Buttons zurück
-                    button4.setBackground(Main.defaultButton);
-    
-                    // Entferne das Kreuz vom Button
-                    button4.setText("");
-                    button4.setIcon(null);
-                }
-            }
-        });
-
-        JButton button5 = new JButton("");
-        button5.setPreferredSize(new Dimension(50, 50));
-        button5.setBackground(Main.defaultButton);
-        button5.setForeground(Main.TextColor);
-    
-        button4.addActionListener(new ActionListener() {
-          
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isCrossVisible5 = !isCrossVisible5;
-    
-                if (isCrossVisible5) {
-                    // Ändere die Hintergrundfarbe des Buttons auf Weiß
-                    button5.setBackground(Main.defaultButton);
-    
-                    // Zeige das Kreuz auf dem Button
-                    button5.setText("");
-                    button5.setIcon(new ImageIcon(createCrossImage()));
-                } else {
-                    // Setze die Hintergrundfarbe des Buttons zurück
-                    button5.setBackground(Main.defaultButton);
-    
-                    // Entferne das Kreuz vom Button
-                    button5.setText("");
-                    button5.setIcon(null);
-                }
-            }
-        });
+        checkBox1.setPreferredSize(new Dimension(1000, 50));
+        checkBox1.setBackground(Main.BodyColor);
 
 
-      
-
-        JLabel label1 = new JLabel("Alle Übersetzungen abfragen");
-        label1.setForeground(Main.TextColor);
-        label1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
-
-        JLabel label2 = new JLabel("Reihenfologe der eingegebenen Übersetzungen ignorieren");
-        label2.setForeground(Main.TextColor);
-        label2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
-
-        JLabel label3 = new JLabel("Stamm formen von Verben abfragen");
-        label3.setForeground(Main.TextColor);
-        label3.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
-
-        JLabel label4 = new JLabel("zufällige Deklination abfragen");
-        label4.setForeground(Main.TextColor);
-        label4.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
-
-        JLabel label5 = new JLabel("zufällige Kunjugationen abfragen");
-        label5.setForeground(Main.TextColor);
-        label5.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+// Ändere die Schriftgröße, um die Größe der JCheckBox zu beeinflussen
+Font checkBoxFont1 = checkBox1.getFont();
+checkBox1.setFont(new Font(checkBoxFont1.getName(), checkBoxFont1.getStyle(), 20));  // 20 ist die gewünschte Schriftg
+checkBox1.setForeground(Main.TextColor);
 
        
+    
+        checkBox1.addActionListener(new ActionListener() {
+          
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox1.isSelected()) {
+                    checkBox1.setBackground((Main.BodyColor));
+                    isCrossVisible1 = true;
+        
+        
+                } else {
+                    checkBox1.setIcon(null);  // Entferne das Icon
+                    isCrossVisible1 = false;
+                    
+                }
+            }
+        });
 
+        JCheckBox  checkBox2 = new JCheckBox("Reihenfolge der eingegebenen Übersetzungen ignorien");
+
+        checkBox2.setPreferredSize(new Dimension(1000, 50));
+        checkBox2.setBackground(Main.BodyColor);
+
+// Ändere die Schriftgröße, um die Größe der JCheckBox zu beeinflussen
+Font checkBoxFont2 = checkBox2.getFont();
+checkBox2.setFont(new Font(checkBoxFont2.getName(), checkBoxFont2.getStyle(), 20));  // 20 ist die gewünschte Schriftg
+
+checkBox2.setForeground(Main.TextColor);
+        
+        checkBox2.addActionListener(new ActionListener() {
+          
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+    
+                if (checkBox2.isSelected()) {
+                    checkBox2.setBackground((Main.BodyColor));
+                    isCrossVisible2 = true;
+        
+        
+                } else {
+                    checkBox2.setIcon(null);  // Entferne das Icon
+                    isCrossVisible2 = false;
+                    
+                }
+            }
+        });
+
+        JCheckBox checkBox3 = new JCheckBox("Stammformen von Verben abfragen");
+        checkBox3.setPreferredSize(new Dimension(1000, 50));
+        checkBox3.setBackground(Main.BodyColor);
+
+// Ändere die Schriftgröße, um die Größe der JCheckBox zu beeinflussen
+Font checkBoxFont3 = checkBox3.getFont();
+checkBox3.setFont(new Font(checkBoxFont3.getName(), checkBoxFont3.getStyle(), 20));  // 20 ist die gewünschte Schriftg
+
+checkBox3.setForeground(Main.TextColor);
+     
+    
+        checkBox3.addActionListener(new ActionListener() {
+          
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+    
+                if (checkBox3.isSelected()) {
+                    checkBox3.setBackground((Main.BodyColor));
+                    isCrossVisible3 = true;
+        
+        
+                } else {
+                    checkBox3.setIcon(null);  // Entferne das Icon
+                    isCrossVisible3 = false;
+                    
+                }
+            }
+        });
+
+        JCheckBox checkBox4 = new JCheckBox("zufällige Deklination abfragen");
+        checkBox4.setPreferredSize(new Dimension(1000, 50));
+        checkBox4.setBackground(Main.BodyColor);
+
+// Ändere die Schriftgröße, um die Größe der JCheckBox zu beeinflussen
+Font checkBoxFont4 = checkBox4.getFont();
+checkBox4.setFont(new Font(checkBoxFont4.getName(), checkBoxFont4.getStyle(), 20));  // 20 ist die gewünschte Schriftg
+checkBox4.setForeground(Main.TextColor);
+    
+        checkBox4.addActionListener(new ActionListener() {
+          
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+    
+                if (checkBox4.isSelected()) {
+                    checkBox4.setBackground((Main.BodyColor));
+                    isCrossVisible4 = true;
+        
+        
+                } else {
+                    checkBox4.setIcon(null);  // Entferne das Icon
+                    isCrossVisible4 = false;
+                    
+                }
+            }
+        });
+
+      
+        JCheckBox checkBox5 = new JCheckBox("zufällige Kunjugationen abfragen");
+        checkBox5.setPreferredSize(new Dimension(1000, 50));
+        checkBox5.setBackground((Main.BodyColor));
+
+Font checkBoxFont5 = checkBox5.getFont();
+checkBox5.setFont(new Font(checkBoxFont5.getName(), checkBoxFont5.getStyle(), 20));  // 20 ist die gewünschte Schriftgröße
+checkBox5.setForeground(Main.TextColor);
+
+checkBox5.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+
+        if (checkBox5.isSelected()) {
+            checkBox5.setBackground((Main.BodyColor));
+            isCrossVisible5 = true;
+
+
+        } else {
+            checkBox5.setIcon(null);  // Entferne das Icon
+            isCrossVisible5 = false;
+            
+        }
+    }
+});
+
+        
+        
+        
 
 
       
@@ -246,58 +222,54 @@ public class TestSelection extends JPanel {
     
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(20, 75, 5, 10);
+        gbc.insets = new Insets(20, 60, 5, 10);
         
         gbc.gridx = 0;
-        buttonsPanel.add(button1, gbc);
+        buttonsPanel.add(checkBox1, gbc);
 
         gbc.gridx = 1;
 
-        buttonsPanel.add(label1, gbc);
+        // buttonsPanel.add(label1, gbc);
         
         
 
         // Setze die gewünschten Positionen für Button 2
         gbc.gridx = 0;
         gbc.gridy = 1;
-        buttonsPanel.add(button2, gbc);
+        buttonsPanel.add(checkBox2, gbc);
 
         gbc.gridx = 1;
 
-        buttonsPanel.add(label2, gbc);
+       //  buttonsPanel.add(label2, gbc);
     
         // Setze die gewünschten Positionen für Button 3
         gbc.gridx = 0;
         gbc.gridy = 2;
-        buttonsPanel.add(button3, gbc);
+        buttonsPanel.add(checkBox3, gbc);
 
 
         gbc.gridx = 1;
-
-        buttonsPanel.add(label3, gbc);
+;
     
         // Setze die gewünschten Positionen für Button 4
         gbc.gridx = 0;
         gbc.gridy = 3;
-        buttonsPanel.add(button4, gbc); 
+        buttonsPanel.add(checkBox4, gbc); 
 
          
         gbc.gridx = 1;
 
-        buttonsPanel.add(label4, gbc);
+       
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        buttonsPanel.add(button5, gbc);
+        buttonsPanel.add(checkBox5, gbc);
          
                          
         gbc.gridx = 1;
 
-        buttonsPanel.add(label5, gbc);
+      
 
-        
-
-     
 
         bodyPanel.add(buttonsPanel, BorderLayout.WEST);
 
@@ -321,69 +293,10 @@ bodyPanel.add(buttonsPanel1, BorderLayout.EAST);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 button6.addActionListener(e -> main.newTestView(selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
         content.add(bodyPanel);
     }
 
-  
-    
-   
-    
-
-    private Image createCrossImage() {
-        // Erstelle ein Bild mit einem roten Kreuz
-        int size = 50;
-        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = image.createGraphics();
-        
-        // Setze die Hintergrundfarbe auf Rot
-        
-    
-        g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(3));
-    
-        // Zeichne das Kreuz auf das Bild
-        g2d.drawLine(5, 5, size - 5, size - 5);
-        g2d.drawLine(size - 5, 5, 5, size - 5);
-        g2d.dispose();
-    
-        return image;
-    }
-
-    
 }

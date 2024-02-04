@@ -318,10 +318,10 @@ public class LearningView {
     private void showPreviousVocab() {
         if (currentVocabIndex > 0) {
             currentVocabIndex--;
+            isFront = true;
             updateFlashcard();
             updateProgressBar();
 
-            isFront = true;
             //try to remove the vocab from wrongVocabs/rightVocabs
             if (wrongVocabs.indexOf(currentVocabIndex + 1) != -1) 
                 wrongVocabs.remove(wrongVocabs.indexOf(currentVocabIndex + 1));
@@ -336,10 +336,10 @@ public class LearningView {
         // and lektion is correctly initialized.
         if (currentVocabIndex < VocabParser.getVocabsFromLesson(lektion).size() - 1) {
             currentVocabIndex++;
+            isFront = true;
             updateFlashcard();
             updateProgressBar();
         }
-        isFront = true;
     }
 
     private void updateProgressBar() {

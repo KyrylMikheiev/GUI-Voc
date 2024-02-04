@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 import VocabAPI.WordTypes.Vocab;
 import VocabAPI.VocabParser;
@@ -61,7 +60,7 @@ public abstract class LessonSelector {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    main.newLearningView(lesson);
+                    execute(lesson);
                 }
             });
             buttonPanel.add(button);

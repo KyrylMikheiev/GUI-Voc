@@ -128,7 +128,7 @@ public class GameM implements ActionListener{
 		}
 		
 
-		 
+		
 		//lesson
 		//for(int i=0;i<x/2;i++){
 		//	String[]Inhalt = {vocabGerman.get(i),vocabLatin.get(i)};
@@ -219,7 +219,8 @@ public class GameM implements ActionListener{
 			goBack.setEnabled(true);
 			goBack.addActionListener(this);
 	}
-	public void goToMainScreen(){
+	public void goToMainScreen() {
+		
 		new GameM(content, lesson);
 	}
 	public void createBoard(){//this is just gui stuff to show the board
@@ -232,11 +233,11 @@ public class GameM implements ActionListener{
 	}
 	public void clearMain(){//clears the main menu so i can add the board or instructions
 		start_screen.remove(menu);
-		 start_screen.remove(menu2);
-		 start_screen.remove(menu3);
+		start_screen.remove(menu2);
+		start_screen.remove(menu3);
 
-       start_screen.revalidate();
-       start_screen.repaint();
+        start_screen.revalidate();
+        start_screen.repaint();
 	}
 public void actionPerformed(ActionEvent click){
 		Object source = click.getSource();
@@ -261,7 +262,7 @@ public void actionPerformed(ActionEvent click){
 		}
 		if(source==inst){//this just sets the instruction screen
 			clearMain();
-	        
+			
 			start_screen.add(instruct_screen, BorderLayout.NORTH);
 			
 			JPanel one = new JPanel();

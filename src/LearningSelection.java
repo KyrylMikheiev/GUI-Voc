@@ -13,6 +13,6 @@ public class LearningSelection extends LessonSelector {
     }
     @Override
     public void execute(String lesson) {
-        new LearningView(content, lesson, main);
+        main.newLearningView(lesson);
     }
 }
