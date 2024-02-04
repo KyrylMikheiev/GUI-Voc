@@ -5,8 +5,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import VocabAPI.Verb;
-import VocabAPI.Vocab;
+import VocabAPI.WordTypes.Verb;
+import VocabAPI.WordTypes.Vocab;
 
 import java.awt.*;
 import java.util.ArrayList;

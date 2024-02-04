@@ -27,8 +27,9 @@ public class APIClient {
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
 
-            String requestBody = String.format("{\"firstName\":\"%s\",\"lastName\":\"%s\",\"email\":\"%s\",\"password\":\"%s\",\"modePreference\":%d,\"class\":%d}",
-                        firstName, lastName, email, password, modePreference, userClass);
+            String requestBody = parseToJson(Map.of("firstName", firstName, "lastName", lastName, "email", email, "password", password, "modePreference", String.valueOf(modePreference), "class", String.valueOf(userClass)));
+            //String.format("{\"firstName\":\"%s\",\"lastName\":\"%s\",\"email\":\"%s\",\"password\":\"%s\",\"modePreference\":%d,\"class\":%d}",
+            //            firstName, lastName, email, password, modePreference, userClass);
 
 
             try (OutputStream os = connection.getOutputStream()) {
@@ -62,7 +63,7 @@ public class APIClient {
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
 
-            String requestBody = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", email, password);
+            String requestBody = parseToJson(Map.of("email", email, "password", password)); 
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = requestBody.getBytes("utf-8");
@@ -74,7 +75,7 @@ public class APIClient {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String response = reader.lines().collect(Collectors.joining());
                 System.out.println("Login successful. Response: " + response);
-                return parseJson(response).get("token");
+                return parseFromJson(response).get("token");
             } else {
                 System.out.println("Login failed. Response code: " + responseCode);
                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
@@ -109,7 +110,7 @@ public class APIClient {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String response = reader.lines().collect(Collectors.joining());
                 System.out.println("Verification successful. Token: " + response);
-                return parseJson(response).get("token");
+                return parseFromJson(response).get("token");
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 System.out.println("Verification failed.");
             } else {
@@ -135,7 +136,8 @@ public class APIClient {
             connection.setRequestProperty("Auth", token); // Set the Auth header with the token
             connection.setDoOutput(true);
 
-            String requestBody = String.format("{\"password\":\"%s\"}", password);
+            String requestBody = parseToJson(Map.of("password", password));
+            //String.format("{\"password\":\"%s\"}", password);
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = requestBody.getBytes("utf-8");
@@ -158,7 +160,7 @@ public class APIClient {
         }
     }
 
-    private static Map<String, String> parseJson(String jsonString) {
+    private static Map<String, String> parseFromJson(String jsonString) {
         Map<String, String> jsonMap = new HashMap<>();
         Pattern pattern = Pattern.compile("\"(\\w+)\":\\s*\"([^\"]+)\"");
         Matcher matcher = pattern.matcher(jsonString);
@@ -169,14 +171,37 @@ public class APIClient {
         }
         return jsonMap;
     }
+    private static String parseToJson(Map<String, String> jsonMap) {
+        StringBuilder jsonStringBuilder = new StringBuilder();
+        jsonStringBuilder.append("{");
+        
+        // Iterate over the entries of the Map
+        for (Map.Entry<String, String> entry : jsonMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            
+            // Append key-value pair to the JSON string
+            jsonStringBuilder.append("\"").append(key).append("\":\"").append(value).append("\",");
+        }
+        
+        // Remove the trailing comma if there's at least one entry in the map
+        if (!jsonMap.isEmpty()) {
+            jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
+        }
+        
+        jsonStringBuilder.append("}");
+        
+        return jsonStringBuilder.toString();
+    }
+    
 
     public static void main(String[] args) {
 
         // create example account
-        String email = "john.doe@example.com";
-        String password = "bruh";
+        String email = "adr.st@gmx.de";
+        String password = "123456";
 
-        boolean created = createUserAccount("John", "Doe", email, password, 1, 10);
+        boolean created = createUserAccount("Adrian", "Steyer", email, password, 1, 11);
 
         // verify account
         if (created) {

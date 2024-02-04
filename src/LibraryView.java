@@ -2,7 +2,7 @@ package src;
 
 import javax.swing.*;
 
-import VocabAPI.Vocab;
+import VocabAPI.WordTypes.Vocab;
 import VocabAPI.VocabParser;
 
 import java.awt.*;

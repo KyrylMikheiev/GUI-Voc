@@ -7,11 +7,31 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
 ### data storage stuff
 
 - [ ] database
-  - [ ] ERM?
-  - [ ] rest api
-  - [ ] java connector class
+  - [ ] add mainMenuWidget (integer) column to users db
+  - [ ] add daily login streak logger thing
+  - [X] rest api
+    - [X] register
+    - [X] verify
+      - [X] email
+    - [X] login
+    - [X] delete account
+    - [X] updateUserVocabstats
+    - [ ] forgotPassword
+    - [ ] updatePreferences (modePreference, widget, class)
+    - [ ] invalidateAllTokens
+  - [X] java connector class
+    - [X] register
+    - [X] login
+      - [ ] save token to file
+    - [X] verify
+      - [ ] save token to file
+    - [X] delete account
+    - [ ] updateUserVocabStats
+    - [ ] forgotPasswd
+    - [ ] updatePreferences
+    - [ ] invalidateAllTokens
 - [ ] CSV
-  - [ ] fix broken "#NAME" vocabs
+  - [X] fix broken "#NAME" vocabs
   - [ ] add ID column
 
 ### UIs
@@ -22,21 +42,28 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
   - [ ] back button
 - [ ] initialSetup
 
-  - [ ] register
-  - [ ] login
+  - [X] register
+  - [X] verify
+  - [X] login
   - [ ] forgot password
-  - [ ] confirm app settings screen(widget, darkmode)
+  - [X] confirm app settings screen
+    - [X] modePreference
+    - [ ] widget
   - [ ] layout
   - [ ] style
 - [ ] textHelper
 
   - [ ] get lessons of words
   - [ ] get vocabs of words
-  - [ ] layout
+  - [X] layout
   - [ ] style
 - [ ] settings
 
   - [ ] add button to invalidate all session tokens
+  - [ ] remove change name stuff
+  - [ ] add change class combobox
+  - [ ] add change start screen widget stuff
+  - [ ] layout
   - [ ] style
 - [ ] mainMenu
 
@@ -46,17 +73,18 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
   - [ ] button descriptions
 - [ ] widgets
 
-  - [ ] expand ERM with needed stuff
   - [ ] make a widget class
 - [ ] library
 
-  - [ ] lesson selector/spinner
-  - [ ] JButton for each vocab
-- [ ] lessonSelection (for various UIs)
+  - [X] lesson selector/spinner
+    - [ ] fix ugly stuff
+  - [X] JButton for each vocab
+    - [ ] north-aligned if less vocabs than screen size
+- [X] lessonSelection (for various UIs)
 
-  - [ ] make abstract class with all common code
-  - [ ] abstract function with what ui should launch when a lesson is clicked
-- [ ] memory minigame
+  - [X] make abstract class with all common code
+  - [X] abstract function with what ui should launch when a lesson is clicked
+- [X] memory minigame
 
   - [ ] style the UI
   - [ ] make button to start screen work again
@@ -68,7 +96,7 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
   - [ ] style
   - [ ] keybinds
   - [ ] connect to database
-- [ ] vocab set creator
+- [ ] vocabSet creator
 
   - [ ] upload/save functionality
   - [ ] layout
