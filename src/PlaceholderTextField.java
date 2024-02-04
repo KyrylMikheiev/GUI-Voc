@@ -44,6 +44,8 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
         repaint();
     }
 
-    
+    public void setEchoChar(char c) {
+        //setEchoChar(c);
+    }
 
 }

@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import VocabAPI.Vocab;
@@ -77,14 +78,14 @@ public class Main {
 
         // Navigation bar
         new NavBar(globalPane, this);
-
+        
         // create the mainMenu
-        new MainMenu(contentPane, this);
-
-
+        this.newSetup();
         // Refresh screen to make stuff show up
         globalPane.revalidate();
         globalPane.repaint();
+
+
     }
 
     public static void main(String[] args) {
@@ -154,7 +155,8 @@ public class Main {
     }
     public void newSetup() {
         newUI();
-        new Setup(contentPane);
+        String a = new Setup().startLogin(contentPane, this);
+        System.out.println(a);
         repaint();
     }
     public void newPrivacyStatement() {
