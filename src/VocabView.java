@@ -5,17 +5,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import VocabAPI.WordTypes.Adjective;
 import VocabAPI.WordTypes.Verb;
 import VocabAPI.WordTypes.Vocab;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+
 public class VocabView {
     String[] pronomen = {"Ich", "Du", "Er/Sie/Es", "Wir", "Ihr", "Sie"};
     String[] zeitformen = {"Indikativ Aktiv", "Präsens", "Imperfekt", "Perfekt", "Plusquamperfekt", "Futur I", "Futur II"};
+    String[] steigerungen = {"Positiv", "Komparativ", "Superlativ"};
     int numRows = pronomen.length;
     int numCols = zeitformen.length;
+    int numCols1 = steigerungen.length;
     private final DefaultTableModel tableModel;
     private final JTable table;
     private JPanel bodyPanel;
@@ -72,11 +76,19 @@ public class VocabView {
         bodyPanel.add(header, BorderLayout.NORTH);
         bodyPanel.add(table, BorderLayout.CENTER);
 
+       
         if (v instanceof Verb) {
             displayConjugations((Verb) v);
+            System.out.println("hello");
+        } else if (v instanceof Adjective) {
+            displayAdjectiveFormsTableLayout((Adjective) v);
+            System.out.println("hello");
         }
+
         content.add(bodyPanel);
     }
+
+     
 
     private void displayConjugations(Verb verb) {
         ArrayList<String> PräsentsConjugations = verb.getPraesens();
@@ -105,4 +117,33 @@ public class VocabView {
             tableModel.setValueAt(FuturIIConjugations.get(i), i, 6);
         }
     }
+
+
+    private void displayAdjectiveFormsTableLayout(Adjective adjective) {
+        bodyPanel.removeAll(); // Entferne alle Komponenten aus dem alten bodyPanel
+        tableModel.setColumnCount(0); // Entferne alle Spalten aus dem alten tableModel
+        
+        
+        
+    
+        // Füge die neuen Spalten für Steigerungen hinzu
+        for (int i = 0; i < numCols1; i++) {
+            tableModel.addColumn(steigerungen[i]);
+        }
+
+        
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(Main.BodyColor); // Set header background color
+        header.setForeground(Main.TextColor); // Set header text color
+        header.setFont(new Font("Arial", Font.BOLD, 20));
+    
+        // Weitere Anpassungen...
+       
+        // Füge die Tabelle zum alten bodyPanel hinzu
+        bodyPanel.add(header, BorderLayout.NORTH);
+        bodyPanel.add(table, BorderLayout.CENTER);
+        bodyPanel.revalidate(); // Aktualisiere das Layout des bodyPanel
+    }
+    
+
 }
