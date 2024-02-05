@@ -155,7 +155,7 @@ public class Main {
     }
     public void newSetup() {
         newUI();
-        String a = new Setup().startLogin(contentPane, this);
+        String a = new Setup().startRegistration(contentPane, this);
         System.out.println(a);
         repaint();
     }

@@ -31,7 +31,8 @@ public class Credits {
         "https://www.flaticon.com/free-icons/exam-results" + "<br/>" +
         "https://www.flaticon.com/free-icons/text" + "<br/>" +
         "https://www.flaticon.com/free-icons/gamepad" + "<br/>" +
-        "https://www.flaticon.com/free-icons/setting" + 
+        "https://www.flaticon.com/free-icons/setting" + "<br/>" +
+        "https://www.flaticon.com/free-icons/sun" +
         "</html>");
         flaticons.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         flaticons.setForeground(Main.TextColor);
