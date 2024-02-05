@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class Setup {
     private JPanel contentPanel;
-    private JPanel bodyPanel;
+    //private JPanel bodyPanel;
 
     // UI components for design select
     private JPanel designSelect;
@@ -58,8 +58,66 @@ public class Setup {
 
     private String token = "";
 
+    
+    public void startScreen(JPanel content, Main main) {
+        contentPanel = content;
+        content.setLayout(new BorderLayout());
+        // Attempt to load session
+        token = APIClient.loadSession();
+
+        if (token.equals("LOGIN_REQUIRED")) {
+            // If session couldn't be loaded, show login/register screen
+            showLoginRegisterScreen();
+        } else {
+            // Session loaded successfully, forward to main menu
+            // main.newMainMenu();
+            System.out.println("Session loaded successfully. Proceed to main menu.");
+        }
+    }
+
+    public void showLoginRegisterScreen() {
+        // Show login/register screen on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                contentPanel.removeAll();
+                contentPanel.revalidate();
+                contentPanel.repaint();
+    
+                JPanel loginRegisterPanel = new JPanel();
+                loginRegisterPanel.setLayout(new GridLayout(2, 1));
+    
+                JButton loginButton = new JButton("Login");
+                loginButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        startLogin(contentPanel, null);
+                    }
+                });
+    
+                JButton registerButton = new JButton("Register");
+                registerButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        startRegistration(contentPanel, null);
+                    }
+                });
+    
+                loginRegisterPanel.add(loginButton);
+                loginRegisterPanel.add(registerButton);
+    
+                JPanel bodyPanel = new JPanel();
+                bodyPanel.add(loginRegisterPanel);
+                contentPanel.add(bodyPanel);
+                contentPanel.revalidate();
+                contentPanel.repaint();
+            }
+        });
+    }
+    
     public String startRegistration(JPanel content, Main main) {
         contentPanel = content;
+        JPanel bodyPanel = new JPanel();
         bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout());
         bodyPanel.setBackground(Main.BodyColor);
@@ -71,6 +129,7 @@ public class Setup {
         return token;
     }
     public String startLogin(JPanel content, Main main) {
+        JPanel bodyPanel = new JPanel();
         contentPanel = content;
         bodyPanel = new JPanel();
         contentPanel.add(bodyPanel);
@@ -81,9 +140,10 @@ public class Setup {
     }
 
     public void designSelect() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        JPanel bodyPanel = new JPanel();
+        contentPanel.removeAll();
+        contentPanel.revalidate();
+        contentPanel.repaint();
 
         designSelect = new JPanel();
         designLabel = new JLabel("Design Selection");
@@ -147,14 +207,16 @@ public class Setup {
         designSelect.add(designNextPanel, BorderLayout.SOUTH);
 
         bodyPanel.add(designSelect);
+        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void registration() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        JPanel bodyPanel = new JPanel();
+        contentPanel.removeAll();
+        contentPanel.revalidate();
+        contentPanel.repaint();
 
         registration = new JPanel();
         registration.setBackground(Main.BodyColor);
@@ -194,14 +256,16 @@ public class Setup {
         registration.add(registrationNextPanel);
 
         bodyPanel.add(registration);
+        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void registration2() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        JPanel bodyPanel = new JPanel();
+        contentPanel.removeAll();
+        contentPanel.revalidate();
+        contentPanel.repaint();
 
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
@@ -250,13 +314,15 @@ public class Setup {
         registration2.add(registerButtonPanel);
 
         bodyPanel.add(registration2);
+        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
     public void verification() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        JPanel bodyPanel = new JPanel();
+        contentPanel.removeAll();
+        contentPanel.revalidate();
+        contentPanel.repaint();
 
         verification = new JPanel();
         verification.setBackground(Main.BodyColor);
@@ -294,14 +360,16 @@ public class Setup {
         verification.add(verificationNextPanel);
 
         bodyPanel.add(verification);
+        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void login() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        JPanel bodyPanel = new JPanel();
+        contentPanel.removeAll();
+        contentPanel.revalidate();
+        contentPanel.repaint();
 
         login = new JPanel();
         loginLabel = new JLabel("Login");
@@ -339,6 +407,7 @@ public class Setup {
         login.add(loginButton);
 
         bodyPanel.add(login);
+        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }

@@ -69,13 +69,12 @@ public class Main {
         frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, "ESCAPE");
         frame.getRootPane().getActionMap().put("ESCAPE", escapeAction);
         
-        frame.setVisible(true);
-
+        
         // UI Content Pane
         contentPane = new JPanel(new BorderLayout());
         //contentPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         globalPane.add(contentPane, BorderLayout.CENTER);
-
+        
         // Navigation bar
         new NavBar(globalPane, this);
         
@@ -84,7 +83,8 @@ public class Main {
         // Refresh screen to make stuff show up
         globalPane.revalidate();
         globalPane.repaint();
-
+        
+        frame.setVisible(true);
 
     }
 
@@ -155,8 +155,7 @@ public class Main {
     }
     public void newSetup() {
         newUI();
-        String a = new Setup().startRegistration(contentPane, this);
-        System.out.println(a);
+        new Setup().startScreen(contentPane, this);
         repaint();
     }
     public void newPrivacyStatement() {

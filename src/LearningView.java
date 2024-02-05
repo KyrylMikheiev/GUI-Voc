@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 import VocabAPI.VocabParser;
+import restAPI.APIClient;
 
 public class LearningView {
     private JPanel content;
@@ -323,10 +324,10 @@ public class LearningView {
             updateProgressBar();
 
             //try to remove the vocab from wrongVocabs/rightVocabs
-            if (wrongVocabs.indexOf(currentVocabIndex + 1) != -1) 
-                wrongVocabs.remove(wrongVocabs.indexOf(currentVocabIndex + 1));
-            if (rightVocabs.indexOf(currentVocabIndex + 1) != -1) 
-                rightVocabs.remove(rightVocabs.indexOf(currentVocabIndex + 1));
+            if (wrongVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
+                wrongVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
+            if (rightVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
+                rightVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
 
         }
     }
@@ -360,23 +361,18 @@ public class LearningView {
     }
 
     private void falseVocab() {
-        wrongVocabs.add(currentVocabIndex);
+        wrongVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
         showNextVocab();
     }
 
     private void trueVocab() {
-        rightVocabs.add(currentVocabIndex);
+        rightVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
         showNextVocab();
     }
 
     private boolean uploadData() {
-        try {
-            //connect to database/rest api and upload the vocab data
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        //connect to rest api and upload the vocab data
+        return APIClient.updateUserVocabStats(wrongVocabs, rightVocabs, "bf875d80ac0c0ee18ac47e0581ebd5288b38ca4602b1a7bdb32e0444b7ef96ba");
     }
     private void showFinishedScreen() {
         // show finished screen
