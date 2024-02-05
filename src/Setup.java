@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class Setup {
     private JPanel contentPanel;
-    //private JPanel bodyPanel;
+    private JPanel bodyPanel;
 
     // UI components for design select
     private JPanel designSelect;
@@ -62,6 +62,7 @@ public class Setup {
     public void startScreen(JPanel content, Main main) {
         contentPanel = content;
         content.setLayout(new BorderLayout());
+        bodyPanel = new JPanel();
         // Attempt to load session
         token = APIClient.loadSession();
 
@@ -125,6 +126,10 @@ public class Setup {
         contentPanel.add(bodyPanel);
         
         designSelect();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+        contentPanel.revalidate();
+        contentPanel.repaint();
         // main.newMainMenu();
         return token;
     }
@@ -135,15 +140,18 @@ public class Setup {
         contentPanel.add(bodyPanel);
 
         login();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+        contentPanel.revalidate();
+        contentPanel.repaint();
         // main.newMainMenu();
         return token;
     }
 
     public void designSelect() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         designSelect = new JPanel();
         designLabel = new JLabel("Design Selection");
@@ -207,16 +215,14 @@ public class Setup {
         designSelect.add(designNextPanel, BorderLayout.SOUTH);
 
         bodyPanel.add(designSelect);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void registration() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         registration = new JPanel();
         registration.setBackground(Main.BodyColor);
@@ -256,16 +262,14 @@ public class Setup {
         registration.add(registrationNextPanel);
 
         bodyPanel.add(registration);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void registration2() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
@@ -314,15 +318,13 @@ public class Setup {
         registration2.add(registerButtonPanel);
 
         bodyPanel.add(registration2);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
     public void verification() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         verification = new JPanel();
         verification.setBackground(Main.BodyColor);
@@ -360,16 +362,14 @@ public class Setup {
         verification.add(verificationNextPanel);
 
         bodyPanel.add(verification);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void login() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         login = new JPanel();
         loginLabel = new JLabel("Login");
@@ -407,7 +407,6 @@ public class Setup {
         login.add(loginButton);
 
         bodyPanel.add(login);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
