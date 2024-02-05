@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class Setup {
     private JPanel contentPanel;
-    //private JPanel bodyPanel;
+    private JPanel bodyPanel;
 
     // UI components for design select
     private JPanel designSelect;
@@ -129,7 +129,6 @@ public class Setup {
         return token;
     }
     public String startLogin(JPanel content, Main main) {
-        JPanel bodyPanel = new JPanel();
         contentPanel = content;
         bodyPanel = new JPanel();
         contentPanel.add(bodyPanel);
@@ -140,10 +139,9 @@ public class Setup {
     }
 
     public void designSelect() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         designSelect = new JPanel();
         designLabel = new JLabel("Design Selection");
@@ -207,16 +205,14 @@ public class Setup {
         designSelect.add(designNextPanel, BorderLayout.SOUTH);
 
         bodyPanel.add(designSelect);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     public void registration() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         registration = new JPanel();
         registration.setBackground(Main.BodyColor);
@@ -262,10 +258,9 @@ public class Setup {
     }
 
     public void registration2() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
@@ -314,15 +309,13 @@ public class Setup {
         registration2.add(registerButtonPanel);
 
         bodyPanel.add(registration2);
-        contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
     public void verification() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         verification = new JPanel();
         verification.setBackground(Main.BodyColor);
@@ -333,11 +326,18 @@ public class Setup {
         verificationLabel.setForeground(Main.TextColor);
         verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        JLabel verificationCodeLabel = new JLabel("Geben Sie den an Ihre E-Mail gesendeten Code ein");
+        verificationCodeLabel.setForeground(Main.TextColor);
+        verificationCodeLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        
+        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
+
         JPanel verificationCodePanel = new JPanel();
         verificationCodePanel.setOpaque(false);
-        verificationCodePanel.setLayout(new GridLayout());
-        verificationCodePanel.setBorder(new ResponsiveBorder(90, 450, 90, 450));
-        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
+        verificationCodePanel.setLayout(new GridLayout(2, 1, 0, 10));
+        verificationCodePanel.setBorder(new ResponsiveBorder(20, 450, 90, 450));
+        
+        
 
         JPanel verificationNextPanel = new JPanel();
         verificationNextPanel.setLayout(new GridLayout());
@@ -352,6 +352,7 @@ public class Setup {
             }
         });
 
+verificationCodePanel.add(verificationCodeLabel);
         verificationCodePanel.add(verificationCode);
         verificationNextPanel.add(verificationNext);
 
@@ -366,10 +367,9 @@ public class Setup {
     }
 
     public void login() {
-        JPanel bodyPanel = new JPanel();
-        contentPanel.removeAll();
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
 
         login = new JPanel();
         loginLabel = new JLabel("Login");
