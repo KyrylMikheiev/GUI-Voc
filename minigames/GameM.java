@@ -54,6 +54,8 @@ public class GameM implements ActionListener{
 
 	int Abfrageanzahl=0;
 
+	Main main;
+
 	//String Inhalt[]=new String[Abfrageanzahl];
 	
 	private JLabel label = new JLabel("Geben Sie eine Anzahl an Pärchen ein:");
@@ -63,8 +65,9 @@ public class GameM implements ActionListener{
 	//instructW.setEditable(false);
 	//instructM.setLineWrap(true);
 	//instructW.setWrapStyleWord(true);
-	public GameM(JPanel content, String lektion){
+	public GameM(JPanel content, String lektion, Main main ){
 		this.content = content;
+		this.main = main;
 		EventQueue.invokeLater(()->{
 		start_screen.setLayout(new BorderLayout());
 		menu.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -221,7 +224,7 @@ public class GameM implements ActionListener{
 	}
 	public void goToMainScreen() {
 		
-		new GameM(content, lesson);
+		main.newGameM(lesson);
 	}
 	public void createBoard(){//this is just gui stuff to show the board
 		field.setLayout(new BorderLayout());

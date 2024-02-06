@@ -13,15 +13,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 public class APIClient {
 
     private static final String BASE_URL = "https://vt.jo-dev.net/";
-    private static final String filename = "token.txt";
 
     public static boolean createUserAccount(String firstName, String lastName, String email, String password, int modePreference, int userClass) {
         try {
@@ -80,7 +76,7 @@ public class APIClient {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String response = reader.lines().collect(Collectors.joining());
-                System.out.println("Login successful. Response: " + response);
+                System.out.println("Login successful. (APIclient) ");
                 TokenManager.saveToken(parseFromJson(response).get("token"));
                 return parseFromJson(response).get("token");
             } else {
@@ -251,6 +247,7 @@ public class APIClient {
         }
         return jsonMap;
     }
+    @SuppressWarnings("unchecked")
     private static String parseToJson(Map<String, Object> jsonMap) {
         StringBuilder jsonStringBuilder = new StringBuilder();
         jsonStringBuilder.append("{");

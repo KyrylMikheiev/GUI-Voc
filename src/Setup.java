@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -57,12 +56,16 @@ public class Setup {
     private JButton loginButton;
 
     private String token = "";
+    private Main main;
 
     
     public void startScreen(JPanel content, Main main) {
         contentPanel = content;
+        this.main = main;
         content.setLayout(new BorderLayout());
         bodyPanel = new JPanel();
+        bodyPanel.setBackground(Main.BodyColor);
+        //bodyPanel.setLayout(new BorderLayout());
         // Attempt to load session
         token = APIClient.loadSession();
 
@@ -71,86 +74,62 @@ public class Setup {
             showLoginRegisterScreen();
         } else {
             // Session loaded successfully, forward to main menu
-            // main.newMainMenu();
             System.out.println("Session loaded successfully. Proceed to main menu.");
+            main.newMainMenu();
         }
     }
 
     public void showLoginRegisterScreen() {
         // Show login/register screen on the EDT
-        SwingUtilities.invokeLater(new Runnable() {
+
+        JPanel loginRegisterPanel = new JPanel();
+        loginRegisterPanel.setLayout(new GridLayout(2, 1));
+
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
             @Override
-            public void run() {
-                contentPanel.removeAll();
-                contentPanel.revalidate();
-                contentPanel.repaint();
-    
-                JPanel loginRegisterPanel = new JPanel();
-                loginRegisterPanel.setLayout(new GridLayout(2, 1));
-    
-                JButton loginButton = new JButton("Login");
-                loginButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        startLogin(contentPanel, null);
-                    }
-                });
-    
-                JButton registerButton = new JButton("Register");
-                registerButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        startRegistration(contentPanel, null);
-                    }
-                });
-    
-                loginRegisterPanel.add(loginButton);
-                loginRegisterPanel.add(registerButton);
-    
-                JPanel bodyPanel = new JPanel();
-                bodyPanel.add(loginRegisterPanel);
-                contentPanel.add(bodyPanel);
-                contentPanel.revalidate();
-                contentPanel.repaint();
+            public void actionPerformed(ActionEvent e) {
+                startLogin(contentPanel, main);
             }
         });
+
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startRegistration(contentPanel, main);
+            }
+        });
+
+        loginRegisterPanel.add(loginButton);
+        loginRegisterPanel.add(registerButton);
+
+        //JPanel bodyPanel = new JPanel();
+        bodyPanel.add(loginRegisterPanel);
+        contentPanel.add(bodyPanel);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
     
-    public String startRegistration(JPanel content, Main main) {
-        contentPanel = content;
-        JPanel bodyPanel = new JPanel();
-        bodyPanel = new JPanel();
+    
+    public void startRegistration(JPanel content, Main main) {
+
         bodyPanel.setLayout(new GridLayout());
         bodyPanel.setBackground(Main.BodyColor);
 
         contentPanel.add(bodyPanel);
         
         designSelect();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
-        contentPanel.revalidate();
-        contentPanel.repaint();
-        // main.newMainMenu();
-        return token;
     }
-    public String startLogin(JPanel content, Main main) {
-        contentPanel = content;
-        bodyPanel = new JPanel();
+    public void startLogin(JPanel content, Main main) {
+
         contentPanel.add(bodyPanel);
 
         login();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
-        contentPanel.revalidate();
-        contentPanel.repaint();
-        // main.newMainMenu();
-        return token;
     }
 
     public void designSelect() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         designSelect = new JPanel();
         designLabel = new JLabel("Design Selection");
@@ -214,14 +193,11 @@ public class Setup {
         designSelect.add(designNextPanel, BorderLayout.SOUTH);
 
         bodyPanel.add(designSelect);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void registration() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         registration = new JPanel();
         registration.setBackground(Main.BodyColor);
@@ -261,14 +237,11 @@ public class Setup {
         registration.add(registrationNextPanel);
 
         bodyPanel.add(registration);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void registration2() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
@@ -317,13 +290,10 @@ public class Setup {
         registration2.add(registerButtonPanel);
 
         bodyPanel.add(registration2);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
     public void verification() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         verification = new JPanel();
         verification.setBackground(Main.BodyColor);
@@ -334,18 +304,11 @@ public class Setup {
         verificationLabel.setForeground(Main.TextColor);
         verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel verificationCodeLabel = new JLabel("Geben Sie den an Ihre E-Mail gesendeten Code ein");
-        verificationCodeLabel.setForeground(Main.TextColor);
-        verificationCodeLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-        
-        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
-
         JPanel verificationCodePanel = new JPanel();
         verificationCodePanel.setOpaque(false);
-        verificationCodePanel.setLayout(new GridLayout(2, 1, 0, 10));
-        verificationCodePanel.setBorder(new ResponsiveBorder(20, 450, 90, 450));
-        
-        
+        verificationCodePanel.setLayout(new GridLayout());
+        verificationCodePanel.setBorder(new ResponsiveBorder(90, 450, 90, 450));
+        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
 
         JPanel verificationNextPanel = new JPanel();
         verificationNextPanel.setLayout(new GridLayout());
@@ -360,7 +323,6 @@ public class Setup {
             }
         });
 
-verificationCodePanel.add(verificationCodeLabel);
         verificationCodePanel.add(verificationCode);
         verificationNextPanel.add(verificationNext);
 
@@ -369,17 +331,18 @@ verificationCodePanel.add(verificationCodeLabel);
         verification.add(verificationNextPanel);
 
         bodyPanel.add(verification);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void login() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         login = new JPanel();
+        login.setBackground(Main.BodyColor);
+        login.setLayout(new GridLayout(0, 1));
+
         loginLabel = new JLabel("Login");
+        loginLabel.setForeground(Main.TextColor);
         loginEmail = new PlaceholderTextField("Email", Main.TextColor);
         loginPassword = new PlaceholderTextField("Password", Main.TextColor);
         loginPassword.setEchoChar('*'); // Mask the password input
@@ -399,7 +362,8 @@ verificationCodePanel.add(verificationCodeLabel);
                 if (!sesssion_token.isEmpty()) {
                     // Login successful, navigate to next screen or perform actions
                     // For now, let's just print a message
-                    System.out.println("Login successful. Token: " + sesssion_token);
+                    System.out.println("Login successful.");
+                    main.newMainMenu();
                 } else {
                     // Login failed, display an error message or handle accordingly
                     loginWrongLabel.setVisible(true);
@@ -414,9 +378,23 @@ verificationCodePanel.add(verificationCodeLabel);
         login.add(loginButton);
 
         bodyPanel.add(login);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
+
+    private void newUI() {
+        try {
+            bodyPanel.removeAll();
+        }
+        catch (Exception e) {
+            
+        }
+        bodyPanel.setBackground(Main.BodyColor);
+    }
+    private void repaint() {
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }
+
     public void verifyUser() {
         // Verify the user using the verification code
         String code = verificationCode.getText();
