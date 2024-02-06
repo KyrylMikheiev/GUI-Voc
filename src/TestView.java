@@ -19,8 +19,9 @@ public class TestView {
             {
                 allVocabs.add(VocabParser.getVocabsFromLesson(selectedElements.get(i).substring(8)).get(j));
             }
+            
         }
-        
+
         
         content.add(bodyPanel);
     }
