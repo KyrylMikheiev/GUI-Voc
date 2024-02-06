@@ -134,7 +134,6 @@ public class Setup {
         return token;
     }
     public String startLogin(JPanel content, Main main) {
-        JPanel bodyPanel = new JPanel();
         contentPanel = content;
         bodyPanel = new JPanel();
         contentPanel.add(bodyPanel);
@@ -335,11 +334,18 @@ public class Setup {
         verificationLabel.setForeground(Main.TextColor);
         verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        JLabel verificationCodeLabel = new JLabel("Geben Sie den an Ihre E-Mail gesendeten Code ein");
+        verificationCodeLabel.setForeground(Main.TextColor);
+        verificationCodeLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        
+        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
+
         JPanel verificationCodePanel = new JPanel();
         verificationCodePanel.setOpaque(false);
-        verificationCodePanel.setLayout(new GridLayout());
-        verificationCodePanel.setBorder(new ResponsiveBorder(90, 450, 90, 450));
-        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
+        verificationCodePanel.setLayout(new GridLayout(2, 1, 0, 10));
+        verificationCodePanel.setBorder(new ResponsiveBorder(20, 450, 90, 450));
+        
+        
 
         JPanel verificationNextPanel = new JPanel();
         verificationNextPanel.setLayout(new GridLayout());
@@ -354,6 +360,7 @@ public class Setup {
             }
         });
 
+verificationCodePanel.add(verificationCodeLabel);
         verificationCodePanel.add(verificationCode);
         verificationNextPanel.add(verificationNext);
 
