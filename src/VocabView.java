@@ -25,7 +25,6 @@ public class VocabView {
     private static JPanel mainPanel;
     private final JTable table;
     private JPanel bodyPanel;
-    JPanel content;
 
     public VocabView(JPanel content, Vocab v) {
         bodyPanel = new JPanel();
@@ -122,45 +121,44 @@ public class VocabView {
     }
 
 
-    private void displayAdjectiveFormsTableLayout(Adjective adjective) {
-        bodyPanel.removeAll(); 
-    
-        // Erstelle ein Panel für die Buttons
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    
-        // Erstelle die Buttons
-        JButton button1 = new JButton("Maskulinum");
-        JButton button2 = new JButton("Femininum");
-        JButton button3 = new JButton("Neutrum");
-    
-        // Füge ActionListener zu den Buttons hinzu
-        button1.addActionListener(new ButtonListener());
-        button2.addActionListener(new ButtonListener());
-        button3.addActionListener(new ButtonListener());
-    
-        // Füge die Buttons zum Button-Panel hinzu
-        buttonPanel.add(button1);
-        buttonPanel.add(button2);
-        buttonPanel.add(button3);
-    
-    
-       
-    
-        // Füge das Button-Panel zum Haupt-Panel hinzu
-        mainPanel.add(buttonPanel, BorderLayout.NORTH);
-      
-        // Setze die Hintergrundfarbe des Hauptpanels
-        mainPanel.setBackground(Main.BodyColor);
-    
-        // Erstelle eine Standard-Tabelle beim Start
-        createTable("Maskulinum");
-    
-        // Füge das Haupt-Panel zum Hauptfenster hinzu und mache es sichtbar
-        bodyPanel.add(mainPanel);
-        bodyPanel.setVisible(true);
-        content.add(bodyPanel);
-    }
-    
+  private void displayAdjectiveFormsTableLayout(Adjective adjective) {
+    bodyPanel.removeAll(); 
+
+    // Erstelle ein Panel für die Buttons
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+    // Erstelle die Buttons
+    JButton button1 = new JButton("Maskulinum");
+    JButton button2 = new JButton("Femininum");
+    JButton button3 = new JButton("Neutrum");
+
+    // Füge ActionListener zu den Buttons hinzu
+    button1.addActionListener(new ButtonListener());
+    button2.addActionListener(new ButtonListener());
+    button3.addActionListener(new ButtonListener());
+
+    // Füge die Buttons zum Button-Panel hinzu
+    buttonPanel.add(button1);
+    buttonPanel.add(button2);
+    buttonPanel.add(button3);
+
+    // Erstelle das Haupt-Panel für die GUI
+    mainPanel = new JPanel(new BorderLayout());
+
+    // Füge das Button-Panel zum Haupt-Panel hinzu
+    mainPanel.add(buttonPanel, BorderLayout.NORTH);
+  
+    // Setze die Hintergrundfarbe des Hauptpanels
+    mainPanel.setBackground(Main.BodyColor);
+
+    // Erstelle eine Standard-Tabelle beim Start
+    createTable("Maskulinum");
+
+    // Füge das Haupt-Panel zum Hauptfenster hinzu und mache es sichtbar
+    bodyPanel.add(mainPanel);
+    bodyPanel.setVisible(true);
+}
+
 
     private static void createTable(String gender) {
         // Erstelle eine Tabelle mit 5 Zeilen (für die Kasus) und 3 Spalten (für die Steigerungen)
