@@ -293,7 +293,10 @@ bodyPanel.add(buttonsPanel1, BorderLayout.EAST);
 
 
 
-button6.addActionListener(e -> main.newTestView(selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5));
+button6.addActionListener(e -> {
+    selectedElements = lessonRoster.getSelectedElementsAsStringList();
+    main.newTestView(selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5);
+});
 
         
         content.add(bodyPanel);

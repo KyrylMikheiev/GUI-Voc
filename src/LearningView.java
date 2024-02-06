@@ -5,9 +5,11 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 import VocabAPI.VocabParser;
+import restAPI.APIClient;
 
 public class LearningView {
     private JPanel content;
+    private JPanel bodyPanel;
     private String lektion;
     private int currentVocabIndex;
     private JLabel phrase;
@@ -300,7 +302,7 @@ public class LearningView {
         bodyPanel_contentDown.add(contentDown_center, BorderLayout.CENTER);
         bodyPanel_contentDown.add(emptyPanelSouth, BorderLayout.SOUTH);
 
-        JPanel bodyPanel = new JPanel();
+        bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());
         bodyPanel.setBackground(Main.BodyColor);
         bodyPanel.add(bodyPanel_contentUp, BorderLayout.NORTH);
@@ -323,10 +325,10 @@ public class LearningView {
             updateProgressBar();
 
             //try to remove the vocab from wrongVocabs/rightVocabs
-            if (wrongVocabs.indexOf(currentVocabIndex + 1) != -1) 
-                wrongVocabs.remove(wrongVocabs.indexOf(currentVocabIndex + 1));
-            if (rightVocabs.indexOf(currentVocabIndex + 1) != -1) 
-                rightVocabs.remove(rightVocabs.indexOf(currentVocabIndex + 1));
+            if (wrongVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
+                wrongVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
+            if (rightVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
+                rightVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
 
         }
     }
@@ -360,23 +362,18 @@ public class LearningView {
     }
 
     private void falseVocab() {
-        wrongVocabs.add(currentVocabIndex);
+        wrongVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
         showNextVocab();
     }
 
     private void trueVocab() {
-        rightVocabs.add(currentVocabIndex);
+        rightVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
         showNextVocab();
     }
 
     private boolean uploadData() {
-        try {
-            //connect to database/rest api and upload the vocab data
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        //connect to rest api and upload the vocab data
+        return APIClient.updateUserVocabStats(wrongVocabs, rightVocabs, "bf875d80ac0c0ee18ac47e0581ebd5288b38ca4602b1a7bdb32e0444b7ef96ba");
     }
     private void showFinishedScreen() {
         // show finished screen
@@ -384,5 +381,76 @@ public class LearningView {
         // show wrong vocabs
         // show button to go to start screen
         // show button to re-learn wrong vocabs
+
+        bodyPanel.removeAll();
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+
+        JPanel congratulationScreen = new JPanel();
+        congratulationScreen.setBackground(Main.BodyColor);
+        congratulationScreen.setLayout(new GridLayout(3,1));
+
+        JLabel congratulations = new JLabel("<html>" +"Herzlich Glückwunsch! Du hast die Lektion " + lektion + " beendet!" + "<br>" + "Hier sind deine Ergebnisse:" + "</html>");
+        congratulations.setFont(new Font("Arial", Font.BOLD, 20));
+        congratulations.setForeground(Main.TextColor);
+        congratulations.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel statisticsPanel = new JPanel();
+        statisticsPanel.setOpaque(false);
+        statisticsPanel.setLayout(new GridLayout(2,1, 0, 30));
+        statisticsPanel.setBorder(new ResponsiveBorder(20, 420, 50, 300));
+
+        JLabel rightVocabsLabel = new JLabel("Richtig: " + rightVocabs.size());
+        rightVocabsLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        rightVocabsLabel.setForeground(Main.TextColor);
+        // rightVocabsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel wrongVocabsLabel = new JLabel("Falsch: " + wrongVocabs.size());
+        wrongVocabsLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        wrongVocabsLabel.setForeground(Main.TextColor);
+        // wrongVocabsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.setLayout(new GridLayout(1, 2, 50, 0));
+        buttonsPanel.setBorder(new ResponsiveBorder(90, 420, 90, 300));
+
+        JButton backMainMenu = new JButton("Zurück zum Hauptmenu");
+        JButton relearnVocabs = new JButton("Falsche Vocabs lernen");
+
+        backMainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bodyPanel.removeAll();
+                bodyPanel.revalidate();
+                bodyPanel.repaint();
+                main.newMainMenu();
+            }
+        });
+
+        relearnVocabs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: make relearn screen
+            }
+        });
+
+        buttonsPanel.add(relearnVocabs);
+        buttonsPanel.add(backMainMenu);
+
+        statisticsPanel.add(rightVocabsLabel);
+        statisticsPanel.add(wrongVocabsLabel);
+
+        congratulationScreen.add(congratulations);
+        congratulationScreen.add(statisticsPanel);
+        congratulationScreen.add(buttonsPanel);
+
+
+        bodyPanel.add(congratulationScreen);
+
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+
+
     }
 }

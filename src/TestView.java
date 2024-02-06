@@ -11,7 +11,8 @@ public class TestView {
         bodyPanel.setLayout(new GridLayout(1, 2));
         bodyPanel.setBackground(Main.BodyColor);
 
-
+        System.out.println(selectedElements);
+        
 
         content.add(bodyPanel);
     }
