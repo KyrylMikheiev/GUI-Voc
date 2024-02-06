@@ -70,7 +70,13 @@ public class LibraryView {
         nextLessonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentIndex = (currentIndex + 1) % lessons.size();
+                
+                if (currentIndex < 44) {
+                    currentIndex += 1;
+                } else {
+                    // Wenn der Index gleich 0 ist, setzen Sie ihn auf das letzte Element der Liste
+                    currentIndex = 0;
+                }
                 updateLessonPanel(bodyPanel, main);
             }
         });
@@ -85,9 +91,17 @@ public class LibraryView {
         prevLessonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentIndex = (currentIndex - 1 + lessons.size()) % lessons.size();
+                // Überprüfen, ob der aktuelle Index größer als 0 ist
+                if (currentIndex > 0) {
+                    currentIndex = (currentIndex - 1 + lessons.size()) % lessons.size();
+                } else {
+                    // Wenn der Index gleich 0 ist, setzen Sie ihn auf das letzte Element der Liste
+                    currentIndex = lessons.size() - 2;
+                }
                 updateLessonPanel(bodyPanel, main);
             }
+            
+        
         });
 
         JComboBox<Integer> lektionComboBox = createLektionComboBoxPanel(main);
