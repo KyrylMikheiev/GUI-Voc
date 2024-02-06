@@ -172,7 +172,7 @@ public class VocabView {
         int bottomInset = 10;
         int rightInset = 100;
         scrollPane.setBorder(BorderFactory.createEmptyBorder(topInset, leftInset, bottomInset, rightInset));
-
+        scrollPane.setBackground(Main.BodyColor);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Aktualisiere das Haupt-Panel
