@@ -171,7 +171,7 @@ public class Main {
     }
     public void newGameM(String lektion) {
         newUI();
-        new GameM(contentPane, lektion);
+        new GameM(contentPane, lektion, this);
         repaint();
     }
     public void newMemorySelection() {

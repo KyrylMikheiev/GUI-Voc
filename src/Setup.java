@@ -57,7 +57,67 @@ public class Setup {
     private JButton loginButton;
 
     private String token = "";
+    private Main main;
 
+    
+    public void startScreen(JPanel content, Main main) {
+        contentPanel = content;
+        this.main = main;
+        content.setLayout(new BorderLayout());
+        bodyPanel = new JPanel();
+        // Attempt to load session
+        token = APIClient.loadSession();
+
+        if (token.equals("LOGIN_REQUIRED")) {
+            // If session couldn't be loaded, show login/register screen
+            showLoginRegisterScreen();
+        } else {
+            // Session loaded successfully, forward to main menu
+            // main.newMainMenu();
+            System.out.println("Session loaded successfully. Proceed to main menu.");
+        }
+    }
+
+    public void showLoginRegisterScreen() {
+        // Show login/register screen on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                contentPanel.removeAll();
+                contentPanel.revalidate();
+                contentPanel.repaint();
+    
+                JPanel loginRegisterPanel = new JPanel();
+                loginRegisterPanel.setLayout(new GridLayout(2, 1));
+    
+                JButton loginButton = new JButton("Login");
+                loginButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        startLogin(contentPanel, main);
+                    }
+                });
+    
+                JButton registerButton = new JButton("Register");
+                registerButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        startRegistration(contentPanel, main);
+                    }
+                });
+    
+                loginRegisterPanel.add(loginButton);
+                loginRegisterPanel.add(registerButton);
+    
+                JPanel bodyPanel = new JPanel();
+                bodyPanel.add(loginRegisterPanel);
+                contentPanel.add(bodyPanel);
+                contentPanel.revalidate();
+                contentPanel.repaint();
+            }
+        });
+    }
+    
     public String startRegistration(JPanel content, Main main) {
         contentPanel = content;
         bodyPanel = new JPanel();
