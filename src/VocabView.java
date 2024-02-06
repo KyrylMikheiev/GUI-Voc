@@ -169,7 +169,7 @@ public class VocabView {
 
         int topInset = 10;
         int leftInset = 100;
-        int bottomInset = 10;
+        int bottomInset = -200;
         int rightInset = 100;
         scrollPane.setBorder(BorderFactory.createEmptyBorder(topInset, leftInset, bottomInset, rightInset));
         scrollPane.setBackground(Main.BodyColor);
