@@ -2,13 +2,12 @@ package src;
 
 import javax.swing.*;
 
-import restAPI.APIClient;
+import restAPI.APIclient;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -65,8 +64,10 @@ public class Setup {
         this.main = main;
         content.setLayout(new BorderLayout());
         bodyPanel = new JPanel();
+        bodyPanel.setBackground(Main.BodyColor);
+        //bodyPanel.setLayout(new BorderLayout());
         // Attempt to load session
-        token = APIClient.loadSession();
+        token = APIclient.loadSession();
 
         if (token.equals("LOGIN_REQUIRED")) {
             // If session couldn't be loaded, show login/register screen
@@ -80,70 +81,55 @@ public class Setup {
 
     public void showLoginRegisterScreen() {
         // Show login/register screen on the EDT
-        SwingUtilities.invokeLater(new Runnable() {
+
+        JPanel loginRegisterPanel = new JPanel();
+        loginRegisterPanel.setLayout(new GridLayout(2, 1));
+
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
             @Override
-            public void run() {
-                contentPanel.removeAll();
-                contentPanel.revalidate();
-                contentPanel.repaint();
-    
-                JPanel loginRegisterPanel = new JPanel();
-                loginRegisterPanel.setLayout(new GridLayout(2, 1));
-    
-                JButton loginButton = new JButton("Login");
-                loginButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        startLogin(contentPanel, main);
-                    }
-                });
-    
-                JButton registerButton = new JButton("Register");
-                registerButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        startRegistration(contentPanel, main);
-                    }
-                });
-    
-                loginRegisterPanel.add(loginButton);
-                loginRegisterPanel.add(registerButton);
-    
-                JPanel bodyPanel = new JPanel();
-                bodyPanel.add(loginRegisterPanel);
-                contentPanel.add(bodyPanel);
-                contentPanel.revalidate();
-                contentPanel.repaint();
+            public void actionPerformed(ActionEvent e) {
+                startLogin(contentPanel, main);
             }
         });
+
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startRegistration(contentPanel, main);
+            }
+        });
+
+        loginRegisterPanel.add(loginButton);
+        loginRegisterPanel.add(registerButton);
+
+        //JPanel bodyPanel = new JPanel();
+        bodyPanel.add(loginRegisterPanel);
+        contentPanel.add(bodyPanel);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
     
-    public String startRegistration(JPanel content, Main main) {
-        contentPanel = content;
-        bodyPanel = new JPanel();
+    
+    public void startRegistration(JPanel content, Main main) {
+
         bodyPanel.setLayout(new GridLayout());
         bodyPanel.setBackground(Main.BodyColor);
 
         contentPanel.add(bodyPanel);
         
         designSelect();
-        // main.newMainMenu();
-        return token;
     }
-    public String startLogin(JPanel content, Main main) {
-        contentPanel = content;
-        bodyPanel = new JPanel();
+    public void startLogin(JPanel content, Main main) {
+
         contentPanel.add(bodyPanel);
 
         login();
-        // main.newMainMenu();
-        return token;
     }
 
     public void designSelect() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         designSelect = new JPanel();
         designLabel = new JLabel("Design Selection");
@@ -207,14 +193,11 @@ public class Setup {
         designSelect.add(designNextPanel, BorderLayout.SOUTH);
 
         bodyPanel.add(designSelect);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void registration() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         registration = new JPanel();
         registration.setBackground(Main.BodyColor);
@@ -254,14 +237,11 @@ public class Setup {
         registration.add(registrationNextPanel);
 
         bodyPanel.add(registration);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void registration2() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
@@ -310,13 +290,10 @@ public class Setup {
         registration2.add(registerButtonPanel);
 
         bodyPanel.add(registration2);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
     public void verification() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         verification = new JPanel();
         verification.setBackground(Main.BodyColor);
@@ -354,17 +331,18 @@ public class Setup {
         verification.add(verificationNextPanel);
 
         bodyPanel.add(verification);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
 
     public void login() {
-        bodyPanel.removeAll();
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        newUI();
 
         login = new JPanel();
+        login.setBackground(Main.BodyColor);
+        login.setLayout(new GridLayout(0, 1));
+
         loginLabel = new JLabel("Login");
+        loginLabel.setForeground(Main.TextColor);
         loginEmail = new PlaceholderTextField("Email", Main.TextColor);
         loginPassword = new PlaceholderTextField("Password", Main.TextColor);
         loginPassword.setEchoChar('*'); // Mask the password input
@@ -379,12 +357,13 @@ public class Setup {
                 String email = loginEmail.getText();
                 String password = new String(loginPassword.getText());
 
-                String sesssion_token = APIClient.login(email, password);
+                String sesssion_token = APIclient.login(email, password);
                 token = sesssion_token;
                 if (!sesssion_token.isEmpty()) {
                     // Login successful, navigate to next screen or perform actions
                     // For now, let's just print a message
-                    System.out.println("Login successful. Token: " + sesssion_token);
+                    System.out.println("Login successful.");
+                    main.newMainMenu();
                 } else {
                     // Login failed, display an error message or handle accordingly
                     loginWrongLabel.setVisible(true);
@@ -399,13 +378,27 @@ public class Setup {
         login.add(loginButton);
 
         bodyPanel.add(login);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        repaint();
     }
+
+    private void newUI() {
+        try {
+            bodyPanel.removeAll();
+        }
+        catch (Exception e) {
+            
+        }
+        bodyPanel.setBackground(Main.BodyColor);
+    }
+    private void repaint() {
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }
+
     public void verifyUser() {
         // Verify the user using the verification code
         String code = verificationCode.getText();
-        token = APIClient.verifyAccount(email.getText(), code);
+        token = APIclient.verifyAccount(email.getText(), code);
     }
 
 
@@ -417,7 +410,7 @@ public class Setup {
         int userModePreference = designMode; // You need to set this value based on the user's mode preference
         int userClass = gradeLevel.getSelectedIndex() + 1; // Assuming the index corresponds to class (e.g., Freshman = 1, Sophomore = 2, etc.)
 
-        boolean accountCreated = APIClient.createUserAccount(userFirstName, userLastName, userEmail, userPassword, userModePreference, userClass);
+        boolean accountCreated = APIclient.createUserAccount(userFirstName, userLastName, userEmail, userPassword, userModePreference, userClass);
         if (accountCreated) {
             System.out.println("Account created successfully.");
             // Optionally, you can proceed with the verification process here
