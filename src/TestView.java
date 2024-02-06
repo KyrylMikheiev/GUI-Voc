@@ -2,7 +2,8 @@ package src;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
-
+import VocabAPI.VocabParser;
+import VocabAPI.WordTypes.Vocab;
 import javax.swing.JPanel;
 
 public class TestView {
@@ -11,9 +12,16 @@ public class TestView {
         bodyPanel.setLayout(new GridLayout(1, 2));
         bodyPanel.setBackground(Main.BodyColor);
 
-        System.out.println(selectedElements);
+        ArrayList<Vocab> allVocabs = new ArrayList<>();
+        for (int i = 0; i < selectedElements.size(); ++i)
+        {
+            for (int j = 0; j < VocabParser.getVocabsFromLesson(selectedElements.get(i).substring(8)).size(); ++j)
+            {
+                allVocabs.add(VocabParser.getVocabsFromLesson(selectedElements.get(i).substring(8)).get(j));
+            }
+        }
         
-
+        
         content.add(bodyPanel);
     }
 }
