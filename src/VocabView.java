@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-
 public class VocabView {
     String[] pronomen = {"Ich", "Du", "Er/Sie/Es", "Wir", "Ihr", "Sie"};
     String[] zeitformen = {"Indikativ Aktiv", "Präsens", "Imperfekt", "Perfekt", "Plusquamperfekt", "Futur I", "Futur II"};
@@ -55,8 +54,7 @@ public class VocabView {
                 // Set background color
                 if (row % 2 == 0) {
                     component.setBackground(Main.defaultButton);
-                }
-                else {
+                } else {
                     component.setBackground(Main.BodyColor);
                 }
                 // Set text color
@@ -73,12 +71,9 @@ public class VocabView {
         header.setForeground(Main.TextColor); // Set header text color
         header.setFont(new Font("Arial", Font.BOLD, 20));
 
-        //JScrollPane scrollPane = new JScrollPane(table);
-        //bodyPanel.add(scrollPane, BorderLayout.CENTER);
         bodyPanel.add(header, BorderLayout.NORTH);
         bodyPanel.add(table, BorderLayout.CENTER);
 
-       
         if (v instanceof Verb) {
             displayConjugations((Verb) v);
             System.out.println("hello");
@@ -89,8 +84,6 @@ public class VocabView {
 
         content.add(bodyPanel);
     }
-
-     
 
     private void displayConjugations(Verb verb) {
         ArrayList<String> PräsentsConjugations = verb.getPraesens();
@@ -120,45 +113,43 @@ public class VocabView {
         }
     }
 
+    private void displayAdjectiveFormsTableLayout(Adjective adjective) {
+        bodyPanel.removeAll();
 
-  private void displayAdjectiveFormsTableLayout(Adjective adjective) {
-    bodyPanel.removeAll(); 
+        // Erstelle ein Panel für die Buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(Main.BodyColor);
 
-    // Erstelle ein Panel für die Buttons
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // Erstelle die Buttons
+        JButton button1 = new JButton("Maskulinum");
+        JButton button2 = new JButton("Femininum");
+        JButton button3 = new JButton("Neutrum");
 
-    // Erstelle die Buttons
-    JButton button1 = new JButton("Maskulinum");
-    JButton button2 = new JButton("Femininum");
-    JButton button3 = new JButton("Neutrum");
+        // Füge ActionListener zu den Buttons hinzu
+        button1.addActionListener(new ButtonListener());
+        button2.addActionListener(new ButtonListener());
+        button3.addActionListener(new ButtonListener());
 
-    // Füge ActionListener zu den Buttons hinzu
-    button1.addActionListener(new ButtonListener());
-    button2.addActionListener(new ButtonListener());
-    button3.addActionListener(new ButtonListener());
+        // Füge die Buttons zum Button-Panel hinzu
+        buttonPanel.add(button1);
+        buttonPanel.add(button2);
+        buttonPanel.add(button3);
 
-    // Füge die Buttons zum Button-Panel hinzu
-    buttonPanel.add(button1);
-    buttonPanel.add(button2);
-    buttonPanel.add(button3);
+        // Erstelle das Haupt-Panel für die GUI
+        mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Main.BodyColor);
 
-    // Erstelle das Haupt-Panel für die GUI
-    mainPanel = new JPanel(new BorderLayout());
+        // Füge das Button-Panel zum Haupt-Panel hinzu
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
 
-    // Füge das Button-Panel zum Haupt-Panel hinzu
-    mainPanel.add(buttonPanel, BorderLayout.NORTH);
-  
-    // Setze die Hintergrundfarbe des Hauptpanels
-    mainPanel.setBackground(Main.BodyColor);
+        // Erstelle eine Standard-Tabelle beim Start
+        createTable("Maskulinum");
 
-    // Erstelle eine Standard-Tabelle beim Start
-    createTable("Maskulinum");
-
-    // Füge das Haupt-Panel zum Hauptfenster hinzu und mache es sichtbar
-    bodyPanel.add(mainPanel);
-    bodyPanel.setVisible(true);
-}
-
+        // Füge das Haupt-Panel zum Hauptfenster hinzu und mache es sichtbar
+        bodyPanel.add(mainPanel);
+        bodyPanel.setBackground(Main.BodyColor);
+        bodyPanel.setVisible(true);
+    }
 
     private static void createTable(String gender) {
         // Erstelle eine Tabelle mit 5 Zeilen (für die Kasus) und 3 Spalten (für die Steigerungen)
@@ -166,61 +157,57 @@ public class VocabView {
         String[] kasus = {"Nominativ", "Genitiv", "Dativ", "Akkusativ", "Ablativ"};
         DefaultTableModel model = new DefaultTableModel(kasus.length, steigerungen.length);
         model.setColumnIdentifiers(steigerungen);
-    
+
         // Setze die Zeilenbezeichnungen (Kasus)
         for (int i = 0; i < kasus.length; i++) {
             model.setValueAt(kasus[i], i, 0);
         }
- 
+
         table1 = new JTable(model);
 
         JScrollPane scrollPane = new JScrollPane(table1);
 
         int topInset = 10;
-    int leftInset = 100;
-    int bottomInset = 10;
-    int rightInset = 100;
-    scrollPane.setBorder(BorderFactory.createEmptyBorder(topInset, leftInset, bottomInset, rightInset));
-    
-    mainPanel.add(scrollPane, BorderLayout.CENTER);
-        
-    
+        int leftInset = 100;
+        int bottomInset = 10;
+        int rightInset = 100;
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(topInset, leftInset, bottomInset, rightInset));
+
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
         // Aktualisiere das Haupt-Panel
         mainPanel.revalidate();
         mainPanel.repaint();
     }
+
     static class ButtonListener implements ActionListener {
-            // Bestimme die Daten für die neue Tabelle je nach geklicktem Button
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Bestimme das Geschlecht je nach geklicktem Button
-                String gender = "";
-                if (e.getActionCommand().equals("Maskulinum")) {
-                    gender = "Maskulinum";
-                } else if (e.getActionCommand().equals("Femininum")) {
-                    gender = "Femininum";
-                } else if (e.getActionCommand().equals("Neutrum")) {
-                    gender = "Neutrum";
-                }
-            
-                // Entferne die alte Tabelle, falls vorhanden
-                Component[] components = mainPanel.getComponents();
-                for (Component component : components) {
-                    if (component instanceof JScrollPane) {
-                        mainPanel.remove(component);
-                    }
-                }
-            
-                // Erstelle die neue Tabelle mit dem entsprechenden Geschlecht
-                createTable(gender);
-            
-                // Aktualisiere das Haupt-Panel
-                mainPanel.revalidate();
-                mainPanel.repaint();
+        // Bestimme die Daten für die neue Tabelle je nach geklicktem Button
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Bestimme das Geschlecht je nach geklicktem Button
+            String gender = "";
+            if (e.getActionCommand().equals("Maskulinum")) {
+                gender = "Maskulinum";
+            } else if (e.getActionCommand().equals("Femininum")) {
+                gender = "Femininum";
+            } else if (e.getActionCommand().equals("Neutrum")) {
+                gender = "Neutrum";
             }
-            
+
+            // Entferne die alte Tabelle, falls vorhanden
+            Component[] components = mainPanel.getComponents();
+            for (Component component : components) {
+                if (component instanceof JScrollPane) {
+                    mainPanel.remove(component);
+                }
+            }
+
+            // Erstelle die neue Tabelle mit dem entsprechenden Geschlecht
+            createTable(gender);
+
+            // Aktualisiere das Haupt-Panel
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
     }
-
-
-    
 }
