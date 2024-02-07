@@ -190,6 +190,8 @@ public class Main {
 
     public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2,
             boolean isCrossVisible3, boolean isCrossVisible4, boolean isCrossVisible5) {
+        newUI();
         new TestView(contentPane, null, selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5);
+        repaint();
     }
 }
