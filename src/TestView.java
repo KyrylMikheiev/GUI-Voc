@@ -8,10 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+
 
 import VocabAPI.VocabParser;
 import VocabAPI.WordTypes.Vocab;
-
 
 public class TestView {
     private ArrayList<Vocab> selectedVocabs;
@@ -41,18 +42,18 @@ public class TestView {
 
         // Erstelle Textfelder für die Übersetzungen
         if (!selectedVocabs.isEmpty()) {
-        Vocab firstVocab = selectedVocabs.get(0);
-        int anzahlÜbersetzungen = 0;
-        for (Vocab v: selectedVocabs) {
-            anzahlÜbersetzungen += v.getGerman().size();
+            Vocab firstVocab = selectedVocabs.get(0);
+            int anzahlÜbersetzungen = 0;
+            for (Vocab v: selectedVocabs) {
+                anzahlÜbersetzungen += v.getGerman().size();
+            }
+            translationTextFields = new JTextField[anzahlÜbersetzungen];
+            for (int i = 0; i < anzahlÜbersetzungen; i++) {
+                translationTextFields[i] = new JTextField();
+                bodyPanel.add(new JLabel("Übersetzung " + (i+1) + ":"));
+                bodyPanel.add(translationTextFields[i]);
+            }
         }
-        translationTextFields = new JTextField[anzahlÜbersetzungen];
-        for (int i = 0; i < anzahlÜbersetzungen; i++) {
-        translationTextFields[i] = new JTextField();
-        bodyPanel.add(new JLabel("Übersetzung " + (i+1) + ":"));
-        bodyPanel.add(translationTextFields[i]);
-    }
-}
 
         for (int i = 0; i < translationTextFields.length; i++) {
             translationTextFields[i] = new JTextField();
@@ -101,7 +102,50 @@ public class TestView {
         bodyPanel.repaint();
     }
 
+    private boolean isTranslationValid(String translation) {
+        // Hier kannst du deine Validierungslogik für die Übersetzungen implementieren
+        // Zum Beispiel könntest du prüfen, ob die Übersetzung nicht leer ist
+        return !translation.trim().isEmpty();
+    }
+
+    private boolean isNominativeValid(String nominative) {
+        // Hier kannst du deine Validierungslogik für den Nominativ implementieren
+        // Zum Beispiel könntest du prüfen, ob der Nominativ nicht leer ist
+        return !nominative.trim().isEmpty();
+    }
+
+    private boolean isDativeValid(String dative) {
+        // Hier kannst du deine Validierungslogik für den Dativ implementieren
+        // Zum Beispiel könntest du prüfen, ob der Dativ nicht leer ist
+        return !dative.trim().isEmpty();
+    }
+
+    private boolean areInputsValid() {
+        for (JTextField textField : translationTextFields) {
+            if (!isTranslationValid(textField.getText())) {
+                return false;
+            }
+        }
+        return isNominativeValid(nominativeTextField.getText()) && isDativeValid(dativeTextField.getText());
+    }
+
+    private void nextVocab() {
+        if (!areInputsValid()) {
+            JOptionPane.showMessageDialog(null, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        currentVocabIndex++;
+        if (currentVocabIndex >= selectedVocabs.size()) {
+            currentVocabIndex = 0;
+        }
+        updateVocabFields((JPanel) translationTextFields[0].getParent());
+    }
+
     private void previousVocab() {
+        if (!areInputsValid()) {
+            JOptionPane.showMessageDialog(null, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         currentVocabIndex--;
         if (currentVocabIndex < 0) {
             currentVocabIndex = selectedVocabs.size() - 1;
@@ -109,11 +153,6 @@ public class TestView {
         updateVocabFields((JPanel) translationTextFields[0].getParent());
     }
 
-    private void nextVocab() {
-        currentVocabIndex++;
-        if (currentVocabIndex >= selectedVocabs.size()) {
-            currentVocabIndex = 0;
-        }
-        updateVocabFields((JPanel) translationTextFields[0].getParent());
-    }
+    
+
 }
