@@ -57,7 +57,7 @@ public class NavBar {
         };
         appName.addMouseListener(mouseListener);
         appName.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        navigation_contentLeft.add(appName, BorderLayout.CENTER);
+        navigation_contentLeft.add(appName, BorderLayout.WEST);
         
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
