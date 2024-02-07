@@ -275,7 +275,7 @@ checkBox5.addActionListener(new ActionListener() {
 
         JButton button6 = new JButton("Start");
 button6.setPreferredSize(new Dimension(100, 50));
-button6.setBackground(Main.defaultButton);
+button6.setBackground(Main.DefaultButton);
 button6.setForeground(Main.TextColor);
 
 buttonsPanel1.setLayout(new GridBagLayout());

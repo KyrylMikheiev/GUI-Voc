@@ -26,6 +26,14 @@ public class Settings {
 
         JLabel darkModeLabel = new JLabel("Dunkelmodus");
         JButton darkModeButton = new JButton("Toggle");
+        darkModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add dark mode toggle functionality
+                main.toggleDarkmode();
+                bodyPanel.setBackground(Main.BodyColor);
+            }
+        });
         bodyPanel.add(darkModeLabel);
         bodyPanel.add(darkModeButton);
 

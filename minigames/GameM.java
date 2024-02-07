@@ -122,7 +122,7 @@ public class GameM implements ActionListener{
 		board = new String[2*x];
 		for(int i=0;i<(x*2);i++){
 			btn[i] = new JButton("");
-			btn[i].setBackground(Main.defaultButton);
+			btn[i].setBackground(Main.DefaultButton);
 			btn[i].setForeground(Main.TextColor);
 			btn[i].addActionListener(this);
 			btn[i].setEnabled(true);

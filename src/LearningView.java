@@ -195,7 +195,7 @@ public class LearningView {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backArrowButton.setContentAreaFilled(true);
-                backArrowButton.setBackground(Main.hoverButton);
+                backArrowButton.setBackground(Main.HoverButton);
             }
 
             @Override
@@ -223,7 +223,7 @@ public class LearningView {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     cross.setContentAreaFilled(true);
-                    cross.setBackground(Main.hoverButton);
+                    cross.setBackground(Main.HoverButton);
                 }
                 @Override
                 public void mouseExited(MouseEvent e) {
@@ -249,7 +249,7 @@ public class LearningView {
                 flipFlashcard();
             }
         });
-        flashcard.setBackground(Main.defaultButton);
+        flashcard.setBackground(Main.DefaultButton);
         flashcardPanel.add(flashcard, BorderLayout.CENTER);
         
         checkmarkPanel.setLayout(new BorderLayout());
@@ -267,7 +267,7 @@ public class LearningView {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     checkmark.setContentAreaFilled(true);
-                    checkmark.setBackground(Main.hoverButton);
+                    checkmark.setBackground(Main.HoverButton);
                 }
                 @Override
                 public void mouseExited(MouseEvent e) {

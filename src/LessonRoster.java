@@ -162,7 +162,7 @@ public class LessonRoster {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setBackground(Main.defaultButton);
+        button.setBackground(Main.DefaultButton);
         button.setForeground(Main.TextColor);
         button.setFocusPainted(false);
         return button;
@@ -172,7 +172,7 @@ public class LessonRoster {
         JList<String> list = new JList<>(model);
         list.setBackground(Main.BodyColor);
         list.setForeground(Main.TextColor);
-        list.setSelectionBackground(Main.defaultButton);
+        list.setSelectionBackground(Main.DefaultButton);
         list.setSelectionForeground(Main.BodyColor);
         list.setBorder(BorderFactory.createLineBorder(Main.TextColor));
 

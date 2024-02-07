@@ -168,7 +168,6 @@ public class Setup {
         designSelect_center.add(darkMode);
         designSelect.setLayout(new GridLayout(3, 1));
 
-
         designNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -179,14 +178,23 @@ public class Setup {
             @Override
             public void actionPerformed(ActionEvent e) {
                 designMode = 2;
+                if (main.getDarkmodeState()) {
+                    main.toggleDarkmode();
+                }
+                bodyPanel.setBackground(Main.BodyColor);
             }
         });
         darkMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 designMode = 1;
+                if (!main.getDarkmodeState()) {
+                    main.toggleDarkmode();
+                }
+                bodyPanel.setBackground(Main.BodyColor);
             }
         });
+
 
         designSelect.add(designLabel, BorderLayout.NORTH);
         designSelect.add(designSelect_center, BorderLayout.CENTER);
@@ -319,7 +327,11 @@ public class Setup {
         verificationNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                verifyUser();
+                if (verifyUser()) {
+                    main.newMainMenu();
+                } else {
+                    verification.add(new JLabel("Invalid verification code"));
+                }
             }
         });
 
@@ -395,10 +407,11 @@ public class Setup {
         bodyPanel.repaint();
     }
 
-    public void verifyUser() {
+    public boolean verifyUser() {
         // Verify the user using the verification code
         String code = verificationCode.getText();
         token = APIClient.verifyAccount(email.getText(), code);
+        return token != null;
     }
 
 

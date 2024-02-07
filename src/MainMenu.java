@@ -12,6 +12,36 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MainMenu {
+    private JButton learn;
+    private JButton test;
+    private JButton library;
+    private JButton text;
+    private JButton games;
+    private JButton settings;
+
+    public JButton getLearnButton() {
+        return learn;
+    }
+
+    public JButton getTestButton() {
+        return test;
+    }
+
+    public JButton getLibraryButton() {
+        return library;
+    }
+
+    public JButton getTextButton() {
+        return text;
+    }
+
+    public JButton getGamesButton() {
+        return games;
+    }
+
+    public JButton getSettingsButton() {
+        return settings;
+    }
     
     
 
@@ -58,16 +88,16 @@ public class MainMenu {
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                e.getComponent().setBackground(Main.hoverButton);
+                e.getComponent().setBackground(Main.HoverButton);
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                e.getComponent().setBackground(Main.defaultButton);
+                e.getComponent().setBackground(Main.DefaultButton);
             }
             @Override
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(() -> {
-                    e.getComponent().setBackground(Main.clickButton);
+                    e.getComponent().setBackground(Main.ClickButton);
                     //do something
                     if (e.getComponent() == learn) {
                         main.newLearningSelection();
@@ -99,14 +129,14 @@ public class MainMenu {
             button.setFont(new Font(Font.SANS_SERIF, 0, 20));
             button.setFocusPainted(false);
             button.setLayout(new BorderLayout());
-            button.setBackground(Main.defaultButton);
+            button.setBackground(Main.DefaultButton);
             button.setForeground(Main.TextColor);
             button.setHorizontalTextPosition(JButton.RIGHT);
             button.setVerticalTextPosition(JButton.CENTER);
             button.addMouseListener(mouseListener);
             body_contentLeft.add(button);
         }
-        
+
         JPanel bodyPanel_contentRight = new JPanel();
         bodyPanel_contentRight.setOpaque(false);
         bodyPanel_contentRight.setBorder(new ResponsiveBorder(100, 30, 100, 80));

@@ -64,7 +64,7 @@ public class LibraryView {
         
         nextLessonButton.setFont(new Font(Font.SANS_SERIF, 0, 20));
         nextLessonButton.setFocusPainted(false);
-        nextLessonButton.setBackground(Main.defaultButton);
+        nextLessonButton.setBackground(Main.DefaultButton);
         nextLessonButton.setForeground(Main.TextColor);
 
         nextLessonButton.addActionListener(new ActionListener() {
@@ -85,7 +85,7 @@ public class LibraryView {
         prevLessonButton.setBounds(325, 75, 75, 50);
         prevLessonButton.setFont(new Font(Font.SANS_SERIF, 0, 20));
         prevLessonButton.setFocusPainted(false);
-        prevLessonButton.setBackground(Main.defaultButton);
+        prevLessonButton.setBackground(Main.DefaultButton);
         prevLessonButton.setForeground(Main.TextColor);
 
         prevLessonButton.addActionListener(new ActionListener() {
@@ -111,7 +111,7 @@ public class LibraryView {
         lektionButton.setBounds(420, 75, 420, 50);
         lektionButton.setFont(new Font(Font.SANS_SERIF, 0, 20));
         lektionButton.setFocusPainted(false);
-        lektionButton.setBackground(Main.defaultButton);
+        lektionButton.setBackground(Main.DefaultButton);
         lektionButton.setForeground(Main.TextColor);
         lektionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -156,7 +156,7 @@ public class LibraryView {
                 JButton vocabButton = new JButton(vocab.getBasicForm() + " - " + vocab.getGerman().toString().replace("[", "").replace("]", ""));
                 vocabButton.setFont(new Font(Font.SANS_SERIF, 0, 12));
                 vocabButton.setFocusPainted(false);
-                vocabButton.setBackground(Main.defaultButton);
+                vocabButton.setBackground(Main.DefaultButton);
                 vocabButton.setForeground(Main.TextColor);
                 vocabButton.addActionListener(e -> main.newVocabView(vocab));
         

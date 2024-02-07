@@ -113,7 +113,7 @@ public class APIClient {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String response = reader.lines().collect(Collectors.joining());
-                System.out.println("Verification successful. Token: " + response);
+                System.out.println("Verification successful.");
                 TokenManager.saveToken(parseFromJson(response).get("token"));
                 return parseFromJson(response).get("token");
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {

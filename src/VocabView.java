@@ -53,7 +53,7 @@ public class VocabView {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 // Set background color
                 if (row % 2 == 0) {
-                    component.setBackground(Main.defaultButton);
+                    component.setBackground(Main.DefaultButton);
                 } else {
                     component.setBackground(Main.BodyColor);
                 }
