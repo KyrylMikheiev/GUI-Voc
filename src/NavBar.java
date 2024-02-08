@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import restAPI.APIClient;
+
 public class NavBar {
 
     private Color GRAY = Color.decode("#374151");
@@ -118,12 +120,8 @@ public class NavBar {
         burgerMenu.setForeground(Main.BodyColor);
 
         JMenuItem mainmenu = new JMenuItem("Hauptmenü");
-        JMenuItem learn = new JMenuItem("Lernen");
-        JMenuItem test = new JMenuItem("Testen");
-        JMenuItem library = new JMenuItem("Bibliothek");
-        JMenuItem text = new JMenuItem("Textchecker");
-        JMenuItem games = new JMenuItem("Minispiele");
         JMenuItem settings = new JMenuItem("Einstellungen");
+        JMenuItem logout = new JMenuItem("Abmelden");
         JMenuItem exit = new JMenuItem("Beenden");
 
         // MouseListener for hovering and unhovering menuItems
@@ -144,25 +142,18 @@ public class NavBar {
                 JMenuItem source = (JMenuItem) e.getSource(); // Identify the source of the event
                 if (source == mainmenu) {
                     main.newMainMenu();
-                } else if (source == learn) {
-                    main.newLearningSelection();
-                } else if (source == library) {
-                    main.newLibraryMenu();
-                } else if (source == games) {
-                    main.newGamesMenu();
                 } else if (source == settings) {
                     main.newSettingsMenu();
                 } else if (source == exit) {
                     System.exit(0);
-                } else if (source == test) {
-                    main.newTestSelection();
-                } else if (source == text) {
-                    main.newTextChecker();
+                } else if (source == logout) {
+                    APIClient.logout();
+                    main.newSetup();
                 }
             }
         };
 
-        JMenuItem[] menuItems = {mainmenu, learn, test, library, text, games, settings, exit};
+        JMenuItem[] menuItems = {mainmenu, settings, logout, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
             menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));

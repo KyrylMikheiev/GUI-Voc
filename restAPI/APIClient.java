@@ -50,6 +50,7 @@ public class APIClient {
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
             }
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,6 +87,7 @@ public class APIClient {
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
             }
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,6 +127,7 @@ public class APIClient {
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
             }
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,7 +140,12 @@ public class APIClient {
             return "LOGIN_REQUIRED";
         } else {
             // Token loaded successfully
-            return loadedToken;
+            if (validateToken(loadedToken)) {
+                return loadedToken;
+            }
+            else {
+                return "LOGIN_REQUIRED";
+            }
         }
     }
 
@@ -172,6 +180,7 @@ public class APIClient {
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
             }
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,6 +203,7 @@ public class APIClient {
             os.close();
 
             int responseCode = con.getResponseCode();
+            con.disconnect();
             return responseCode == 200;
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,6 +227,7 @@ public class APIClient {
             os.close();
 
             int responseCode = con.getResponseCode();
+            con.disconnect();
             return responseCode == 200;
         } catch (IOException e) {
             e.printStackTrace();
@@ -241,6 +252,7 @@ public class APIClient {
             os.close();
 
             int responseCode = con.getResponseCode();
+            con.disconnect();
             return responseCode == 200;
         } catch (IOException e) {
             e.printStackTrace();
@@ -249,29 +261,55 @@ public class APIClient {
         }
     }
 
-    public static boolean logout(String authToken) {
+    public static boolean logout() {
         try {
+            String authToken = TokenManager.loadToken();
+    
             URI uri = URI.create(BASE_URL + "?action=logout");
             URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Auth", authToken);
             connection.setDoOutput(true);
-
-            String requestBody = parseToJson(Map.of("authToken", authToken));
-
-            OutputStream os = connection.getOutputStream();
-            byte[] input = requestBody.getBytes("utf-8");
-            os.write(input, 0, input.length);
-            os.flush();
-            os.close();
-
             int responseCode = connection.getResponseCode();
-            return responseCode == 200;
+
+            connection.disconnect();
+    
+            return responseCode == HttpURLConnection.HTTP_OK;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("IOException occurred while trying to logout.");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to logout due to an unexpected exception.");
+            return false;
+        }
+    }
+    
+
+    private static boolean validateToken(String authToken) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=validateToken");
+            URL url = uri.toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Auth", authToken); // Set your authentication token here
+            connection.setDoOutput(true);
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+            if (responseCode == 401) {
+                System.out.println("Token is invalid. Redirecting to login.");
+                return false;
+            }
+
+            return true;
         }
         catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Failed to logout.");
+            System.out.println("Failed to validate token.");
             return false;
         }
     }
@@ -329,6 +367,7 @@ public class APIClient {
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
             }
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
