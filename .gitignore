@@ -1,3 +1,4 @@
-*class
+**.class
 .gitmodules
 restAPI/token.txt
+**.DS_Store

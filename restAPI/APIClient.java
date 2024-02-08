@@ -2,6 +2,7 @@ package restAPI;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -146,7 +147,7 @@ public class APIClient {
             URI uri = URI.create(BASE_URL + "?action=deleteAccount");
             URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
+            connection.setRequestMethod("DELETE");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Auth", authToken); // Set the Auth header with the token
@@ -173,6 +174,105 @@ public class APIClient {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static boolean initiatePasswordReset(String email) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=initiatePasswordReset");
+            URL url = uri.toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+
+            String jsonInputString = "{\"email\": \"" + email + "\"}";
+
+            OutputStream os = con.getOutputStream();
+            os.write(jsonInputString.getBytes());
+            os.flush();
+            os.close();
+
+            int responseCode = con.getResponseCode();
+            return responseCode == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean validatePasswordResetCode(String email, String code) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=validatePasswordReset");
+            URL url = uri.toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+
+            String jsonInputString = "{\"email\": \"" + email + "\", \"code\": \"" + code + "\"}";
+
+            OutputStream os = con.getOutputStream();
+            os.write(jsonInputString.getBytes());
+            os.flush();
+            os.close();
+
+            int responseCode = con.getResponseCode();
+            return responseCode == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to validate password reset code.");
+            return false;
+        }
+    }
+    public static boolean doPasswordReset(String email, String code, String password) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=doPasswordReset");
+            URL url = uri.toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+
+            String jsonInputString = "{\"email\": \"" + email + "\", \"code\": \"" + code + "\", \"newPassword\": \"" + password + "\"}";
+
+            OutputStream os = con.getOutputStream();
+            os.write(jsonInputString.getBytes());
+            os.flush();
+            os.close();
+
+            int responseCode = con.getResponseCode();
+            return responseCode == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to reset password.");
+            return false;
+        }
+    }
+
+    public static boolean logout(String authToken) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=logout");
+            URL url = uri.toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            String requestBody = parseToJson(Map.of("authToken", authToken));
+
+            OutputStream os = connection.getOutputStream();
+            byte[] input = requestBody.getBytes("utf-8");
+            os.write(input, 0, input.length);
+            os.flush();
+            os.close();
+
+            int responseCode = connection.getResponseCode();
+            return responseCode == 200;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to logout.");
+            return false;
         }
     }
 
@@ -346,7 +446,7 @@ public class APIClient {
     public static void main(String[] args) {
 
         // create example account
-        String email = "mochasteve@outlook.com";
+        String email = "adr.st@gmx.de";
         String password = "123456";
 
         boolean created = createUserAccount("Adrian", "Steyer", email, password, 1, 11);
@@ -363,6 +463,19 @@ public class APIClient {
         // login to account
         //login(email, password);
         System.out.println("Token: " + TokenManager.loadToken());
+
+        // reset password
+        System.out.println("reset password");
+        initiatePasswordReset(email);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String inputString = scanner.nextLine();
+        scanner.close();
+        System.out.println("validate password ");
+        validatePasswordResetCode(email, inputString);
+        System.out.println("resedtting password ");
+        doPasswordReset(email, inputString, "nigga");
+        System.out.println("successfully reset password ");
 
         // delete account
         //deleteAccount(password, TokenManager.loadToken());
