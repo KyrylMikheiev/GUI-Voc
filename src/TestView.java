@@ -1,15 +1,10 @@
 package src;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-
+import javax.swing.*;
 
 import VocabAPI.VocabParser;
 import VocabAPI.WordTypes.Vocab;
@@ -26,7 +21,7 @@ public class TestView {
         currentVocabIndex = 0;
 
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new GridLayout(5, 2));
+        bodyPanel.setLayout(new BorderLayout());
         bodyPanel.setBackground(Main.BodyColor);
         System.out.println(selectedElements);
         ArrayList<Vocab> allVocabs = new ArrayList<>();
@@ -40,32 +35,44 @@ public class TestView {
         // Ersten zehn zufälligen Vokabeln auswählen
         selectedVocabs.addAll(allVocabs.subList(0, Math.min(10, allVocabs.size())));
 
-        // Erstelle Textfelder für die Übersetzungen
+        // Erstelle Textfelder für die Übersetzungen einer einzelnen Vokabel
         if (!selectedVocabs.isEmpty()) {
-            Vocab firstVocab = selectedVocabs.get(0);
-            int anzahlÜbersetzungen = 0;
-            for (Vocab v: selectedVocabs) {
-                anzahlÜbersetzungen += v.getGerman().size();
-            }
-            translationTextFields = new JTextField[anzahlÜbersetzungen];
-            for (int i = 0; i < anzahlÜbersetzungen; i++) {
-                translationTextFields[i] = new JTextField();
-                bodyPanel.add(new JLabel("Übersetzung " + (i+1) + ":"));
-                bodyPanel.add(translationTextFields[i]);
-            }
-        }
+            Vocab selectedVocab = selectedVocabs.get(currentVocabIndex); // Die aktuell ausgewählte Vokabel
+            int anzahlÜbersetzungen = selectedVocab.getGerman().size(); // Anzahl der deutschen Übersetzungen dieser Vokabel
+            translationTextFields = new JTextField[anzahlÜbersetzungen]; // Array für die Übersetzungsfelder
 
-        for (int i = 0; i < translationTextFields.length; i++) {
-            translationTextFields[i] = new JTextField();
-            bodyPanel.add(new JLabel("Übersetzung " + (i+1) + ":"));
-            bodyPanel.add(translationTextFields[i]);
+            // Schleife zum Erstellen der Textfelder für die Übersetzungen
+            for (int i = 0; i < anzahlÜbersetzungen; i++) {
+                translationTextFields[i] = new JTextField(); // Neues Textfeld für eine Übersetzung
+            }
         }
 
         nominativeTextField = new JTextField();
         dativeTextField = new JTextField();
 
+        // Erstelle Panel für die Übersetzungen
+        JPanel translationPanel = new JPanel();
+        translationPanel.setLayout(new BoxLayout(translationPanel, BoxLayout.Y_AXIS));
+        translationPanel.setBackground(Main.BodyColor);
+
+        // Erstelle Labels und Textfelder für die Übersetzungen
+        for (int i = 0; i < translationTextFields.length; i++) {
+            JPanel translationRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            translationRow.setBackground(Main.BodyColor);
+            translationRow.add(new JLabel("Übersetzung " + (i + 1) + ":"));
+            translationRow.add(translationTextFields[i]);
+            translationPanel.add(translationRow);
+        }
+
+        // Füge Panel für die Übersetzungen hinzu
+        bodyPanel.add(translationPanel, BorderLayout.WEST);
+
         // Füge Labels und Textfelder für die aktuelle Vokabel hinzu
         updateVocabFields(bodyPanel);
+
+        // Erstelle Panel für die Buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(Main.BodyColor);
 
         // Erstelle Buttons für Vor- und Zurück-Navigation
         JButton previousButton = new JButton("Vorherige Vokabel");
@@ -74,33 +81,74 @@ public class TestView {
         JButton nextButton = new JButton("Nächste Vokabel");
         nextButton.addActionListener(e -> nextVocab());
 
-        bodyPanel.add(previousButton);
-        bodyPanel.add(nextButton);
+        buttonPanel.add(previousButton);
+        buttonPanel.add(nextButton);
+
+        // Füge Panel für die Buttons hinzu
+        bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         content.add(bodyPanel);
     }
+//UPDATE!!!!!!!!!!!
+private void updateVocabFields(JPanel bodyPanel) {
+    // Anzeige der gesamten selectedVocabs-Liste
+    JLabel vocabsListLabel = new JLabel("Gesamte Vokabeln: " + selectedVocabs.toString());
+    bodyPanel.add(vocabsListLabel, BorderLayout.NORTH);
 
-    private void updateVocabFields(JPanel bodyPanel) {
-        bodyPanel.removeAll();
-        Vocab currentVocab = selectedVocabs.get(currentVocabIndex);
+    Vocab currentVocab = selectedVocabs.get(currentVocabIndex);
 
-        // Erstelle Labels und Textfelder für die Übersetzungen
-        for (int i = 0; i < translationTextFields.length; i++) {
-            bodyPanel.add(new JLabel("Übersetzung " + (i+1) + ":"));
-            bodyPanel.add(translationTextFields[i]);
-        }
+    JPanel nominativeDativePanel = new JPanel(new GridLayout(2, 1)); // GridLayout für 2 Reihen und 2 Spalten
+    nominativeDativePanel.setBackground(Main.BodyColor);
+    nominativeDativePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Abstand um das Panel hinzufügen
+    
+    // Erstelle Panel für Nominativ
+JPanel nominativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+nominativePanel.setBackground(Main.BodyColor);
+JLabel nominativeLabel = new JLabel("Nominativ Plural auf Latein:");
+nominativePanel.add(nominativeLabel);
+nominativeTextField.setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+nominativePanel.add(nominativeTextField);
 
-        JLabel nominativeLabel = new JLabel("Nominativ Plural auf Latein:");
-        bodyPanel.add(nominativeLabel);
-        bodyPanel.add(nominativeTextField);
+// Erstelle Panel für Dativ
+JPanel dativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+dativePanel.setBackground(Main.BodyColor);
+JLabel dativeLabel = new JLabel("Dativ Singular auf Latein:");
+dativePanel.add(dativeLabel);
+dativeTextField.setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+dativePanel.add(dativeTextField);
 
-        JLabel dativeLabel = new JLabel("Dativ Singular auf Latein:");
-        bodyPanel.add(dativeLabel);
-        bodyPanel.add(dativeTextField);
+// Füge Panel für Nominativ und Dativ hinzu
+nominativeDativePanel.add(nominativePanel);
+nominativeDativePanel.add(dativePanel);
+bodyPanel.add(nominativeDativePanel, BorderLayout.EAST);
 
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
-    }
+    
+
+
+    // Füge das Translation Panel hinzu
+    JPanel translationPanel = new JPanel();
+    translationPanel.setLayout(new BoxLayout(translationPanel, BoxLayout.Y_AXIS));
+    translationPanel.setBackground(Main.BodyColor);
+
+    // Erstelle Labels und Textfelder für die Übersetzungen
+for (int i = 0; i < translationTextFields.length; i++) {
+    JPanel translationRow = new JPanel(new BorderLayout());
+    translationRow.setBackground(Main.BodyColor);
+    JLabel translationLabel = new JLabel("Übersetzung " + (i + 1) + ":");
+    JTextField translationTextField = new JTextField(20); // Ändere die Größe des Textfelds hier
+    translationRow.add(translationLabel, BorderLayout.WEST);
+    translationRow.add(translationTextField, BorderLayout.CENTER);
+    translationPanel.add(translationRow);
+}
+
+
+    // Füge das Translation Panel hinzu
+    bodyPanel.add(translationPanel, BorderLayout.WEST);
+
+    bodyPanel.revalidate();
+    bodyPanel.repaint();
+}
+
 
     private boolean isTranslationValid(String translation) {
         // Hier kannst du deine Validierungslogik für die Übersetzungen implementieren
@@ -152,7 +200,5 @@ public class TestView {
         }
         updateVocabFields((JPanel) translationTextFields[0].getParent());
     }
-
-    
 
 }
