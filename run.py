@@ -2,6 +2,7 @@ import os
 import shutil
 
 def delete():
+    print("Deleting old files...")
     if os.path.exists("src/*.class"):
         os.remove("src/*.class")
     if os.path.exists("LatinVocabParser/VocabAPI/*.class"):
@@ -15,10 +16,12 @@ def delete():
 
 def compile():
     delete()
+    print("Compiling Java code...")
     os.system('javac -d . src/*.java LatinVocabParser/VocabAPI/*.java LatinVocabParser/VocabAPI/WordTypes/*.java minigames/*.java')
 
 def run():
     compile()
+    print("Starting program...")
     os.system('java src/Main')
 
 if __name__ == "__main__":

@@ -41,8 +41,9 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
 
 - [ ] navBar
 
-  - [ ] better logo
+  - [X] better logo
   - [ ] back button
+  - [ ] light mode
 - [ ] initialSetup
 
   - [X] register
@@ -52,8 +53,8 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
   - [X] confirm app settings screen
     - [X] modePreference
     - [ ] widget
-  - [ ] layout
-  - [ ] style
+  - [ ] loginRegister style
+  - [ ] light mode
 - [ ] textHelper
 
   - [ ] get lessons of words
@@ -98,7 +99,7 @@ GUI und Grundgerüst für den VocabTrainer von Adrian, Kyryl, Nick und Niko.
 
   - [ ] style
   - [ ] keybinds
-  - [ ] connect to database
+  - [X] connect to database
 - [ ] vocabSet creator
 
   - [ ] upload/save functionality
