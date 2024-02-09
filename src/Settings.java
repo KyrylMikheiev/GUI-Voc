@@ -1,6 +1,9 @@
 package src;
 
 import javax.swing.*;
+
+import restAPI.APIClient;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,31 +18,10 @@ public class Settings {
 
         bodyPanel.setBackground(Main.BodyColor);
 
-        JLabel changeName = new JLabel("Name ändern");
-        changeName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-        changeName.setForeground(Main.TextColor);
-        bodyPanel.add(changeName);
-
-        PlaceholderTextField textArea = new PlaceholderTextField("Max Mustermann", Color.GRAY);
-        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        bodyPanel.add(textArea);
-
-        JLabel darkModeLabel = new JLabel("Dunkelmodus");
-        JButton darkModeButton = new JButton("Toggle");
-        darkModeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Add dark mode toggle functionality
-                main.toggleDarkmode();
-                bodyPanel.setBackground(Main.BodyColor);
-            }
-        });
-        bodyPanel.add(darkModeLabel);
+        JButton darkModeButton = new JButton("Dunkelmodus an/aus");
         bodyPanel.add(darkModeButton);
 
-        JLabel deleteDataLabel = new JLabel("Daten Löschen");
-        JButton deleteDataButton = new JButton("Delete");
-        bodyPanel.add(deleteDataLabel);
+        JButton deleteDataButton = new JButton("Konto löschen");
         bodyPanel.add(deleteDataButton);
 
         JButton creditsButton = new JButton("Mitwirkende und Copyright");
@@ -53,12 +35,19 @@ public class Settings {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == darkModeButton) {
                     // Add dark mode toggle functionality
+                    main.toggleDarkmode();
+                    bodyPanel.setBackground(Main.BodyColor);
+                    APIClient.updatePreferences(main.getDarkmodeState(), 0, 0);
+
                 } else if (e.getSource() == deleteDataButton) {
                     // Add delete data functionality
+
                 } else if (e.getSource() == creditsButton) {
                     main.newCredits(content);
+
                 } else if (e.getSource() == privacyButton) {
                     main.newPrivacyStatement();
+
                 }
             }
         };

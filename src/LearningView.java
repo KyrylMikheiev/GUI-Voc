@@ -373,7 +373,7 @@ public class LearningView {
 
     private boolean uploadData() {
         //connect to rest api and upload the vocab data
-        return APIClient.updateUserVocabStats(wrongVocabs, rightVocabs, "bf875d80ac0c0ee18ac47e0581ebd5288b38ca4602b1a7bdb32e0444b7ef96ba");
+        return APIClient.updateUserVocabStats(wrongVocabs, rightVocabs);
     }
     private void showFinishedScreen() {
         // show finished screen

@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -149,7 +148,6 @@ public class APIClient {
         }
     }
 
-
     public static void deleteAccount(String password, String authToken) {
         try {
             URI uri = URI.create(BASE_URL + "?action=deleteAccount");
@@ -275,8 +273,15 @@ public class APIClient {
             int responseCode = connection.getResponseCode();
 
             connection.disconnect();
-    
-            return responseCode == HttpURLConnection.HTTP_OK;
+
+            if (responseCode == 200) {
+                System.out.println("Logout successful.");
+                return true;
+            }
+            else {
+                System.out.println("Failed to logout. Response code: " + responseCode);
+                return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IOException occurred while trying to logout.");
@@ -297,24 +302,74 @@ public class APIClient {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Auth", authToken); // Set your authentication token here
+            connection.setRequestProperty("Auth", authToken);
             connection.setDoOutput(true);
+    
+            // Send request
             int responseCode = connection.getResponseCode();
-            connection.disconnect();
-            if (responseCode == 401) {
-                System.out.println("Token is invalid. Redirecting to login.");
+    
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Read response
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+    
+                // Parse JSON response
+                String jsonResponse = response.toString();
+                //System.out.println("Response: " + jsonResponse);
+                // Assuming the response is a boolean value
+                return Boolean.parseBoolean(jsonResponse);
+            } else {
+                System.out.println("Token validation failed with response code: " + responseCode);
                 return false;
             }
-
-            return true;
-        }
-        catch (Exception e) {
-            System.out.println("Failed to validate token.");
+        } catch (Exception e) {
+            System.out.println("Failed to validate token: " + e.getMessage());
             return false;
         }
     }
 
-    public static boolean updateUserVocabStats(ArrayList<Integer> wrongVocabIDs, ArrayList<Integer> rightVocabIDs, String authToken) {
+    public static boolean updatePreferences(boolean isDarkMode, int gradeLevel, int startMenuWidget) {
+        try {
+            URI uri = URI.create(BASE_URL + "?action=updatePreferences");
+            URL url = uri.toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Auth", TokenManager.loadToken());
+            connection.setDoOutput(true);
+            
+            String jsonInputString = parseToJson(Map.of("mode", isDarkMode, "class", gradeLevel, "widget", startMenuWidget));
+
+            OutputStream os = connection.getOutputStream();
+            os.write(jsonInputString.getBytes());
+            os.flush();
+            os.close();
+
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+
+            if (responseCode == 200) {
+                System.out.println("Preferences updated successfully.");
+                return true;
+            }
+            else {
+                System.out.println("Failed to update preferences. Response code: " + responseCode);
+                return false;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Failed to update preferences: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean updateUserVocabStats(ArrayList<Integer> wrongVocabIDs, ArrayList<Integer> rightVocabIDs) {
         try {
             URI uri = URI.create(BASE_URL + "?action=updateUserVocabStats");
             URL url = uri.toURL();
@@ -322,7 +377,7 @@ public class APIClient {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Auth", authToken); // Set your authentication token here
+            connection.setRequestProperty("Auth", TokenManager.loadToken()); // Set your authentication token here
             connection.setDoOutput(true);
     
             // Construct JSON payload
@@ -485,6 +540,7 @@ public class APIClient {
     public static void main(String[] args) {
 
         // create example account
+        /*
         String email = "adr.st@gmx.de";
         String password = "123456";
 
@@ -518,5 +574,8 @@ public class APIClient {
 
         // delete account
         //deleteAccount(password, TokenManager.loadToken());
+        */
+        //logout
+        logout();
     }
 }
