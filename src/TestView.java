@@ -29,33 +29,33 @@ public class TestView {
             allVocabs.addAll(VocabParser.getVocabsFromLesson(selectedElements.get(i).substring(8)));
         }
 
-        // Vokabeln mischen
+        // shuffle vocabs
         Collections.shuffle(allVocabs);
 
-        // Ersten zehn zufälligen Vokabeln auswählen
+        // select ten random vocabs
         selectedVocabs.addAll(allVocabs.subList(0, Math.min(10, allVocabs.size())));
 
-        // Erstelle Textfelder für die Übersetzungen einer einzelnen Vokabel
+        // set up text fields for each translation
         if (!selectedVocabs.isEmpty()) {
-            Vocab selectedVocab = selectedVocabs.get(currentVocabIndex); // Die aktuell ausgewählte Vokabel
-            int anzahlÜbersetzungen = selectedVocab.getGerman().size(); // Anzahl der deutschen Übersetzungen dieser Vokabel
-            translationTextFields = new JTextField[anzahlÜbersetzungen]; // Array für die Übersetzungsfelder
+            Vocab selectedVocab = selectedVocabs.get(currentVocabIndex); // currently selected vocab
+            int anzahlÜbersetzungen = selectedVocab.getGerman().size(); // number of german translations for the selected vocab
+            translationTextFields = new JTextField[anzahlÜbersetzungen]; // array of translation fields
 
-            // Schleife zum Erstellen der Textfelder für die Übersetzungen
+            // create text fields for each translation
             for (int i = 0; i < anzahlÜbersetzungen; i++) {
-                translationTextFields[i] = new JTextField(); // Neues Textfeld für eine Übersetzung
+                translationTextFields[i] = new JTextField(); 
             }
         }
 
         nominativeTextField = new JTextField();
         dativeTextField = new JTextField();
 
-        // Erstelle Panel für die Übersetzungen
+        // create panel for translation fields
         JPanel translationPanel = new JPanel();
         translationPanel.setLayout(new BoxLayout(translationPanel, BoxLayout.Y_AXIS));
         translationPanel.setBackground(Main.BodyColor);
 
-        // Erstelle Labels und Textfelder für die Übersetzungen
+        // create labels and text fields for translations
         for (int i = 0; i < translationTextFields.length; i++) {
             JPanel translationRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
             translationRow.setBackground(Main.BodyColor);
@@ -64,17 +64,17 @@ public class TestView {
             translationPanel.add(translationRow);
         }
 
-        // Füge Panel für die Übersetzungen hinzu
+        //  add panel for the translations
         bodyPanel.add(translationPanel, BorderLayout.WEST);
 
-        // Füge Labels und Textfelder für die aktuelle Vokabel hinzu
+        // add labels and text fields for the  current vocab
         updateVocabFields(bodyPanel);
 
-        // Erstelle Panel für die Buttons
+        // create panel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Main.BodyColor);
 
-        // Erstelle Buttons für Vor- und Zurück-Navigation
+        // create buttons for previous and next vocab
         JButton previousButton = new JButton("Vorherige Vokabel");
         previousButton.addActionListener(e -> previousVocab());
 
@@ -84,40 +84,48 @@ public class TestView {
         buttonPanel.add(previousButton);
         buttonPanel.add(nextButton);
 
-        // Füge Panel für die Buttons hinzu
+        // ????
         bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         content.add(bodyPanel);
     }
 //UPDATE!!!!!!!!!!!
+//update the GUI components in the bodyPanel
 private void updateVocabFields(JPanel bodyPanel) {
-    // Anzeige der gesamten selectedVocabs-Liste
-    JLabel vocabsListLabel = new JLabel("Gesamte Vokabeln: " + selectedVocabs.toString());
+
+    // create a JLabel with the name of the vocab
+    JLabel vocabsListLabel = new JLabel(selectedVocabs.get(0).getBasicForm());
+    vocabsListLabel.setFont(vocabsListLabel.getFont().deriveFont(35f));
+
+    // center text (x axis) 
+    vocabsListLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    vocabsListLabel.setBackground(Main.BodyColor);
     bodyPanel.add(vocabsListLabel, BorderLayout.NORTH);
 
     Vocab currentVocab = selectedVocabs.get(currentVocabIndex);
 
-    JPanel nominativeDativePanel = new JPanel(new GridLayout(2, 1)); // GridLayout für 2 Reihen und 2 Spalten
+    // JPanel for forms
+    JPanel nominativeDativePanel = new JPanel(new GridLayout(2, 1)); 
     nominativeDativePanel.setBackground(Main.BodyColor);
-    nominativeDativePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Abstand um das Panel hinzufügen
+    nominativeDativePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
     
-    // Erstelle Panel für Nominativ
+    // create panel for "nominativ"
 JPanel nominativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 nominativePanel.setBackground(Main.BodyColor);
 JLabel nominativeLabel = new JLabel("Nominativ Plural auf Latein:");
 nominativePanel.add(nominativeLabel);
-nominativeTextField.setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+nominativeTextField.setPreferredSize(new Dimension(200, 20)); 
 nominativePanel.add(nominativeTextField);
 
-// Erstelle Panel für Dativ
+// create panel for "dativ"
 JPanel dativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 dativePanel.setBackground(Main.BodyColor);
 JLabel dativeLabel = new JLabel("Dativ Singular auf Latein:");
 dativePanel.add(dativeLabel);
-dativeTextField.setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+dativeTextField.setPreferredSize(new Dimension(200, 20)); 
 dativePanel.add(dativeTextField);
 
-// Füge Panel für Nominativ und Dativ hinzu
+// add both panels
 nominativeDativePanel.add(nominativePanel);
 nominativeDativePanel.add(dativePanel);
 bodyPanel.add(nominativeDativePanel, BorderLayout.EAST);
@@ -125,46 +133,40 @@ bodyPanel.add(nominativeDativePanel, BorderLayout.EAST);
     
 
 
-    // Füge das Translation Panel hinzu
-    JPanel translationPanel = new JPanel();
-    translationPanel.setLayout(new BoxLayout(translationPanel, BoxLayout.Y_AXIS));
-    translationPanel.setBackground(Main.BodyColor);
+   // create panel for translations
+JPanel translationPanel = new JPanel();
+translationPanel.setLayout(new BoxLayout(translationPanel, BoxLayout.Y_AXIS));
+translationPanel.setBackground(Main.BodyColor);
 
-    // Erstelle Labels und Textfelder für die Übersetzungen
+// Erstelle Labels und Textfelder für die Übersetzungen
 for (int i = 0; i < translationTextFields.length; i++) {
-    JPanel translationRow = new JPanel(new BorderLayout());
+    JPanel translationRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
     translationRow.setBackground(Main.BodyColor);
     JLabel translationLabel = new JLabel("Übersetzung " + (i + 1) + ":");
-    JTextField translationTextField = new JTextField(20); // Ändere die Größe des Textfelds hier
-    translationRow.add(translationLabel, BorderLayout.WEST);
-    translationRow.add(translationTextField, BorderLayout.CENTER);
+    translationRow.add(translationLabel);
+    translationTextFields[i].setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+    translationRow.add(translationTextFields[i]);
     translationPanel.add(translationRow);
 }
 
+// add panel for translations
+bodyPanel.add(translationPanel, BorderLayout.WEST);
 
-    // Füge das Translation Panel hinzu
-    bodyPanel.add(translationPanel, BorderLayout.WEST);
 
     bodyPanel.revalidate();
     bodyPanel.repaint();
 }
 
-
+    // check if all fields are filled in
     private boolean isTranslationValid(String translation) {
-        // Hier kannst du deine Validierungslogik für die Übersetzungen implementieren
-        // Zum Beispiel könntest du prüfen, ob die Übersetzung nicht leer ist
         return !translation.trim().isEmpty();
     }
 
     private boolean isNominativeValid(String nominative) {
-        // Hier kannst du deine Validierungslogik für den Nominativ implementieren
-        // Zum Beispiel könntest du prüfen, ob der Nominativ nicht leer ist
         return !nominative.trim().isEmpty();
     }
 
     private boolean isDativeValid(String dative) {
-        // Hier kannst du deine Validierungslogik für den Dativ implementieren
-        // Zum Beispiel könntest du prüfen, ob der Dativ nicht leer ist
         return !dative.trim().isEmpty();
     }
 
@@ -177,6 +179,8 @@ for (int i = 0; i < translationTextFields.length; i++) {
         return isNominativeValid(nominativeTextField.getText()) && isDativeValid(dativeTextField.getText());
     }
 
+
+// return error message if fields are not filled in
     private void nextVocab() {
         if (!areInputsValid()) {
             JOptionPane.showMessageDialog(null, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
