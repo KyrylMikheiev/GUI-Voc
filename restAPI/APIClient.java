@@ -10,8 +10,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -136,6 +134,7 @@ public class APIClient {
         String loadedToken = TokenManager.loadToken();
         if (loadedToken == null) {
             // Token loader returned null, prompting UI to request login
+            System.out.println("Token loader returned null, prompting UI to request login.");
             return "LOGIN_REQUIRED";
         } else {
             // Token loaded successfully
@@ -143,12 +142,13 @@ public class APIClient {
                 return loadedToken;
             }
             else {
+                System.out.println("Loaded token seems to be invalid.");
                 return "LOGIN_REQUIRED";
             }
         }
     }
 
-    public static void deleteAccount(String password, String authToken) {
+    public static boolean deleteAccount(String password) {
         try {
             URI uri = URI.create(BASE_URL + "?action=deleteAccount");
             URL url = uri.toURL();
@@ -156,7 +156,7 @@ public class APIClient {
             connection.setRequestMethod("DELETE");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Auth", authToken); // Set the Auth header with the token
+            connection.setRequestProperty("Auth", loadSession()); // Set the Auth header with the token
             connection.setDoOutput(true);
 
             String requestBody = parseToJson(Map.of("password", password));
@@ -170,6 +170,7 @@ public class APIClient {
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 System.out.println("Account deleted successfully");
+                return true;
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 System.out.println("Failed to delete account. Invalid login credentials.");
             } else {
@@ -182,6 +183,7 @@ public class APIClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
     
     public static boolean initiatePasswordReset(String email) {
@@ -322,7 +324,9 @@ public class APIClient {
                 String jsonResponse = response.toString();
                 //System.out.println("Response: " + jsonResponse);
                 // Assuming the response is a boolean value
-                return Boolean.parseBoolean(jsonResponse);
+                boolean x = Boolean.parseBoolean(parseFromJson(jsonResponse).get("TokenValid"));
+                System.out.println("Token valid: " + x);
+                return x;
             } else {
                 System.out.println("Token validation failed with response code: " + responseCode);
                 return false;
@@ -432,15 +436,25 @@ public class APIClient {
 
     private static Map<String, String> parseFromJson(String jsonString) {
         Map<String, String> jsonMap = new HashMap<>();
-        Pattern pattern = Pattern.compile("\"(\\w+)\":\\s*\"([^\"]+)\"");
-        Matcher matcher = pattern.matcher(jsonString);
-        while (matcher.find()) {
-            String key = matcher.group(1);
-            String value = matcher.group(2);
+        
+        // Remove curly braces from the JSON string
+        jsonString = jsonString.substring(1, jsonString.length() - 1);
+        
+        // Split the key-value pairs by comma
+        String[] keyValuePairs = jsonString.split(",");
+        
+        for (String pair : keyValuePairs) {
+            // Split each pair into key and value
+            String[] entry = pair.split(":");
+            // Trim leading and trailing whitespace and remove quotes
+            String key = entry[0].trim().replaceAll("\"", "");
+            String value = entry.length > 1 ? entry[1].trim().replaceAll("\"", "") : "";
             jsonMap.put(key, value);
         }
+        
         return jsonMap;
     }
+    
     @SuppressWarnings("unchecked")
     private static String parseToJson(Map<String, Object> jsonMap) {
         StringBuilder jsonStringBuilder = new StringBuilder();
@@ -540,12 +554,12 @@ public class APIClient {
     public static void main(String[] args) {
 
         // create example account
+        
         /*
         String email = "adr.st@gmx.de";
         String password = "123456";
 
         boolean created = createUserAccount("Adrian", "Steyer", email, password, 1, 11);
-
         // verify account
         if (created) {
             Scanner scanner = new Scanner(System.in);
@@ -574,8 +588,11 @@ public class APIClient {
 
         // delete account
         //deleteAccount(password, TokenManager.loadToken());
-        */
+        
         //logout
-        logout();
+        //logout();
+        */
+        //try to validate token
+        System.out.println(loadSession());
     }
 }

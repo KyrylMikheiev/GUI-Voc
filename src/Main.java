@@ -46,6 +46,8 @@ public class Main {
     private JPanel contentPane; 
     private boolean isDarkmode = false;
 
+    private NavBar navBar;
+
     public Main() {
         // Set the cross-platform look and feel
         try {
@@ -85,7 +87,7 @@ public class Main {
         globalPane.add(contentPane, BorderLayout.CENTER);
 
         // Navigation bar
-        new NavBar(globalPane, this);
+        navBar = new NavBar(globalPane, this);
 
         // create the mainMenu
         this.newSetup();
@@ -233,6 +235,9 @@ public class Main {
 
     public JFrame getFrame() {
         return frame;
+    }
+    public NavBar getNavBar() {
+        return navBar;
     }
 
     public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2,

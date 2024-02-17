@@ -14,13 +14,35 @@ import restAPI.APIClient;
 
 public class NavBar {
 
-    private Color GRAY = Color.decode("#374151");
+    private Color DEFAULT_BUTTON_COLOR = Main.DefaultButton;
+    private Color HOVER_BUTTON_COLOR = Main.BodyColor;
+    private Color CLICK_BUTTON_COLOR = Main.ClickButton;
+    private Color BODY_COLOR = Color.GRAY;
+    private Color SECOND_BODY_COLOR = Main.SecondBodyColor;
+    private Color TEXT_COLOR = Main.TextColor;
 
-    public NavBar(JPanel globalPanel, Main main)
-    {
+    private boolean active = false;
+    private JPanel globalPanel;
+    private Main main;
+
+    // Navigation bar components
+    private JPanel navigationBar;
+    private JPanel searchBar;
+    private PlaceholderTextField textArea;
+    private JLabel appName;
+    private JButton plusButton;
+    private JMenu burgerMenu;
+
+    public NavBar(JPanel globalPanel, Main main) {
+        this.globalPanel = globalPanel;
+        this.main = main;
+        initComponents();
+    }
+
+    private void initComponents() {
         //------------------navigationBar----------------
-        JPanel navigationBar = new JPanel();
-        navigationBar.setBackground(GRAY);
+        navigationBar = new JPanel();
+        navigationBar.setBackground(BODY_COLOR);
         navigationBar.setPreferredSize(new Dimension(200, 80));
         navigationBar.setLayout(new GridLayout(1, 3));
 
@@ -30,56 +52,57 @@ public class NavBar {
         navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 0, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
 
-
-        JLabel appName = new JLabel("Vokabeltrainer");
-        appName.setFont(new Font("Times New Roman", 0, 28));
+        appName = new JLabel("Vokabeltrainer");
+        appName.setFont(new Font("Times New Roman", Font.PLAIN, 28));
         appName.setOpaque(false);
-        Image logoImage = new ImageIcon("resources/images/logo.png").getImage().getScaledInstance(100, 100, 0);      
+        ImageIcon logoIcon = new ImageIcon("resources/images/logo.png");
+        Image logoImage = logoIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         appName.setIcon(new ImageIcon(logoImage));
-        appName.setForeground(Color.WHITE);
-        
-        JButton plusButton = new JButton();
+        appName.setForeground(TEXT_COLOR);
+
+        plusButton = new JButton();
         plusButton.setBorder(null);
         plusButton.setFocusPainted(false);
-        plusButton.setBackground(GRAY);
+        plusButton.setBackground(BODY_COLOR);
         plusButton.setPreferredSize(new Dimension(60, 10));
         plusButton.setOpaque(false);
         ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
-        Image plusImage = plusIcon.getImage();
-        plusImage = plusImage.getScaledInstance(260, 200, Image.SCALE_SMOOTH);
-        plusIcon = new ImageIcon(plusImage); 
+        Image plusImage = plusIcon.getImage().getScaledInstance(260, 200, Image.SCALE_SMOOTH);
+        plusIcon = new ImageIcon(plusImage);
         plusButton.setIcon(plusIcon);
-        
+
         navigation_contentLeft.add(plusButton, BorderLayout.EAST);
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                main.newMainMenu();
+                if (active) {
+                    main.newMainMenu();
+                }
             }
         };
         appName.addMouseListener(mouseListener);
         appName.setCursor(new Cursor(Cursor.HAND_CURSOR));
         navigation_contentLeft.add(appName, BorderLayout.WEST);
-        
+
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
         navigation_contentMiddle.setLayout(new BorderLayout());
         navigation_contentMiddle.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         navigation_contentMiddle.setOpaque(false);
-        navigation_contentMiddle.setBackground(Color.RED);
+        navigation_contentMiddle.setBackground(Color.RED); // This seems unnecessary, as it's being overlaid
 
-        JPanel searchBar = new JPanel();
+        searchBar = new JPanel();
         searchBar.setLayout(new BorderLayout(10, 0));
-        searchBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-        searchBar.setOpaque(false); 
+        searchBar.setBorder(BorderFactory.createLineBorder(TEXT_COLOR, 2));
+        searchBar.setOpaque(false);
 
-        PlaceholderTextField textArea = new PlaceholderTextField("Schnellsuche...", Color.GRAY);
-        textArea.setFont(new Font(Font.SANS_SERIF, 0, 18));
-        textArea.setBorder(null);       
-        textArea.setCaretColor(Color.WHITE);
+        textArea = new PlaceholderTextField("Schnellsuche...", Color.decode("#E0E0E0"));
+        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        textArea.setBorder(null);
+        textArea.setCaretColor(TEXT_COLOR);
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
-        textArea.setForeground(Color.WHITE);
-        textArea.setBackground(GRAY);  
+        textArea.setForeground(TEXT_COLOR);
+        textArea.setBackground(BODY_COLOR);
 
         JLabel searchLabel = new JLabel();
         ImageIcon searchIcon = new ImageIcon("resources/images/search.png");
@@ -107,17 +130,17 @@ public class NavBar {
         burgerImage = burgerImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         burgerIcon = new ImageIcon(burgerImage);
 
-        JMenu burgerMenu = new JMenu();
+        burgerMenu = new JMenu();
         burgerMenu.setIcon(burgerIcon);
         burgerMenu.setHorizontalAlignment(JMenu.RIGHT);
         burgerMenu.setPreferredSize(new Dimension(90, 100));
-        burgerMenu.setFont(new Font(Font.SANS_SERIF, 0, 24));
+        burgerMenu.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
         burgerMenu.setOpaque(false);
         burgerMenu.setBorder(null);
         burgerMenu.setIcon(burgerIcon);
         burgerMenu.setHorizontalAlignment(JMenu.CENTER);
         burgerMenu.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        burgerMenu.setForeground(Main.BodyColor);
+        burgerMenu.setForeground(TEXT_COLOR);
 
         JMenuItem mainmenu = new JMenuItem("Hauptmenü");
         JMenuItem settings = new JMenuItem("Einstellungen");
@@ -128,11 +151,12 @@ public class NavBar {
         MouseListener menuMouseListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // e.getComponent().setBackground(Main.hoverButton);
+                // e.getComponent().setBackground(HOVER_BUTTON_COLOR);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
-                // e.getComponent().setBackground(Main.defaultButton);
+                // e.getComponent().setBackground(DEFAULT_BUTTON_COLOR);
             }
         };
         //actionLister bc mouseListener can't detect clicks of menuItems for some reason
@@ -156,10 +180,10 @@ public class NavBar {
         JMenuItem[] menuItems = {mainmenu, settings, logout, exit};
         for (JMenuItem menuItem : menuItems) {
             burgerMenu.add(menuItem);
-            menuItem.setFont(new Font(Font.SANS_SERIF, 0, 20));
+            menuItem.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
             setRightAlignment(menuItem);
-            //menuItem.setBackground(Main.defaultButton);
-            //menuItem.setForeground(Color.WHITE);
+            //menuItem.setBackground(DEFAULT_BUTTON_COLOR);
+            //menuItem.setForeground(TEXT_COLOR);
             menuItem.addMouseListener(menuMouseListener);
             menuItem.addActionListener(actionListener);
         }
@@ -173,11 +197,62 @@ public class NavBar {
 
         globalPanel.add(navigationBar, BorderLayout.NORTH);
     }
+
     // Custom method to set right alignment for JMenuItem
     private static void setRightAlignment(JMenuItem menuItem) {
         menuItem.setHorizontalAlignment(SwingConstants.RIGHT);
         menuItem.setHorizontalTextPosition(SwingConstants.RIGHT);
         menuItem.setBorder(new EmptyBorder(0, 0, 0, 0)); // Adjust the right padding as needed
     }
+
+    public void activate() {
+        active = true;
+        // Enable all components
+        searchBar.setEnabled(true);
+        plusButton.setEnabled(true);
+        burgerMenu.setEnabled(true);
+        appName.setEnabled(true);
+    }
     
+    public void deactivate() {
+        active = false;
+        // Disable all components
+        textArea.setEnabled(false);
+        plusButton.setEnabled(false);
+        burgerMenu.setEnabled(false);
+        appName.setEnabled(false);
+    }
+    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void updateDesign() {
+        // Update colors
+        DEFAULT_BUTTON_COLOR = Main.DefaultButton;
+        HOVER_BUTTON_COLOR = Main.HoverButton;
+        CLICK_BUTTON_COLOR = Main.ClickButton;
+        //BODY_COLOR = Main.BodyColor;
+        SECOND_BODY_COLOR = Main.SecondBodyColor;
+        TEXT_COLOR = Main.TextColor;
+
+        // Update colors for components
+        navigationBar.setBackground(BODY_COLOR);
+        searchBar.setBorder(BorderFactory.createLineBorder(TEXT_COLOR, 2));
+        textArea.setCaretColor(TEXT_COLOR);
+        textArea.setForeground(TEXT_COLOR);
+        textArea.setBackground(BODY_COLOR);
+        appName.setForeground(TEXT_COLOR);
+        plusButton.setBackground(BODY_COLOR);
+        burgerMenu.setForeground(TEXT_COLOR);
+
+        // Repaint the components
+        navigationBar.repaint();
+        searchBar.repaint();
+        textArea.repaint();
+        appName.repaint();
+        plusButton.repaint();
+        burgerMenu.repaint();
+    }
 }

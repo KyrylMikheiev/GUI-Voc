@@ -34,14 +34,24 @@ public class Settings {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == darkModeButton) {
-                    // Add dark mode toggle functionality
                     main.toggleDarkmode();
                     bodyPanel.setBackground(Main.BodyColor);
+                    main.getNavBar().updateDesign();
                     APIClient.updatePreferences(main.getDarkmodeState(), 0, 0);
 
                 } else if (e.getSource() == deleteDataButton) {
-                    // Add delete data functionality
-
+                    String password = JOptionPane.showInputDialog(null, "Enter Password:");
+                    if (password != null) {
+                        boolean success = APIClient.deleteAccount(password);
+                        if (success) {
+                            JOptionPane.showMessageDialog(null, "Account deleted successfully.");
+                            main.newSetup();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrect password. Data deletion aborted.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Incorrect password. Data deletion aborted.");
+                    }
                 } else if (e.getSource() == creditsButton) {
                     main.newCredits(content);
 
