@@ -13,22 +13,27 @@ public class Settings {
     public Settings(JPanel content, Main main) {
         
         JPanel bodyPanel = new JPanel();
-        
         bodyPanel.setLayout(new GridLayout(6, 2, 10, 10)); // GridLayout with 6 rows and 2 columns
-
         bodyPanel.setBackground(Main.BodyColor);
 
         JButton darkModeButton = new JButton("Dunkelmodus an/aus");
-        bodyPanel.add(darkModeButton);
-
         JButton deleteDataButton = new JButton("Konto löschen");
-        bodyPanel.add(deleteDataButton);
-
         JButton creditsButton = new JButton("Mitwirkende und Copyright");
-        bodyPanel.add(creditsButton);
-
         JButton privacyButton = new JButton("Datenschutzerklärung");
+        
+        JComboBox<String> widgetSelect = new JComboBox<>();
+        widgetSelect.addItem("Top 10 Fehler");
+        widgetSelect.addItem("Leaderboard");
+        widgetSelect.addItem("Letzte Lektionen");
+        
+        
+        bodyPanel.add(darkModeButton);
+        bodyPanel.add(widgetSelect);
+        bodyPanel.add(deleteDataButton);
+        bodyPanel.add(creditsButton);
         bodyPanel.add(privacyButton);
+
+        
 
         ActionListener buttonActionListener = new ActionListener() {
             @Override

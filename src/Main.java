@@ -227,9 +227,14 @@ public class Main {
         new MemorySelection(contentPane, this);
         repaint();
     }
-    public void newSearchView() {
+    public void newSearchView(String query) {
         newUI();
-        new SearchView(contentPane, this);
+        new SearchView(contentPane, this, query);
+        repaint();
+    }
+    public void newCustomLessonView() {
+        newUI();
+        new CustomLessonView(contentPane, this);
         repaint();
     }
 

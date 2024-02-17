@@ -70,6 +70,14 @@ public class NavBar {
         Image plusImage = plusIcon.getImage().getScaledInstance(260, 200, Image.SCALE_SMOOTH);
         plusIcon = new ImageIcon(plusImage);
         plusButton.setIcon(plusIcon);
+        plusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (active) {
+                    main.newCustomLessonView();
+                }
+            }
+        });
 
         navigation_contentLeft.add(plusButton, BorderLayout.EAST);
         MouseListener mouseListener = new MouseAdapter() {
@@ -103,6 +111,14 @@ public class NavBar {
         textArea.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         textArea.setForeground(TEXT_COLOR);
         textArea.setBackground(BODY_COLOR);
+        textArea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (active) {
+                    main.newSearchView(textArea.getText());
+                }
+            }
+        });
 
         JLabel searchLabel = new JLabel();
         ImageIcon searchIcon = new ImageIcon("resources/images/search.png");
@@ -208,7 +224,7 @@ public class NavBar {
     public void activate() {
         active = true;
         // Enable all components
-        searchBar.setEnabled(true);
+        textArea.setEnabled(true);
         plusButton.setEnabled(true);
         burgerMenu.setEnabled(true);
         appName.setEnabled(true);

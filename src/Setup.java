@@ -247,6 +247,8 @@ public class Setup {
         registration.add(registration_center);
         registration.add(registrationNextPanel);
 
+        firstName.requestFocusInWindow();
+
         bodyPanel.add(registration);
         repaint();
     }
@@ -303,6 +305,8 @@ public class Setup {
         registration_center.add(password);
         registration_center.add(repeatPassword);
 
+        email.requestFocusInWindow();
+
         registerButtonPanel.add(registerButton);
 
         registration2.add(registrationLabel2);
@@ -350,6 +354,8 @@ public class Setup {
 
         verificationCodePanel.add(verificationCode);
         verificationNextPanel.add(verificationNext);
+
+        verificationCode.requestFocusInWindow();
 
         verification.add(verificationLabel);
         verification.add(verificationCodePanel);
@@ -402,6 +408,8 @@ public class Setup {
         login.add(loginWrongLabel);
         login.add(loginButton);
 
+        loginEmail.requestFocusInWindow();
+
         bodyPanel.add(login);
         repaint();
     }
@@ -433,7 +441,7 @@ public class Setup {
         String userFirstName = firstName.getText();
         String userLastName = lastName.getText();
         String userEmail = email.getText();
-        String userPassword = password.getText().toString();
+        String userPassword = String.valueOf(password.getPassword());
         int userModePreference = designMode; // You need to set this value based on the user's mode preference
         int userClass = gradeLevel.getSelectedIndex() + 1; // Assuming the index corresponds to class (e.g., Freshman = 1, Sophomore = 2, etc.)
 
