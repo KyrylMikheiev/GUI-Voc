@@ -60,26 +60,6 @@ public class NavBar {
         appName.setIcon(new ImageIcon(logoImage));
         appName.setForeground(TEXT_COLOR);
 
-        plusButton = new JButton();
-        plusButton.setBorder(null);
-        plusButton.setFocusPainted(false);
-        plusButton.setBackground(BODY_COLOR);
-        plusButton.setPreferredSize(new Dimension(60, 10));
-        plusButton.setOpaque(false);
-        ImageIcon plusIcon = new ImageIcon("resources/images/plus.png");
-        Image plusImage = plusIcon.getImage().getScaledInstance(260, 200, Image.SCALE_SMOOTH);
-        plusIcon = new ImageIcon(plusImage);
-        plusButton.setIcon(plusIcon);
-        plusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (active) {
-                    main.newCustomLessonView();
-                }
-            }
-        });
-
-        navigation_contentLeft.add(plusButton, BorderLayout.EAST);
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -225,7 +205,6 @@ public class NavBar {
         active = true;
         // Enable all components
         textArea.setEnabled(true);
-        plusButton.setEnabled(true);
         burgerMenu.setEnabled(true);
         appName.setEnabled(true);
     }
@@ -234,7 +213,6 @@ public class NavBar {
         active = false;
         // Disable all components
         textArea.setEnabled(false);
-        plusButton.setEnabled(false);
         burgerMenu.setEnabled(false);
         appName.setEnabled(false);
     }
