@@ -20,7 +20,7 @@ def compile():
     os.system('javac -d . src/*.java LatinVocabParser/VocabAPI/*.java LatinVocabParser/VocabAPI/WordTypes/*.java minigames/*.java')
 
 def run():
-    os.system("git submodule --init --recursive")
+    os.system("git submodule update --init --recursive")
     compile()
     print("Starting program...")
     os.system('java src/Main')
