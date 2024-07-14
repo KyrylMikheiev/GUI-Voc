@@ -55,6 +55,9 @@ public class Main {
     private Stack<JPanel> navigationHistory = new Stack<>();
 
     public Main() {
+            
+        System.setProperty("file.encoding", "UTF-8");
+
         // Set the cross-platform look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
