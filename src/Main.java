@@ -226,9 +226,9 @@ public class Main {
         
         repaint();
     }
-    public void newCredits(JPanel content) {
+    public void newCredits() {
         
-        new Credits(content);
+        new Credits(newUI());
         
         repaint();
     }
