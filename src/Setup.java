@@ -228,15 +228,19 @@ public class Setup {
         newUI();
 
         JPanel forgotPasswordPage = new JPanel();
+        forgotPasswordPage.setBackground(Main.bodyColorDarkMode);
         forgotPasswordPage.setBorder(new ResponsiveBorder(0, 350,0,350));
         JLabel forgotPasswordLabel = new JLabel("Forgot Password");
+        forgotPasswordLabel.setForeground(Main.textColorDarkMode);
         forgotPasswordLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
         forgotPasswordLabel.setHorizontalTextPosition(JLabel.CENTER);
         JLabel typeYourEmaiLabel = new JLabel("Type your email and get the verification code to get the access to your account");
+        typeYourEmaiLabel.setForeground(Main.textColorDarkMode);
         PlaceholderTextField forgotPasswordField = new PlaceholderTextField("Email", Color.BLACK);
         JPanel submitButtonWrapper = new JPanel();
         JPanel backButtonsPanel = new JPanel();
         backButtonsPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        backButtonsPanel.setBackground(Main.bodyColorDarkMode);
         JButton backToLoginButton = new JButton("To Login");
         JButton backToSignUp = new JButton("To Sign Up");
         backButtonsPanel.add(backToLoginButton);
@@ -264,12 +268,14 @@ public class Setup {
 
         submitButtonWrapper.setLayout(new GridLayout(2, 1, 0, 30));
         submitButtonWrapper.setBorder(new ResponsiveBorder(0,0,90,0));
+        submitButtonWrapper.setBackground(Main.bodyColorDarkMode);
         JButton submitButton = new JButton("Submit");
         submitButtonWrapper.add(submitButton);
         submitButtonWrapper.add(backButtonsPanel);
         JPanel forgotPasswordCenter = new JPanel();
         forgotPasswordCenter.setBorder(new ResponsiveBorder(0,0,130,0));
         forgotPasswordCenter.setLayout(new GridLayout(2, 1, 0, 15));
+        forgotPasswordCenter.setOpaque(false);
         forgotPasswordCenter.add(typeYourEmaiLabel);
         forgotPasswordCenter.add(forgotPasswordField);
 
