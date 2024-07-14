@@ -261,7 +261,7 @@ public void actionPerformed(ActionEvent click){
 			setUpGame(level);//level between 1 and 2, eh is true or false
 		}
 		if(source==over){//quits
-			System.exit(0);
+			main.goBack();
 		}
 		if(source==inst){//this just sets the instruction screen
 			clearMain();
