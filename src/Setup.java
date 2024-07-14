@@ -435,7 +435,7 @@ public class Setup {
         // Verify the user using the verification code
         String code = verificationCode.getText();
         token = APIClient.verifyAccount(email.getText(), code);
-        return token != null && token == code;
+        return token != null && token != "";
     }
 
 
