@@ -432,6 +432,7 @@ public class LearningView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: make relearn screen
+                // pass wrongVocabs into new learningView
             }
         });
 

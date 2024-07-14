@@ -46,12 +46,31 @@ public class NavBar {
         navigationBar.setPreferredSize(new Dimension(200, 80));
         navigationBar.setLayout(new GridLayout(1, 3));
 
-        //---------------appName---------------
         JPanel navigation_contentLeft = new JPanel();
         navigation_contentLeft.setLayout(new BorderLayout(10, 0));
         navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 0, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
+        //---------------backButton---------------
+        JButton backButton = new JButton();
+        ImageIcon backIcon = new ImageIcon("resources/images/arrow.png");
+        backIcon.setImage(backIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        backButton.setIcon(backIcon);
+        backButton.setOpaque(false);
+        backButton.setBackground(BODY_COLOR);
+        backButton.setBorder(new EmptyBorder(0, 0, 0, 0));
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (active) {
+                    main.goBack();
+                }
+            }
+        });
+        backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backButton.setBorder(new ResponsiveBorder(10, 100, 10, 100));
+        navigation_contentLeft.add(backButton, BorderLayout.WEST);
 
+        //---------------appName---------------
         appName = new JLabel("Vokabeltrainer");
         appName.setFont(new Font("Times New Roman", Font.PLAIN, 28));
         appName.setOpaque(false);
@@ -70,7 +89,10 @@ public class NavBar {
         };
         appName.addMouseListener(mouseListener);
         appName.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        navigation_contentLeft.add(appName, BorderLayout.WEST);
+        navigation_contentLeft.add(appName, BorderLayout.CENTER);
+
+        
+
 
         //---------------textArea---------------
         JPanel navigation_contentMiddle = new JPanel();
@@ -238,7 +260,6 @@ public class NavBar {
         textArea.setForeground(TEXT_COLOR);
         textArea.setBackground(BODY_COLOR);
         appName.setForeground(TEXT_COLOR);
-        plusButton.setBackground(BODY_COLOR);
         burgerMenu.setForeground(TEXT_COLOR);
 
         // Repaint the components

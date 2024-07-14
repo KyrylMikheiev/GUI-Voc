@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class GameSelection {
-    public GameSelection(JPanel content, Main main) {
+    public GameSelection(JPanel content, Main main) { 
         
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(4, 2, 20, 20));

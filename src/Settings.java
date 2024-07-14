@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 public class Settings {
 
     public Settings(JPanel content, Main main) {
-        
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(6, 2, 10, 10)); // GridLayout with 6 rows and 2 columns
         bodyPanel.setBackground(Main.BodyColor);

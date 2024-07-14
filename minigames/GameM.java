@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 import java.util.*;
 //btn1.setBackground(colors[index]
-public class GameM implements ActionListener{ 
+public class GameM implements ActionListener { 
 	
 	JPanel field = new JPanel();
 	JPanel menu = new JPanel();

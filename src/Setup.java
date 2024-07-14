@@ -60,6 +60,9 @@ public class Setup {
     private String token = "";
     private Main main;
 
+    public Setup(JPanel content, Main main) {
+        startScreen(content, main);
+    }
     
     public void startScreen(JPanel content, Main main) {
         main.getNavBar().deactivate();

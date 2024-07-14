@@ -17,6 +17,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Stack;
+
+import java.lang.reflect.*;
+
 
 public class Main {
 
@@ -47,6 +51,8 @@ public class Main {
     private boolean isDarkmode = false;
 
     private NavBar navBar;
+
+    private Stack<JPanel> navigationHistory = new Stack<>();
 
     public Main() {
         // Set the cross-platform look and feel
@@ -141,7 +147,17 @@ public class Main {
         new Main();
     }
 
-    public void newUI() {
+    public JPanel newUI() {
+        navigationHistory.push(new JPanel(new BorderLayout()));
+        return navigationHistory.peek();
+    }
+    public void goBack() {
+        if (navigationHistory.size() > 2) {
+            navigationHistory.pop();
+            repaint();
+        }
+    }
+    public void removeAll() {
         try {
             contentPane.removeAll();
         }
@@ -149,106 +165,122 @@ public class Main {
         }
     }
     public void repaint() {
+        removeAll();
+        contentPane.add(navigationHistory.peek(), BorderLayout.CENTER);
         contentPane.revalidate();
         contentPane.repaint();
     }
     public void newMainMenu() {
-        newUI();
-        new MainMenu(contentPane, this);
-        repaint();
-    }
-    public void newSettingsMenu() {
-        newUI();
-        new Settings(contentPane, this);
-        repaint();
-    }
-    public void newLearningView(String lektion) {
-        newUI();
-        new LearningView(contentPane, lektion, this);
-        repaint();
-    }
-    public void newLearningSelection() {
-        newUI();
-        new LearningSelection(contentPane, this);
-        repaint();
-    }
-    public void newLibraryMenu() {
-        newUI();
-        new LibraryView(contentPane, this);
-        repaint();
-    }
-    public void newGamesMenu() {
-        newUI();
-        new GameSelection(contentPane, this);
-        repaint();
-    }
-    //public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2, boolean isCrossVisible3, boolean isCrossVisible4, boolean isCrossVisible5) {
-    //newUI();
-    //new TestView(contentPane, this, );
-    //repaint();
-//}
-    public void newTextChecker() {
-        newUI();
-        new TextChecker(contentPane);
-        repaint();
-    }
-    public void newTestSelection() {
-        newUI();
-        new TestSelection(contentPane, this);
-        repaint();
-    }
-    public void newCredits(JPanel content) {
-        newUI();
-        new Credits(content);
-        repaint();
-    }
-    public void newSetup() {
-        newUI();
-        new Setup().startScreen(contentPane, this);
-        repaint();
-    }
-    public void newPrivacyStatement() {
-        newUI();
-        new PrivacyStatement(contentPane);
-        repaint();
-    }
-    public void newVocabView(Vocab v) {
-        newUI();
-        new VocabView(contentPane, v);
-        repaint();
-    }
-    public void newGameM(String lektion) {
-        newUI();
-        new GameM(contentPane, lektion, this);
-        repaint();
-    }
-    public void newMemorySelection() {
-        newUI();
-        new MemorySelection(contentPane, this);
-        repaint();
-    }
-    public void newSearchView(String query) {
-        newUI();
-        new SearchView(contentPane, this, query);
-        repaint();
-    }
-    public void newCustomLessonView() {
-        newUI();
-        new CustomLessonView(contentPane, this);
+        new MainMenu(newUI(), this);
         repaint();
     }
 
+
+    public void newSettingsMenu() {
+        
+        new Settings(newUI(), this);
+        
+        repaint();
+    }
+    public void newLearningView(String lektion) {
+        
+        new LearningView(newUI(), lektion, this);
+        
+        repaint();
+    }
+    public void newLearningSelection() {
+        
+        new LearningSelection(newUI(), this);
+        
+        repaint();
+    }
+    public void newLibraryMenu() {
+        
+        new LibraryView(newUI(), this);
+        
+        repaint();
+    }
+    public void newGamesMenu() {
+        
+        new GameSelection(newUI(), this);
+        
+        repaint();
+    }
+    public void newTextChecker() {
+        
+        new TextChecker(newUI());
+        
+        repaint();
+    }
+    public void newTestSelection() {
+        
+        new TestSelection(newUI(), this);
+        
+        repaint();
+    }
+    public void newCredits(JPanel content) {
+        
+        new Credits(content);
+        
+        repaint();
+    }
+    public void newSetup() {
+        
+        new Setup(newUI(), this);
+        
+        repaint();
+    }
+    public void newPrivacyStatement() {
+        
+        new PrivacyStatement(newUI());
+        
+        repaint();
+    }
+    public void newVocabView(Vocab v) {
+        
+        new VocabView(newUI(), v);
+        
+        repaint();
+    }
+    public void newGameM(String lektion) {
+        
+        new GameM(newUI(), lektion, this);
+        
+        repaint();
+    }
+    public void newMemorySelection() {
+        
+        new MemorySelection(newUI(), this);
+        
+        repaint();
+    }
+    public void newSearchView(String query) {
+        
+        new SearchView(newUI(), this, query);
+        
+        repaint();
+    }
+    public void newCustomLessonView() {
+        
+        new CustomLessonView(newUI(), this);
+        
+        repaint();
+    }
+
+    public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2,boolean isCrossVisible3, boolean isCrossVisible4, boolean isCrossVisible5) {
+        
+        new TestView(newUI(), null, selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5);
+        
+        repaint();
+    }
+
+
+
+    
     public JFrame getFrame() {
         return frame;
     }
     public NavBar getNavBar() {
         return navBar;
-    }
-
-    public void newTestView(ArrayList<String> selectedElements, boolean isCrossVisible1, boolean isCrossVisible2,
-            boolean isCrossVisible3, boolean isCrossVisible4, boolean isCrossVisible5) {
-        newUI();
-        new TestView(contentPane, null, selectedElements, isCrossVisible1, isCrossVisible2, isCrossVisible3, isCrossVisible4, isCrossVisible5);
-        repaint();
     }
 }
