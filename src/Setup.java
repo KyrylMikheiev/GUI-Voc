@@ -114,7 +114,9 @@ public class Setup {
         loginButtonPanel.setOpaque(false);
         loginButtonPanel.setBorder(new ResponsiveBorder(30, 450, 80, 450));
         loginButton = new JButton("Login");
+        // loginButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         loginWrongLabel = new JLabel("Invalid email or password");
+        loginWrongLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         loginWrongLabel.setForeground(Color.WHITE);
         loginWrongLabel.setVisible(false); // Initially hidden
         JPanel forgotPasswordSignUpPanel =  new JPanel();
@@ -122,6 +124,8 @@ public class Setup {
         forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
         JButton forgotPasswordButton = new JButton("Forgot Password");
         JButton signUpButton = new JButton("I don't have an account");
+        // forgotPasswordButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+        // signUpButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -374,7 +378,7 @@ public class Setup {
         newUI();
 
         registration = new JPanel();
-        registration.setBackground(Main.BodyColor);
+        registration.setBackground(Main.bodyColorDarkMode);
         registration.setLayout(new GridLayout(3, 1));
         JPanel registration_center = new JPanel();
         registration_center.setOpaque(false);
@@ -382,7 +386,7 @@ public class Setup {
         registration_center.setBorder(new ResponsiveBorder(30, 450, 30, 450));
         registrationLabel = new JLabel("Registration");
         registrationLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-        registrationLabel.setForeground(Main.TextColor);
+        registrationLabel.setForeground(Main.textColorDarkMode);
         registrationLabel.setHorizontalAlignment(SwingConstants.CENTER);
         firstName = new PlaceholderTextField("First Name", Color.BLACK);
         lastName = new PlaceholderTextField("Last Name", Color.BLACK);
@@ -446,11 +450,11 @@ public class Setup {
         newUI();
 
         registration2 = new JPanel();
-        registration2.setBackground(Main.BodyColor);
+        registration2.setBackground(Main.bodyColorDarkMode);
         registration2.setLayout(new GridLayout(3, 0));
         registrationLabel2 = new JLabel("Registration");
         registrationLabel2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-        registrationLabel2.setForeground(Main.TextColor);
+        registrationLabel2.setForeground(Main.textColorDarkMode);
         registrationLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel registration_center = new JPanel();
@@ -466,10 +470,22 @@ public class Setup {
         repeatPassword.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 
         JPanel registerButtonPanel = new JPanel();
-        registerButtonPanel.setLayout(new GridLayout());
+        registerButtonPanel.setLayout(new GridLayout(1, 2, 30, 0));	
         registerButtonPanel.setOpaque(false);
-        registerButtonPanel.setBorder(new ResponsiveBorder(90, 550, 90, 550));
+        registerButtonPanel.setBorder(new ResponsiveBorder(90, 500, 90, 500));
         registerButton = new JButton("Register");
+        JButton backButton = new JButton("Back");
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                registration();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
 
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -487,11 +503,61 @@ public class Setup {
                         contentPanel.revalidate();
                     }
                     else {
-                        registration2.add(new JLabel("User with that email already exists!"));
+                        registration2.removeAll();
+
+                        registrationLabel2 = new JLabel("Registration");
+                        registrationLabel2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+                        registrationLabel2.setForeground(Main.textColorDarkMode);
+                        registrationLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+
+                        JPanel forgotPasswordSignUpPanel =  new JPanel();
+                        forgotPasswordSignUpPanel.setBorder(new ResponsiveBorder(0,50,160,70));
+                        forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
+                        forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
+                        JButton backToLogin = new JButton("Back to Login");
+                        JButton signUpButton = new JButton("I don't have an account");
+                        backToLogin.addActionListener(new ActionListener() {
+                            @Override 
+                            public void actionPerformed(ActionEvent e) {
+                                contentPanel.removeAll();
+                                contentPanel.repaint();
+                                showStartPage();
+                                contentPanel.repaint();
+                                contentPanel.revalidate();
+                            }
+                        });
+                        signUpButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                System.out.println("sign up button was clicked");
+                                contentPanel.removeAll();  
+                                registration();
+                                contentPanel.repaint();
+                                contentPanel.revalidate();
+                            }
+                        });
+                        forgotPasswordSignUpPanel.add(backToLogin);
+                        forgotPasswordSignUpPanel.add(signUpButton);
+                        JLabel userExistsJLabel = new JLabel("User with that email already exists!");
+                        userExistsJLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+                        userExistsJLabel.setForeground(Main.textColorDarkMode);
+
+                        registration2.setBorder(new ResponsiveBorder(0,350,0,350));
+                        registration2.add(registrationLabel2);
+                        registration2.add(userExistsJLabel);
+                        registration2.add(forgotPasswordSignUpPanel);
                     }
                 }
                 else {
+                    JPanel forgotPasswordSignUpPanel =  new JPanel();
+                    forgotPasswordSignUpPanel.setBackground(Color.BLACK);
+                    forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
+                    JButton backToLogin = new JButton("Back to Login");
+                    JButton signUpButton = new JButton("I don't have an account");
+                    forgotPasswordSignUpPanel.add(backToLogin);
+                    forgotPasswordSignUpPanel.add(signUpButton);
                     registration2.add(new JLabel("Passwords do not match!"));
+                    registration2.add(forgotPasswordSignUpPanel);
                 }
                 registration2.revalidate();
                 registration2.repaint();
@@ -504,6 +570,7 @@ public class Setup {
 
         email.requestFocusInWindow();
 
+        registerButtonPanel.add(backButton);
         registerButtonPanel.add(registerButton);
 
         registration2.add(registrationLabel2);
@@ -517,12 +584,12 @@ public class Setup {
         newUI();
 
         verification = new JPanel();
-        verification.setBackground(Main.BodyColor);
+        verification.setBackground(Main.bodyColorDarkMode);
         verification.setLayout(new GridLayout(3, 0));
 
         verificationLabel = new JLabel("Verification");
         verificationLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-        verificationLabel.setForeground(Main.TextColor);
+        verificationLabel.setForeground(Main.textColorDarkMode);
         verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel verificationCodePanel = new JPanel();
@@ -544,7 +611,67 @@ public class Setup {
                     main.getNavBar().activate();
                     main.newMainMenu();
                 } else {
-                    verification.add(new JLabel("Invalid verification code"));
+                    verification.removeAll();
+
+                    verification.setLayout(new GridLayout(4, 1));
+                    verification.setBorder(new ResponsiveBorder(0, 350, 0, 350));
+                    verificationLabel = new JLabel("Verification");
+                    verificationLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+                    verificationLabel.setForeground(Main.textColorDarkMode);
+                    verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+                    JPanel forgotPasswordSignUpPanel =  new JPanel();
+                    forgotPasswordSignUpPanel.setBorder(new ResponsiveBorder(40,50,80,70));
+                    forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
+                    forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
+                    JButton backToLogin = new JButton("Back to Login");
+                    JButton signUpButton = new JButton("I don't have an account");
+                    backToLogin.addActionListener(new ActionListener() {
+                        @Override 
+                        public void actionPerformed(ActionEvent e) {
+                            contentPanel.removeAll();
+                            contentPanel.repaint();
+                            showStartPage();
+                            contentPanel.repaint();
+                            contentPanel.revalidate();
+                        }
+                    });
+                    signUpButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("sign up button was clicked");
+                            contentPanel.removeAll();  
+                            registration();
+                            contentPanel.repaint();
+                            contentPanel.revalidate();
+                        }
+                    });
+                    forgotPasswordSignUpPanel.add(backToLogin);
+                    forgotPasswordSignUpPanel.add(signUpButton);
+                    JLabel userExistsJLabel = new JLabel("Wrong verification code!");
+                    JPanel resendButtonPanel = new JPanel();
+                    resendButtonPanel.setLayout(new GridLayout());
+                    resendButtonPanel.setBackground(Main.bodyColorDarkMode);
+                    resendButtonPanel.setBorder(new ResponsiveBorder(50, 100, 60, 100));
+                    JButton resendButton = new JButton("Resend");
+                    resendButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            contentPanel.removeAll();
+                            verification();
+                            contentPanel.repaint();
+                            contentPanel.revalidate();
+                        }
+                    });
+                    resendButtonPanel.add(resendButton);
+                    userExistsJLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+                    userExistsJLabel.setForeground(Main.textColorDarkMode);
+
+                    verification.setBorder(new ResponsiveBorder(0,350,0,350));
+                    verification.add(verificationLabel);
+                    verification.add(userExistsJLabel);
+                    verification.add(resendButtonPanel);
+                    verification.add(forgotPasswordSignUpPanel);
                 }
             }
         });

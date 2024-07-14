@@ -33,18 +33,18 @@ public class Main {
     public static Color TextColor = Color.decode("#000000");
 
     //button colors Darkmode
-    private Color defaultButtonDarkMode = Color.decode("#4d6190");
-    private Color hoverButtonDarkMode = Color.decode("#4255ff");
-    private Color clickButtonDarkMode = Color.decode("#2f3990");
-    private Color bodyColorDarkMode = Color.decode("#111827");
+    public Color defaultButtonDarkMode = Color.decode("#4d6190");
+    public Color hoverButtonDarkMode = Color.decode("#4255ff");
+    public Color clickButtonDarkMode = Color.decode("#2f3990");
+    public static Color bodyColorDarkMode = Color.decode("#111827");
     public static Color SecondBodyColorDarkMode = Color.decode("#1f2937");
-    private Color textColorDarkMode = Color.decode("#f9fafb");
-    private Color defaultButtonLightMode = Color.decode("#B7B7B7");
-    private Color hoverButtonLightMode = Color.decode("#E1E1E1");
-    private Color clickButtonLightMode = Color.decode("#FAFAFA");
-    private Color BodyColorLightMode = Color.decode("#FFFFFF");
-    private Color SecondBodyColorLightMode = Color.decode("#DDDDDD");
-    private Color TextColorLightMode = Color.decode("#000000");
+    public static Color textColorDarkMode = Color.decode("#f9fafb");
+    public Color defaultButtonLightMode = Color.decode("#B7B7B7");
+    public Color hoverButtonLightMode = Color.decode("#E1E1E1");
+    public Color clickButtonLightMode = Color.decode("#FAFAFA");
+    public Color BodyColorLightMode = Color.decode("#FFFFFF");
+    public Color SecondBodyColorLightMode = Color.decode("#DDDDDD");
+    public Color TextColorLightMode = Color.decode("#000000");
 
     private JFrame frame;
     private JPanel contentPane; 
