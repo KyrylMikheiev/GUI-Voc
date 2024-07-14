@@ -191,6 +191,11 @@ public class Main {
         
         repaint();
     }
+    public void newWrongLearningView(ArrayList<Integer> wrongVocabs) {
+        
+        new LearningView(newUI(), wrongVocabs, this);
+        repaint();
+    }
     public void newLearningSelection() {
         
         new LearningSelection(newUI(), this);
@@ -221,9 +226,9 @@ public class Main {
         
         repaint();
     }
-    public void newCredits(JPanel content) {
+    public void newCredits() {
         
-        new Credits(content);
+        new Credits(newUI());
         
         repaint();
     }

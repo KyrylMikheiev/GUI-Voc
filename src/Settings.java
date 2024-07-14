@@ -75,7 +75,7 @@ public class Settings {
                         JOptionPane.showMessageDialog(null, "Incorrect password. Data deletion aborted.");
                     }
                 } else if (e.getSource() == creditsButton) {
-                    main.newCredits(content);
+                    main.newCredits();
 
                 } else if (e.getSource() == privacyButton) {
                     main.newPrivacyStatement();

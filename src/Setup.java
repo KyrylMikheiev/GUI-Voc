@@ -493,7 +493,6 @@ public class Setup {
                 System.out.println("Registering...");
                 String p1 = String.valueOf(password.getPassword());
                 String p2 = String.valueOf(repeatPassword.getPassword());
-                System.out.println(p1 + " " + p2);
                 if (p1.equals(p2)) {
                     System.out.println("Passwords match");
                     if (registerUser()) {

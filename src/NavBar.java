@@ -30,7 +30,6 @@ public class NavBar {
     private JPanel searchBar;
     private PlaceholderTextField textArea;
     private JLabel appName;
-    private JButton plusButton;
     private JMenu burgerMenu;
 
     public NavBar(JPanel globalPanel, Main main) {
@@ -267,7 +266,6 @@ public class NavBar {
         searchBar.repaint();
         textArea.repaint();
         appName.repaint();
-        plusButton.repaint();
         burgerMenu.repaint();
     }
 }
