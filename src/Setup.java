@@ -92,7 +92,7 @@ public class Setup {
         // newUI();
 
         login = new JPanel();
-        login.setBackground(Color.BLACK);
+        login.setBackground(Main.bodyColorDarkMode);
         login.setLayout(new GridLayout(3, 0));
         loginLabel = new JLabel("Login");
         loginLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
