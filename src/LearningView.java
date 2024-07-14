@@ -10,19 +10,19 @@ import restAPI.APIClient;
 public class LearningView {
     private JPanel content;
     private JPanel bodyPanel;
-    private String lektion;
+    private ArrayList<Integer> vocabs = new ArrayList<>();
     private int currentVocabIndex;
+    private String lektion = "Falsche Vokabeln";
     private JLabel phrase;
     private boolean isFront;
     private Main main;
     private JProgressBar progressBar;
-    private ArrayList<Integer> wrongVocabs;
-    private ArrayList<Integer> rightVocabs;
+    private ArrayList<Integer> wrongVocabs = new ArrayList<>();
+    private ArrayList<Integer> rightVocabs = new ArrayList<>();
 
 
     public LearningView(JPanel content, String lektion, Main main) {
         this.content = content;
-        this.lektion = lektion;
         this.currentVocabIndex = 0;
         this.isFront = true;
         this.main = main;
@@ -30,8 +30,20 @@ public class LearningView {
         setupUI();
         updateFlashcard();
 
-        wrongVocabs = new ArrayList<>();
-        rightVocabs = new ArrayList<>();
+
+        for (int i = 0; i < VocabParser.getVocabsFromLesson(lektion).size(); i++) {
+            vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID());
+        }
+    }
+    public LearningView(JPanel content, ArrayList<Integer> vocabs, Main main) {
+        this.content = content;
+        this.vocabs = vocabs;
+        this.currentVocabIndex = 0;
+        this.isFront = true;
+        this.main = main;
+
+        setupUI();
+        updateFlashcard();
     }
 
     private void setupUI() {
@@ -144,13 +156,6 @@ public class LearningView {
         bodyPanel_contentUp.add(contentUp_LessonAndProgressBar);    
         
         //--------------end of bodyPanel_contentUp-------------------
-        
-        
-
-
-
-
-
         
         
         JPanel crossPanel = new JPanel();
@@ -325,10 +330,10 @@ public class LearningView {
             updateProgressBar();
 
             //try to remove the vocab from wrongVocabs/rightVocabs
-            if (wrongVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
-                wrongVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
-            if (rightVocabs.indexOf(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID()) != -1) 
-                rightVocabs.remove(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex + 1).getID());
+            if (wrongVocabs.indexOf(vocabs.get(currentVocabIndex + 1)) != -1) 
+                wrongVocabs.remove(vocabs.get(currentVocabIndex + 1));
+            if (rightVocabs.indexOf(vocabs.get(currentVocabIndex + 1)) != -1) 
+                rightVocabs.remove(vocabs.get(currentVocabIndex + 1));
 
         }
     }
@@ -336,7 +341,7 @@ public class LearningView {
     private void showNextVocab() {
         // Assuming VocabParser.getVocabsFromLesson(lektion) returns a list of vocabs
         // and lektion is correctly initialized.
-        if (currentVocabIndex < VocabParser.getVocabsFromLesson(lektion).size() - 1) {
+        if (currentVocabIndex < vocabs.size() - 1) {
             currentVocabIndex++;
             isFront = true;
             updateFlashcard();
@@ -345,7 +350,7 @@ public class LearningView {
     }
 
     private void updateProgressBar() {
-        int progress = (currentVocabIndex) * 100 / (VocabParser.getVocabsFromLesson(lektion).size() - 1);
+        int progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
         progressBar.setValue(progress);
         if (progress == 100) {
             // lesson finished, upload data
@@ -355,19 +360,19 @@ public class LearningView {
     }
     private void updateFlashcard() {
         if (isFront) {
-            phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getBasicForm());
+            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getBasicForm());
         } else {
-            phrase.setText(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
+            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
         }
     }
 
     private void falseVocab() {
-        wrongVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
+        wrongVocabs.add(vocabs.get(currentVocabIndex));
         showNextVocab();
     }
 
     private void trueVocab() {
-        rightVocabs.add(VocabParser.getVocabsFromLesson(lektion).get(currentVocabIndex).getID());
+        rightVocabs.add(vocabs.get(currentVocabIndex));
         showNextVocab();
     }
 
@@ -431,8 +436,7 @@ public class LearningView {
         relearnVocabs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: make relearn screen
-                // pass wrongVocabs into new learningView
+                main.newWrongLearningView(wrongVocabs);
             }
         });
 

@@ -191,6 +191,11 @@ public class Main {
         
         repaint();
     }
+    public void newWrongLearningView(ArrayList<Integer> wrongVocabs) {
+        
+        new LearningView(newUI(), wrongVocabs, this);
+        repaint();
+    }
     public void newLearningSelection() {
         
         new LearningSelection(newUI(), this);
