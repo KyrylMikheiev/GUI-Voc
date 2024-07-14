@@ -152,7 +152,7 @@ public class MainMenu {
         textArea.setBorder(new ResponsiveBorder(10, 10, 10, 10));
         textArea.setFont(new Font(Font.SANS_SERIF, 0, 25));
         textArea.setForeground(Main.TextColor);
-        textArea.setText("Hier kommt die Erklärung für jede Button und\ndas Widget Fenster zu");
+        textArea.setText("Hier kommt die Erklärung für jeden Button, wenn man darüber hovert, \nund das Widget Fenster zu");
 
         textAreaPanel.add(textArea, BorderLayout.CENTER);
         bodyPanel_contentRight.add(textAreaPanel, BorderLayout.CENTER);

@@ -105,7 +105,9 @@ public class Setup {
         login_center.setBorder(new ResponsiveBorder(0, 450, 30, 450));
 
         loginEmail = new PlaceholderTextField("Email", Color.BLACK);
+        loginEmail.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
         loginPassword = new PlaceholderPasswordField("Password", Color.BLACK);
+        loginPassword.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
 
         JPanel loginButtonPanel = new JPanel();
         loginButtonPanel.setLayout(new GridLayout(2, 1, 0, 30));
@@ -384,6 +386,8 @@ public class Setup {
         registrationLabel.setHorizontalAlignment(SwingConstants.CENTER);
         firstName = new PlaceholderTextField("First Name", Color.BLACK);
         lastName = new PlaceholderTextField("Last Name", Color.BLACK);
+        firstName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        lastName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         String[] gradeLevels = {"Freshman", "Sophomore", "Junior", "Senior"};
         gradeLevel = new JComboBox<>(gradeLevels);
         JPanel registrationNextPanel = new JPanel();
@@ -457,6 +461,9 @@ public class Setup {
         email = new PlaceholderTextField("Email", Color.BLACK);
         password = new PlaceholderPasswordField("Password", Color.BLACK);
         repeatPassword = new PlaceholderPasswordField("Repeat Password", Color.BLACK);
+        email.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        password.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        repeatPassword.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 
         JPanel registerButtonPanel = new JPanel();
         registerButtonPanel.setLayout(new GridLayout());
