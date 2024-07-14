@@ -398,7 +398,10 @@ public class Setup {
         registrationNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
                 registration2();
+                contentPanel.repaint();
                 contentPanel.revalidate();
             }
         });
@@ -493,7 +496,7 @@ public class Setup {
         registration2.add(registration_center);
         registration2.add(registerButtonPanel);
 
-        bodyPanel.add(registration2);
+        contentPanel.add(registration2);
         repaint();
     }
     public void verification() {
@@ -541,7 +544,7 @@ public class Setup {
         verification.add(verificationCodePanel);
         verification.add(verificationNextPanel);
 
-        bodyPanel.add(verification);
+        contentPanel.add(verification);
         repaint();
     }
 
