@@ -125,14 +125,14 @@ public class LearningView {
         
         //progressBar
         progressBar = new JProgressBar();
-        progressBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        progressBar.setBorder(BorderFactory.createLineBorder(Main.TextColor, 2));
         progressBar.setOpaque(false);
         progressBar.setStringPainted(true);
         progressBar.setUI(new CustomProgressBarUI());
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
         progressBar.setValue(0);
-        progressBar.setForeground(Color.WHITE);
+        progressBar.setForeground(Main.TextColor);
         //end of progressBar
         
         progressBarPanel.add(progressBar);
