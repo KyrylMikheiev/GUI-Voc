@@ -140,6 +140,8 @@ public class Setup {
                     // Login failed, display an error message or handle accordingly
                     loginWrongLabel.setVisible(true);
                 }
+
+                
             }
         });
 
@@ -471,10 +473,15 @@ public class Setup {
                 System.out.println(p1 + " " + p2);
                 if (p1.equals(p2)) {
                     System.out.println("Passwords match");
-                    if (registerUser())
+                    if (registerUser()) {
+                        contentPanel.removeAll();  
                         verification();
-                    else
+                        contentPanel.repaint();
+                        contentPanel.revalidate();
+                    }
+                    else {
                         registration2.add(new JLabel("User with that email already exists!"));
+                    }
                 }
                 else {
                     registration2.add(new JLabel("Passwords do not match!"));
