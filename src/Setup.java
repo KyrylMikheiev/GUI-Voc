@@ -6,6 +6,7 @@ import restAPI.APIClient;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -74,13 +75,111 @@ public class Setup {
 
         if (token.equals("LOGIN_REQUIRED")) {
             // If session couldn't be loaded, show login/register screen
-            showLoginRegisterScreen();
+            showStartPage();
+            // login();
         } else {
             // Session loaded successfully, forward to main menu
             System.out.println("Session loaded successfully. Proceed to main menu.");
             main.getNavBar().activate();
             main.newMainMenu();
         }
+    }
+
+    public void showStartPage() {
+        // newUI();
+
+        login = new JPanel();
+        login.setBackground(Color.BLACK);
+        login.setLayout(new GridLayout(3, 0));
+        loginLabel = new JLabel("Login");
+        loginLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+        loginLabel.setForeground(Color.WHITE);
+        loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel login_center = new JPanel();
+        login_center.setOpaque(false);
+        login_center.setLayout(new GridLayout(3, 1, 0, 20));
+        login_center.setBorder(new ResponsiveBorder(0, 450, 30, 450));
+
+        loginEmail = new PlaceholderTextField("Email", Color.BLACK);
+        loginPassword = new PlaceholderPasswordField("Password", Color.BLACK);
+
+        JPanel loginButtonPanel = new JPanel();
+        loginButtonPanel.setLayout(new GridLayout(2, 1, 0, 30));
+        loginButtonPanel.setOpaque(false);
+        loginButtonPanel.setBorder(new ResponsiveBorder(30, 450, 80, 450));
+        loginButton = new JButton("Login");
+        loginWrongLabel = new JLabel("Invalid email or password");
+        loginWrongLabel.setForeground(Color.WHITE);
+        loginWrongLabel.setVisible(false); // Initially hidden
+        JPanel forgotPasswordSignUpPanel =  new JPanel();
+        forgotPasswordSignUpPanel.setBackground(Color.BLACK);
+        forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        JButton forgotPasswordButton = new JButton("Forgot Password");
+        JButton signUpButton = new JButton("I don't have an account");
+        
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Perform login action using apiClient.login(email, password)
+                String email = loginEmail.getText();
+                String password = new String(loginPassword.getPassword());
+                
+                String sesssion_token = APIClient.login(email, password);
+                token = sesssion_token;
+                if (!sesssion_token.isEmpty()) {
+                    // Login successful, navigate to next screen or perform actions
+                    // For now, let's just print a message
+                    System.out.println("Login successful.");
+                    main.getNavBar().activate();
+                    main.newMainMenu();
+                } else {
+                    // Login failed, display an error message or handle accordingly
+                    loginWrongLabel.setVisible(true);
+                }
+            }
+        });
+
+        /* Redirecting to registration */
+        
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("sign up button was clicked");
+                contentPanel.removeAll();  
+                registration();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+
+        forgotPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                forgotPasswordPage();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        forgotPasswordSignUpPanel.add(signUpButton);
+        forgotPasswordSignUpPanel.add(forgotPasswordButton);
+        
+        login_center.add(loginEmail);
+        login_center.add(loginPassword);
+        login_center.add(loginWrongLabel);
+        
+        loginEmail.requestFocusInWindow();
+        
+        loginButtonPanel.add(loginButton);
+        loginButtonPanel.add(forgotPasswordSignUpPanel);
+
+        login.add(loginLabel);
+        login.add(login_center);
+        login.add(loginButtonPanel);
+
+        contentPanel.add(login);
+        contentPanel.repaint();
     }
 
     public void showLoginRegisterScreen() {
@@ -114,6 +213,63 @@ public class Setup {
         contentPanel.repaint();
     }
     
+    public void forgotPasswordPage() {
+        newUI();
+
+        JPanel forgotPasswordPage = new JPanel();
+        forgotPasswordPage.setBorder(new ResponsiveBorder(0, 350,0,350));
+        JLabel forgotPasswordLabel = new JLabel("Forgot Password");
+        forgotPasswordLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+        forgotPasswordLabel.setHorizontalTextPosition(JLabel.CENTER);
+        JLabel typeYourEmaiLabel = new JLabel("Type your email and get the verification code to get the access to your account");
+        PlaceholderTextField forgotPasswordField = new PlaceholderTextField("Email", Color.BLACK);
+        JPanel submitButtonWrapper = new JPanel();
+        JPanel backButtonsPanel = new JPanel();
+        backButtonsPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        JButton backToLoginButton = new JButton("To Login");
+        JButton backToSignUp = new JButton("To Sign Up");
+        backButtonsPanel.add(backToLoginButton);
+        backButtonsPanel.add(backToSignUp);
+
+        backToLoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                showStartPage();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        
+        backToSignUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                registration();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+
+        submitButtonWrapper.setLayout(new GridLayout(2, 1, 0, 30));
+        submitButtonWrapper.setBorder(new ResponsiveBorder(0,0,90,0));
+        JButton submitButton = new JButton("Submit");
+        submitButtonWrapper.add(submitButton);
+        submitButtonWrapper.add(backButtonsPanel);
+        JPanel forgotPasswordCenter = new JPanel();
+        forgotPasswordCenter.setBorder(new ResponsiveBorder(0,0,130,0));
+        forgotPasswordCenter.setLayout(new GridLayout(2, 1, 0, 15));
+        forgotPasswordCenter.add(typeYourEmaiLabel);
+        forgotPasswordCenter.add(forgotPasswordField);
+
+        forgotPasswordPage.setLayout(new GridLayout(3, 3, 0, 0));
+        forgotPasswordPage.add(forgotPasswordLabel);
+        forgotPasswordPage.add(forgotPasswordCenter);
+        forgotPasswordPage.add(submitButtonWrapper);
+
+        contentPanel.add(forgotPasswordPage);
+        repaint();
+    }
     
     public void startRegistration(JPanel content, Main main) {
 
@@ -226,18 +382,38 @@ public class Setup {
         String[] gradeLevels = {"Freshman", "Sophomore", "Junior", "Senior"};
         gradeLevel = new JComboBox<>(gradeLevels);
         JPanel registrationNextPanel = new JPanel();
-        registrationNextPanel.setLayout(new GridLayout());
+        registrationNextPanel.setLayout(new GridLayout(2, 1, 0, 20));
         registrationNextPanel.setOpaque(false);
-        registrationNextPanel.setBorder(new ResponsiveBorder(90, 550, 90, 550));
+        registrationNextPanel.setBorder(new ResponsiveBorder(50, 500, 85, 500));
         registrationNext = new JButton("Next");
-        registrationNextPanel.add(registrationNext);
-
+        
+        JPanel backButtonsPanel = new JPanel();
+        backButtonsPanel.setBackground(Main.BodyColor);
+        backButtonsPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        JButton backToLoginButton = new JButton("To Login");
+        
         registrationNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registration2();
+                contentPanel.revalidate();
             }
         });
+
+        backToLoginButton.addActionListener(new ActionListener() {
+            @Override 
+            public void actionPerformed(ActionEvent e) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                showStartPage();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        registrationNextPanel.add(registrationNext);
+        backButtonsPanel.add(backToLoginButton);
+
+        registrationNextPanel.add(backButtonsPanel);
 
         registration_center.add(firstName);
         registration_center.add(lastName);
@@ -249,7 +425,8 @@ public class Setup {
 
         firstName.requestFocusInWindow();
 
-        bodyPanel.add(registration);
+        // bodyPanel.add(registration);
+        contentPanel.add(registration);
         repaint();
     }
 
@@ -411,6 +588,7 @@ public class Setup {
         loginEmail.requestFocusInWindow();
 
         bodyPanel.add(login);
+        // contentPanel.add(bodyPanel);
         repaint();
     }
 
