@@ -7,6 +7,9 @@ import restAPI.APIClient;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Settings {
 
@@ -14,8 +17,9 @@ public class Settings {
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(6, 2, 10, 10)); // GridLayout with 6 rows and 2 columns
         bodyPanel.setBackground(Main.BodyColor);
+        bodyPanel.setBorder(new ResponsiveBorder(100, 100, 20, 100));
 
-        JButton darkModeButton = new JButton("Dunkelmodus an/aus");
+        JButton darkModeButton = new JButton("Dunkelmodus");
         JButton deleteDataButton = new JButton("Konto löschen");
         JButton creditsButton = new JButton("Mitwirkende und Copyright");
         JButton privacyButton = new JButton("Datenschutzerklärung");
@@ -32,14 +36,28 @@ public class Settings {
         bodyPanel.add(creditsButton);
         bodyPanel.add(privacyButton);
 
-        
+        ImageIcon schiebereglerON,schiebereglerOFF;
+        schiebereglerON = new ImageIcon("resources/images/Schieberegler_ON.png");
+        schiebereglerOFF = new ImageIcon("resources/images/Schieberegler_OFF.png");
 
         ActionListener buttonActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == darkModeButton) {
                     main.toggleDarkmode();
+                    if (main.getDarkmodeState()) {
+                        darkModeButton.setIcon(schiebereglerON);
+                    } else {
+                        darkModeButton.setIcon(schiebereglerOFF);
+                    }
                     bodyPanel.setBackground(Main.BodyColor);
+                    JButton[] buttons = {darkModeButton, deleteDataButton, creditsButton, privacyButton};
+                    for (JButton button : buttons) {
+                        button.setBackground(Main.DefaultButton);
+                        button.setForeground(Main.TextColor);
+                    }
+                    widgetSelect.setBackground(Main.DefaultButton);
+                    widgetSelect.setForeground(Main.TextColor);                        
                     main.getNavBar().updateDesign();
                     APIClient.updatePreferences(main.getDarkmodeState(), 0, 0);
 
@@ -66,11 +84,33 @@ public class Settings {
             }
         };
 
-        darkModeButton.addActionListener(buttonActionListener);
-        deleteDataButton.addActionListener(buttonActionListener);
-        creditsButton.addActionListener(buttonActionListener);
-        privacyButton.addActionListener(buttonActionListener);
+MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                e.getComponent().setBackground(Main.HoverButton);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setBackground(Main.DefaultButton);
+            }
+        };
 
+        JButton[] buttons = {darkModeButton, deleteDataButton, creditsButton, privacyButton};
+        for (JButton button : buttons) {
+            button.addActionListener(buttonActionListener);
+            button.addMouseListener(mouseListener);
+            button.setBackground(Main.DefaultButton);
+            button.setForeground(Main.TextColor);
+            button.setFont(new Font(Font.SANS_SERIF, 0, 20));        
+        }   
+        widgetSelect.setBackground(Main.DefaultButton);
+        widgetSelect.setForeground(Main.TextColor);       
+        widgetSelect.setFont(new Font(Font.SANS_SERIF, 0, 20));
+        if (main.getDarkmodeState()) {
+            darkModeButton.setIcon(schiebereglerON);
+        } else {
+            darkModeButton.setIcon(schiebereglerOFF);
+        }
         content.add(bodyPanel);
     }
 }
