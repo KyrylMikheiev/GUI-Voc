@@ -21,7 +21,7 @@ def compile():
 
 def run():
     os.system("git submodule update --init --recursive")
-    os.system("cd LatinVocabParser && git pull origin master && cd ..")
+    os.system("cd LatinVocabParser && git pull origin main && cd ..")
     compile()
     print("Starting program...")
     os.system('java src/Main -Dfile.encoding=UTF-8')
