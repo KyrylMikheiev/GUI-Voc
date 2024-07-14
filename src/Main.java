@@ -47,6 +47,9 @@ public class Main {
     private boolean isDarkmode = false;
 
     public Main() {
+            
+        System.setProperty("file.encoding", "UTF-8");
+
         // Set the cross-platform look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

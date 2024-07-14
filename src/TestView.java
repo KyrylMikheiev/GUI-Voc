@@ -84,7 +84,7 @@ public class TestView {
         buttonPanel.add(previousButton);
         buttonPanel.add(nextButton);
 
-        // ????
+        // add panel for the buttons
         bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         content.add(bodyPanel);
