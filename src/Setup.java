@@ -61,6 +61,9 @@ public class Setup {
     private String token = "";
     private Main main;
 
+    public Setup(JPanel content, Main main) {
+        startScreen(content, main);
+    }
     
     public void startScreen(JPanel content, Main main) {
         main.getNavBar().deactivate();
@@ -610,7 +613,7 @@ public class Setup {
         // Verify the user using the verification code
         String code = verificationCode.getText();
         token = APIClient.verifyAccount(email.getText(), code);
-        return token != null && token == code;
+        return token != null && token != "";
     }
 
 

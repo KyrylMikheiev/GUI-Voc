@@ -32,7 +32,7 @@ public class TestView {
         // shuffle vocabs
         Collections.shuffle(allVocabs);
 
-        // select ten random vocabs
+        // select 10 random vocabs
         selectedVocabs.addAll(allVocabs.subList(0, Math.min(10, allVocabs.size())));
 
         // set up text fields for each translation
@@ -47,6 +47,7 @@ public class TestView {
             }
         }
 
+        //TODO: make them konjugation fields when vocab is verb
         nominativeTextField = new JTextField();
         dativeTextField = new JTextField();
 
@@ -74,17 +75,18 @@ public class TestView {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Main.BodyColor);
 
-        // create buttons for previous and next vocab
-        JButton previousButton = new JButton("Vorherige Vokabel");
-        previousButton.addActionListener(e -> previousVocab());
-
+        // create buttons for next vocab
         JButton nextButton = new JButton("Nächste Vokabel");
         nextButton.addActionListener(e -> nextVocab());
+        nextButton.setBackground(Main.DefaultButton);
+        nextButton.setForeground(Main.TextColor);
+        nextButton.setMaximumSize(new Dimension(400, 50));
+        
 
-        buttonPanel.add(previousButton);
+        //buttonPanel.add(nextButton);
         buttonPanel.add(nextButton);
 
-        // ????
+        // add panel for the buttons
         bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         content.add(bodyPanel);
@@ -96,6 +98,7 @@ private void updateVocabFields(JPanel bodyPanel) {
     // create a JLabel with the name of the vocab
     JLabel vocabsListLabel = new JLabel(selectedVocabs.get(0).getBasicForm());
     vocabsListLabel.setFont(vocabsListLabel.getFont().deriveFont(35f));
+    vocabsListLabel.setForeground(Main.TextColor);
 
     // center text (x axis) 
     vocabsListLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,16 +116,22 @@ private void updateVocabFields(JPanel bodyPanel) {
 JPanel nominativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 nominativePanel.setBackground(Main.BodyColor);
 JLabel nominativeLabel = new JLabel("Nominativ Plural auf Latein:");
+nominativeLabel.setForeground(Main.TextColor);
 nominativePanel.add(nominativeLabel);
 nominativeTextField.setPreferredSize(new Dimension(200, 20)); 
+nominativeTextField.setBackground(Main.DefaultButton);
+nominativeTextField.setForeground(Main.TextColor);
 nominativePanel.add(nominativeTextField);
 
 // create panel for "dativ"
 JPanel dativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 dativePanel.setBackground(Main.BodyColor);
 JLabel dativeLabel = new JLabel("Dativ Singular auf Latein:");
+dativeLabel.setForeground(Main.TextColor);
 dativePanel.add(dativeLabel);
 dativeTextField.setPreferredSize(new Dimension(200, 20)); 
+dativeTextField.setBackground(Main.DefaultButton);
+dativeTextField.setForeground(Main.TextColor);
 dativePanel.add(dativeTextField);
 
 // add both panels
@@ -143,8 +152,11 @@ for (int i = 0; i < translationTextFields.length; i++) {
     JPanel translationRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
     translationRow.setBackground(Main.BodyColor);
     JLabel translationLabel = new JLabel("Übersetzung " + (i + 1) + ":");
+    translationLabel.setForeground(Main.TextColor);
     translationRow.add(translationLabel);
     translationTextFields[i].setPreferredSize(new Dimension(200, 20)); // Anpassen der Größe hier
+    translationTextFields[i].setBackground(Main.DefaultButton);
+    translationTextFields[i].setForeground(Main.TextColor);
     translationRow.add(translationTextFields[i]);
     translationPanel.add(translationRow);
 }

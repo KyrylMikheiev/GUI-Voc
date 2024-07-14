@@ -7,22 +7,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-public class TestSelection extends JPanel {
+public class TestSelection {
     private JPanel bodyPanel;
-    LessonRoster lessonRoster = new LessonRoster();
+    LessonRoster lessonRoster;
     private JPanel buttonsPanel; 
     public boolean isCrossVisible1 = false; // Deklarieren Sie das JPanel als Klassenattribut
     public boolean isCrossVisible2 = false; // Deklarieren Sie das JPanel als Klassenattribut
     public boolean isCrossVisible3 = false; // Deklarieren Sie das JPanel als Klassenattribut
     public boolean isCrossVisible4 = false; // Deklarieren Sie das JPanel als Klassenattribut
     public boolean isCrossVisible5 = false; // Deklarieren Sie das JPanel als Klassenattribut
-    public ArrayList<String> selectedElements = new ArrayList<>(lessonRoster.getSelectedElementsAsStringList());
+    public ArrayList<String> selectedElements;
 
 
 
     public TestSelection(JPanel content, Main main) {
-        setLayout(new BorderLayout());
-        setBorder(new ResponsiveBorder(20, 20, 20, 20));
+        lessonRoster = new LessonRoster();
+        selectedElements = new ArrayList<>(lessonRoster.getSelectedElementsAsStringList());
+        bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.setBorder(new ResponsiveBorder(20, 20, 20, 20));
 
         bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());  
