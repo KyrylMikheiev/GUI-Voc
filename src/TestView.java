@@ -32,7 +32,7 @@ public class TestView {
         // shuffle vocabs
         Collections.shuffle(allVocabs);
 
-        // select ten random vocabs
+        // select 10 random vocabs
         selectedVocabs.addAll(allVocabs.subList(0, Math.min(10, allVocabs.size())));
 
         // set up text fields for each translation
@@ -47,6 +47,7 @@ public class TestView {
             }
         }
 
+        //TODO: make them konjugation fields when vocab is verb
         nominativeTextField = new JTextField();
         dativeTextField = new JTextField();
 

@@ -20,9 +20,11 @@ def compile():
     os.system('javac -d . src/*.java LatinVocabParser/VocabAPI/*.java LatinVocabParser/VocabAPI/WordTypes/*.java minigames/*.java')
 
 def run():
+    os.system("git submodule update --init --recursive")
+    os.system("cd LatinVocabParser && git pull origin main && cd ..")
     compile()
     print("Starting program...")
-    os.system('java src/Main')
+    os.system('java src/Main -Dfile.encoding=UTF-8')
 
 if __name__ == "__main__":
     run()

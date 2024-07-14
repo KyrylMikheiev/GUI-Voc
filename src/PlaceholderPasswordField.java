@@ -4,12 +4,12 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class PlaceholderTextField extends JTextField implements FocusListener {
+public class PlaceholderPasswordField extends JPasswordField implements FocusListener {
 
     private String placeholder;
     private Color placeholderColor;
 
-    public PlaceholderTextField(String placeholder, Color placeholderColor) {
+    public PlaceholderPasswordField(String placeholder, Color placeholderColor) {
         this.placeholder = placeholder;
         this.placeholderColor = placeholderColor;
         addFocusListener(this);
@@ -19,8 +19,8 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // If the text field is empty, paint the placeholder text
-        if (getText().isEmpty()) {
+        // If the password field is empty, paint the placeholder text
+        if (getPassword().length == 0) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(placeholderColor);
             g2d.setFont(getFont().deriveFont(Font.ITALIC));
@@ -34,14 +34,13 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-        // Repaint when the text field gains focus
+        // Repaint when the password field gains focus
         repaint();
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        // Repaint when the text field loses focus
+        // Repaint when the password field loses focus
         repaint();
     }
-
 }

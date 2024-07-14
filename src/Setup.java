@@ -37,8 +37,10 @@ public class Setup {
     private JPanel registration2;
     private JLabel registrationLabel2;
     private PlaceholderTextField email;
-    private PlaceholderTextField password;
-    private PlaceholderTextField repeatPassword;
+    private PlaceholderPasswordField password;
+    private PlaceholderPasswordField repeatPassword;
+    // private PlaceholderPasswordField password;
+    // private PlaceholderPasswordField repeatPassword;
     private JButton registerButton;
 
     // UI components for verification
@@ -51,15 +53,19 @@ public class Setup {
     private JPanel login;
     private JLabel loginLabel;
     private PlaceholderTextField loginEmail;
-    private PlaceholderTextField loginPassword;
+    private PlaceholderPasswordField loginPassword;
     private JLabel loginWrongLabel;
     private JButton loginButton;
 
     private String token = "";
     private Main main;
 
+    public Setup(JPanel content, Main main) {
+        startScreen(content, main);
+    }
     
     public void startScreen(JPanel content, Main main) {
+        main.getNavBar().deactivate();
         contentPanel = content;
         this.main = main;
         content.setLayout(new BorderLayout());
@@ -75,6 +81,7 @@ public class Setup {
         } else {
             // Session loaded successfully, forward to main menu
             System.out.println("Session loaded successfully. Proceed to main menu.");
+            main.getNavBar().activate();
             main.newMainMenu();
         }
     }
@@ -92,7 +99,6 @@ public class Setup {
                 startLogin(contentPanel, main);
             }
         });
-
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -244,6 +250,8 @@ public class Setup {
         registration.add(registration_center);
         registration.add(registrationNextPanel);
 
+        firstName.requestFocusInWindow();
+
         bodyPanel.add(registration);
         repaint();
     }
@@ -254,7 +262,7 @@ public class Setup {
         registration2 = new JPanel();
         registration2.setBackground(Main.BodyColor);
         registration2.setLayout(new GridLayout(3, 0));
-        registrationLabel2 = new JLabel("Registration (Cont'd)");
+        registrationLabel2 = new JLabel("Registration");
         registrationLabel2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         registrationLabel2.setForeground(Main.TextColor);
         registrationLabel2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -265,8 +273,8 @@ public class Setup {
         registration_center.setBorder(new ResponsiveBorder(30, 450, 30, 450));
 
         email = new PlaceholderTextField("Email", Color.BLACK);
-        password = new PlaceholderTextField("Password", Color.BLACK);
-        repeatPassword = new PlaceholderTextField("Repeat Password", Color.BLACK);
+        password = new PlaceholderPasswordField("Password", Color.BLACK);
+        repeatPassword = new PlaceholderPasswordField("Repeat Password", Color.BLACK);
 
         JPanel registerButtonPanel = new JPanel();
         registerButtonPanel.setLayout(new GridLayout());
@@ -277,19 +285,30 @@ public class Setup {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (password.getText().equals(repeatPassword.getText())) {
-                    registerUser();
-                    verification();
+                System.out.println("Registering...");
+                String p1 = String.valueOf(password.getPassword());
+                String p2 = String.valueOf(repeatPassword.getPassword());
+                System.out.println(p1 + " " + p2);
+                if (p1.equals(p2)) {
+                    System.out.println("Passwords match");
+                    if (registerUser())
+                        verification();
+                    else
+                        registration2.add(new JLabel("User with that email already exists!"));
                 }
                 else {
                     registration2.add(new JLabel("Passwords do not match!"));
                 }
+                registration2.revalidate();
+                registration2.repaint();
             }
         });
 
         registration_center.add(email);
         registration_center.add(password);
         registration_center.add(repeatPassword);
+
+        email.requestFocusInWindow();
 
         registerButtonPanel.add(registerButton);
 
@@ -328,6 +347,7 @@ public class Setup {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (verifyUser()) {
+                    main.getNavBar().activate();
                     main.newMainMenu();
                 } else {
                     verification.add(new JLabel("Invalid verification code"));
@@ -337,6 +357,8 @@ public class Setup {
 
         verificationCodePanel.add(verificationCode);
         verificationNextPanel.add(verificationNext);
+
+        verificationCode.requestFocusInWindow();
 
         verification.add(verificationLabel);
         verification.add(verificationCodePanel);
@@ -356,8 +378,7 @@ public class Setup {
         loginLabel = new JLabel("Login");
         loginLabel.setForeground(Main.TextColor);
         loginEmail = new PlaceholderTextField("Email", Main.TextColor);
-        loginPassword = new PlaceholderTextField("Password", Main.TextColor);
-        loginPassword.setEchoChar('*'); // Mask the password input
+        loginPassword = new PlaceholderPasswordField("Password", Main.TextColor);
         loginWrongLabel = new JLabel("Invalid email or password");
         loginWrongLabel.setVisible(false); // Initially hidden
         loginButton = new JButton("Login");
@@ -367,7 +388,7 @@ public class Setup {
             public void actionPerformed(ActionEvent e) {
                 // Perform login action using apiClient.login(email, password)
                 String email = loginEmail.getText();
-                String password = new String(loginPassword.getText());
+                String password = new String(loginPassword.getPassword());
 
                 String sesssion_token = APIClient.login(email, password);
                 token = sesssion_token;
@@ -375,6 +396,7 @@ public class Setup {
                     // Login successful, navigate to next screen or perform actions
                     // For now, let's just print a message
                     System.out.println("Login successful.");
+                    main.getNavBar().activate();
                     main.newMainMenu();
                 } else {
                     // Login failed, display an error message or handle accordingly
@@ -388,6 +410,8 @@ public class Setup {
         login.add(loginPassword);
         login.add(loginWrongLabel);
         login.add(loginButton);
+
+        loginEmail.requestFocusInWindow();
 
         bodyPanel.add(login);
         repaint();
@@ -411,26 +435,29 @@ public class Setup {
         // Verify the user using the verification code
         String code = verificationCode.getText();
         token = APIClient.verifyAccount(email.getText(), code);
-        return token != null;
+        return token != null && token == code;
     }
 
 
-    public void registerUser() {
+    public boolean registerUser() {
+        System.out.println("Registering user...");
         String userFirstName = firstName.getText();
         String userLastName = lastName.getText();
         String userEmail = email.getText();
-        String userPassword = password.getText();
+        String userPassword = String.valueOf(password.getPassword());
         int userModePreference = designMode; // You need to set this value based on the user's mode preference
         int userClass = gradeLevel.getSelectedIndex() + 1; // Assuming the index corresponds to class (e.g., Freshman = 1, Sophomore = 2, etc.)
 
         boolean accountCreated = APIClient.createUserAccount(userFirstName, userLastName, userEmail, userPassword, userModePreference, userClass);
         if (accountCreated) {
             System.out.println("Account created successfully.");
+            //main.getNavBar().activate();
             // Optionally, you can proceed with the verification process here
             // For now, let's just print a message
-            System.out.println("Please verify your account.");
+            return true;
         } else {
             System.out.println("Account creation failed.");
+            return false;
         }
     }
 }

@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 import java.util.*;
 //btn1.setBackground(colors[index]
-public class GameM implements ActionListener{ 
+public class GameM implements ActionListener { 
 	
 	JPanel field = new JPanel();
 	JPanel menu = new JPanel();
@@ -261,7 +261,7 @@ public void actionPerformed(ActionEvent click){
 			setUpGame(level);//level between 1 and 2, eh is true or false
 		}
 		if(source==over){//quits
-			System.exit(0);
+			main.goBack();
 		}
 		if(source==inst){//this just sets the instruction screen
 			clearMain();

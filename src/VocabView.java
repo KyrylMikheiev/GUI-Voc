@@ -23,10 +23,9 @@ public class VocabView {
     private static JTable table1;
     private static JPanel mainPanel;
     private final JTable table;
-    private JPanel bodyPanel;
+    private JPanel bodyPanel = new JPanel();
 
     public VocabView(JPanel content, Vocab v) {
-        bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());
         bodyPanel.setBorder(new ResponsiveBorder(20, 20, 20, 20));
         bodyPanel.setBackground(Main.BodyColor);

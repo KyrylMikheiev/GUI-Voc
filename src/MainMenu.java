@@ -42,17 +42,16 @@ public class MainMenu {
     public JButton getSettingsButton() {
         return settings;
     }
-    
-    
 
-    
+    private static JPanel bodyPanel;
+
     public MainMenu(JPanel content, Main main)
     {
         // # create main menu
         //create elements and add them to the contentPane
         //----------------body-----------------
+        bodyPanel = new JPanel();
         
-        JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new GridLayout(1, 2, 0, 0));
         bodyPanel.setBackground(Main.BodyColor);
         
@@ -75,7 +74,7 @@ public class MainMenu {
         for (ImageIcon icon : icons) {
             icon.setImage(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
         }
-
+        
         JButton learn, games, settings, library, test, text;
         learn = new JButton("Lernen", learnI);
         test = new JButton("Testen", testI);
@@ -160,7 +159,7 @@ public class MainMenu {
         
         bodyPanel.add(body_contentLeft);
         bodyPanel.add(bodyPanel_contentRight);
-
+        
         content.add(bodyPanel, BorderLayout.CENTER);
 
     }
