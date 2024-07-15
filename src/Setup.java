@@ -120,7 +120,7 @@ public class Setup {
         loginWrongLabel.setForeground(Color.WHITE);
         loginWrongLabel.setVisible(false); // Initially hidden
         JPanel forgotPasswordSignUpPanel =  new JPanel();
-        forgotPasswordSignUpPanel.setBackground(Color.BLACK);
+        forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
         forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
         JButton forgotPasswordButton = new JButton("Forgot Password");
         JButton signUpButton = new JButton("I don't have an account");
