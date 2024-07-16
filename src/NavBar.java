@@ -52,7 +52,7 @@ public class NavBar {
         //---------------backButton---------------
         JButton backButton = new JButton();
         ImageIcon backIcon = new ImageIcon("resources/images/arrow.png");
-        backIcon.setImage(backIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        backIcon.setImage(backIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
         backButton.setIcon(backIcon);
         backButton.setOpaque(false);
         backButton.setBackground(BODY_COLOR);

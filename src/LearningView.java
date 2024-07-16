@@ -33,7 +33,7 @@ public class LearningView {
         this.lektion = lektion;
 
         for (int i = 0; i < VocabParser.getVocabsFromLesson(lektion).size(); i++) {
-            vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID());
+            vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID() - 1);
         }
         setupUI();
         updateFlashcard();
@@ -211,14 +211,14 @@ public class LearningView {
                 backArrowButton.setContentAreaFilled(false);
             }
         });
-        Image image = new ImageIcon("./resources/images/arrow.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image image = new ImageIcon("./resources/images/arrowpurple.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         backArrowButton.setIcon(new ImageIcon(image)); 
         backArrowButtonPanel.add(backArrowButton, BorderLayout.CENTER);
         backArrowPanel.add(backArrowLabel, BorderLayout.CENTER);
         backArrowPanel.add(backArrowButtonPanel, BorderLayout.WEST);
 
         JButton cross = new JButton();
-        Image crossImage = new ImageIcon("./resources/images/close.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        Image crossImage = new ImageIcon("./resources/images/close.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getWidth() / 5, Image.SCALE_SMOOTH);
         cross.setIcon(new ImageIcon(crossImage));
         cross.setBorder(null);
         cross.setContentAreaFilled(false);
@@ -262,7 +262,7 @@ public class LearningView {
         
         checkmarkPanel.setLayout(new BorderLayout());
         JButton checkmark = new JButton();
-        Image checkmarkImage = new ImageIcon("./resources/images/checkmark.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        Image checkmarkImage = new ImageIcon("./resources/images/checkmark.png").getImage().getScaledInstance(main.getFrame().getWidth() / 4, main.getFrame().getWidth() / 4, Image.SCALE_SMOOTH);
         checkmark.setIcon(new ImageIcon(checkmarkImage));
         checkmark.setBorder(null);
         checkmark.setContentAreaFilled(false);
@@ -351,13 +351,20 @@ public class LearningView {
             if (currentVocabIndex == vocabs.size()) {
                 uploadData();
                 showFinishedScreen();
+            } else {
+                updateFlashcard();
             }
-            updateFlashcard();
         }
     }
 
     private void updateProgressBar() {
-        int progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
+        int progress = 0;
+        if (vocabs.size() > 1) {
+            progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
+        }
+        else {
+            progress = 100;
+        }
         progressBar.setValue(progress);
     }
     private void updateFlashcard() {
@@ -365,9 +372,9 @@ public class LearningView {
         List<Vocab> sortedVocabs = VocabParser.getAllVocabs().stream().sorted(Comparator.comparingInt(Vocab::getID)).collect(Collectors.toList());
 
         if (isFront) {
-            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex) - 1).getBasicForm());
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex)).getBasicForm());
         } else {
-            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex) - 1).getGerman().toString().replace("[", "").replace("]", ""));
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex)).getGerman().toString().replace("[", "").replace("]", ""));
         }
     }
 
