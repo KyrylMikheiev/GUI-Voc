@@ -3,8 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import VocabAPI.VocabParser;
+import VocabAPI.WordTypes.*;
 import restAPI.APIClient;
 
 public class LearningView {
@@ -26,14 +30,13 @@ public class LearningView {
         this.currentVocabIndex = 0;
         this.isFront = true;
         this.main = main;
-
-        setupUI();
-        updateFlashcard();
-
+        this.lektion = lektion;
 
         for (int i = 0; i < VocabParser.getVocabsFromLesson(lektion).size(); i++) {
             vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID());
         }
+        setupUI();
+        updateFlashcard();
     }
     public LearningView(JPanel content, ArrayList<Integer> vocabs, Main main) {
         this.content = content;
@@ -341,28 +344,30 @@ public class LearningView {
     private void showNextVocab() {
         // Assuming VocabParser.getVocabsFromLesson(lektion) returns a list of vocabs
         // and lektion is correctly initialized.
-        if (currentVocabIndex < vocabs.size() - 1) {
+        if (currentVocabIndex < vocabs.size()) {
             currentVocabIndex++;
             isFront = true;
-            updateFlashcard();
             updateProgressBar();
+            if (currentVocabIndex == vocabs.size()) {
+                uploadData();
+                showFinishedScreen();
+            }
+            updateFlashcard();
         }
     }
 
     private void updateProgressBar() {
         int progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
         progressBar.setValue(progress);
-        if (progress == 100) {
-            // lesson finished, upload data
-            uploadData();
-            showFinishedScreen();
-        }
     }
     private void updateFlashcard() {
+        
+        List<Vocab> sortedVocabs = VocabParser.getAllVocabs().stream().sorted(Comparator.comparingInt(Vocab::getID)).collect(Collectors.toList());
+
         if (isFront) {
-            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getBasicForm());
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex) - 1).getBasicForm());
         } else {
-            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex) - 1).getGerman().toString().replace("[", "").replace("]", ""));
         }
     }
 
@@ -440,11 +445,19 @@ public class LearningView {
             }
         });
 
+        statisticsPanel.add(rightVocabsLabel);
+        statisticsPanel.add(wrongVocabsLabel);
+
+        if (wrongVocabs.size() == 0) {
+            relearnVocabs.setEnabled(false);
+            JLabel noWrongVocabs = new JLabel("Prima!");
+            noWrongVocabs.setForeground(Main.TextColor);
+            statisticsPanel.add(noWrongVocabs);
+        }
         buttonsPanel.add(relearnVocabs);
         buttonsPanel.add(backMainMenu);
 
-        statisticsPanel.add(rightVocabsLabel);
-        statisticsPanel.add(wrongVocabsLabel);
+        
 
         congratulationScreen.add(congratulations);
         congratulationScreen.add(statisticsPanel);
