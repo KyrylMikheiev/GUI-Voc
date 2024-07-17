@@ -29,6 +29,21 @@ public class Settings {
         widgetSelect.addItem("Leaderboard");
         widgetSelect.addItem("Letzte Lektionen");
         
+        widgetSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.setWidget(widgetSelect.getSelectedIndex());
+                main.resetHistory();
+                int dm;
+                if (main.getDarkmodeState()) {
+                    dm = 2;
+                }
+                else {
+                    dm = 1;
+                }
+                APIClient.updatePreferences(dm, 0, widgetSelect.getSelectedIndex());
+            }
+        });
         
         bodyPanel.add(darkModeButton);
         bodyPanel.add(widgetSelect);
@@ -59,7 +74,14 @@ public class Settings {
                     widgetSelect.setBackground(Main.DefaultButton);
                     widgetSelect.setForeground(Main.TextColor);                        
                     main.getNavBar().updateDesign();
-                    APIClient.updatePreferences(main.getDarkmodeState(), 0, 0);
+                    main.resetHistory();
+                    int dm;
+                    if (main.getDarkmodeState()) {
+                        dm = 2;
+                    } else {
+                        dm = 1;
+                    }
+                    APIClient.updatePreferences(dm, 1, widgetSelect.getSelectedIndex());
 
                 } else if (e.getSource() == deleteDataButton) {
                     String password = JOptionPane.showInputDialog(null, "Enter Password:");
@@ -68,6 +90,7 @@ public class Settings {
                         if (success) {
                             JOptionPane.showMessageDialog(null, "Account deleted successfully.");
                             main.newSetup();
+                            main.resetHistory();
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrect password. Data deletion aborted.");
                         }

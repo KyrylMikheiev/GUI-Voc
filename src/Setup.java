@@ -2,17 +2,15 @@ package src;
 
 import javax.swing.*;
 
-import restAPI.APIClient;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import restAPI.APIClient;
+import restAPI.APIClient;
 
 public class Setup {
     private JPanel contentPanel;
@@ -83,8 +81,7 @@ public class Setup {
         } else {
             // Session loaded successfully, forward to main menu
             System.out.println("Session loaded successfully. Proceed to main menu.");
-            main.getNavBar().activate();
-            main.newMainMenu();
+            main.loggedIn();
         }
     }
 
@@ -104,9 +101,9 @@ public class Setup {
         login_center.setLayout(new GridLayout(3, 1, 0, 20));
         login_center.setBorder(new ResponsiveBorder(0, 450, 30, 450));
 
-        loginEmail = new PlaceholderTextField("Email", Color.BLACK);
+        loginEmail = new PlaceholderTextField("E-Mail", Color.BLACK);
         loginEmail.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        loginPassword = new PlaceholderPasswordField("Password", Color.BLACK);
+        loginPassword = new PlaceholderPasswordField("Passwort", Color.BLACK);
         loginPassword.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
 
         JPanel loginButtonPanel = new JPanel();
@@ -115,15 +112,15 @@ public class Setup {
         loginButtonPanel.setBorder(new ResponsiveBorder(30, 450, 80, 450));
         loginButton = new JButton("Login");
         // loginButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-        loginWrongLabel = new JLabel("Invalid email or password");
+        loginWrongLabel = new JLabel("Ungültige E-Mail oder Passwort");
         loginWrongLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         loginWrongLabel.setForeground(Color.WHITE);
         loginWrongLabel.setVisible(false); // Initially hidden
         JPanel forgotPasswordSignUpPanel =  new JPanel();
         forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
         forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
-        JButton forgotPasswordButton = new JButton("Forgot Password");
-        JButton signUpButton = new JButton("I don't have an account");
+        JButton forgotPasswordButton = new JButton("Passwort vergessen");
+        JButton signUpButton = new JButton("Ich habe keinen Account");
         // forgotPasswordButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         // signUpButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         
@@ -136,15 +133,17 @@ public class Setup {
                 
                 String sesssion_token = APIClient.login(email, password);
                 token = sesssion_token;
-                if (!sesssion_token.isEmpty()) {
+                if (!sesssion_token.isEmpty() && sesssion_token != "VERIFY") {
                     // Login successful, navigate to next screen or perform actions
                     // For now, let's just print a message
                     System.out.println("Login successful.");
-                    main.getNavBar().activate();
-                    main.newMainMenu();
-                } else {
+                    main.loggedIn();
+                } else if (sesssion_token == "") {
                     // Login failed, display an error message or handle accordingly
                     loginWrongLabel.setVisible(true);
+                }
+                else if (sesssion_token == "VERIFY") {
+                    verification(loginEmail.getText());
                 }
 
                 
@@ -193,7 +192,7 @@ public class Setup {
         contentPanel.repaint();
     }
 
-    public void showLoginRegisterScreen() {
+    /*public void showLoginRegisterScreen() {
         // Show login/register screen on the EDT
 
         JPanel loginRegisterPanel = new JPanel();
@@ -206,7 +205,7 @@ public class Setup {
                 startLogin(contentPanel, main);
             }
         });
-        JButton registerButton = new JButton("Register");
+        JButton registerButton = new JButton("Registration");
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,7 +221,7 @@ public class Setup {
         contentPanel.add(bodyPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
-    }
+    }*/
     
     public void forgotPasswordPage() {
         newUI();
@@ -469,8 +468,8 @@ public class Setup {
         registration_center.setBorder(new ResponsiveBorder(30, 450, 30, 450));
 
         email = new PlaceholderTextField("Email", Color.BLACK);
-        password = new PlaceholderPasswordField("Password", Color.BLACK);
-        repeatPassword = new PlaceholderPasswordField("Repeat Password", Color.BLACK);
+        password = new PlaceholderPasswordField("Passwort", Color.BLACK);
+        repeatPassword = new PlaceholderPasswordField("Passwort wiederholen", Color.BLACK);
         email.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         password.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         repeatPassword.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
@@ -479,8 +478,8 @@ public class Setup {
         registerButtonPanel.setLayout(new GridLayout(1, 2, 30, 0));	
         registerButtonPanel.setOpaque(false);
         registerButtonPanel.setBorder(new ResponsiveBorder(90, 500, 90, 500));
-        registerButton = new JButton("Register");
-        JButton backButton = new JButton("Back");
+        registerButton = new JButton("Registrieren");
+        JButton backButton = new JButton("Zurück");
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -502,10 +501,7 @@ public class Setup {
                 if (p1.equals(p2)) {
                     System.out.println("Passwords match");
                     if (registerUser()) {
-                        contentPanel.removeAll();  
-                        verification();
-                        contentPanel.repaint();
-                        contentPanel.revalidate();
+                        verification(email.getText());
                     }
                     else {
                         registration2.removeAll();
@@ -519,8 +515,8 @@ public class Setup {
                         forgotPasswordSignUpPanel.setBorder(new ResponsiveBorder(0,50,160,70));
                         forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
                         forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
-                        JButton backToLogin = new JButton("Back to Login");
-                        JButton signUpButton = new JButton("I don't have an account");
+                        JButton backToLogin = new JButton("Zurück zum Login");
+                        JButton signUpButton = new JButton("Ich habe keinen Account");
                         backToLogin.addActionListener(new ActionListener() {
                             @Override 
                             public void actionPerformed(ActionEvent e) {
@@ -543,7 +539,7 @@ public class Setup {
                         });
                         forgotPasswordSignUpPanel.add(backToLogin);
                         forgotPasswordSignUpPanel.add(signUpButton);
-                        JLabel userExistsJLabel = new JLabel("User with that email already exists!");
+                        JLabel userExistsJLabel = new JLabel("Bereits angemeldete oder ungültige E-Mail!");
                         userExistsJLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
                         userExistsJLabel.setForeground(Main.textColorDarkMode);
 
@@ -557,11 +553,11 @@ public class Setup {
                     JPanel forgotPasswordSignUpPanel =  new JPanel();
                     forgotPasswordSignUpPanel.setBackground(Color.BLACK);
                     forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
-                    JButton backToLogin = new JButton("Back to Login");
-                    JButton signUpButton = new JButton("I don't have an account");
+                    JButton backToLogin = new JButton("Zurücl zum Login");
+                    JButton signUpButton = new JButton("Ich habe keinen Account");
                     forgotPasswordSignUpPanel.add(backToLogin);
                     forgotPasswordSignUpPanel.add(signUpButton);
-                    registration2.add(new JLabel("Passwords do not match!"));
+                    registration2.add(new JLabel("Passwörter stimmen nicht überein!"));
                     registration2.add(forgotPasswordSignUpPanel);
                 }
                 registration2.revalidate();
@@ -585,14 +581,14 @@ public class Setup {
         contentPanel.add(registration2);
         repaint();
     }
-    public void verification() {
+    public void verification(String email) {
         newUI();
 
         verification = new JPanel();
         verification.setBackground(Main.bodyColorDarkMode);
         verification.setLayout(new GridLayout(3, 0));
 
-        verificationLabel = new JLabel("Verification");
+        verificationLabel = new JLabel("Account-Verifizierung");
         verificationLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         verificationLabel.setForeground(Main.textColorDarkMode);
         verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -601,7 +597,7 @@ public class Setup {
         verificationCodePanel.setOpaque(false);
         verificationCodePanel.setLayout(new GridLayout());
         verificationCodePanel.setBorder(new ResponsiveBorder(90, 450, 90, 450));
-        verificationCode = new PlaceholderTextField("Verification Code", Color.BLACK);
+        verificationCode = new PlaceholderTextField("Verifizierungs-Code", Color.BLACK);
 
         JPanel verificationNextPanel = new JPanel();
         verificationNextPanel.setLayout(new GridLayout());
@@ -612,15 +608,14 @@ public class Setup {
         verificationNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (verifyUser()) {
-                    main.getNavBar().activate();
-                    main.newMainMenu();
+                if (verifyUser(email)) {
+                    main.loggedIn();
                 } else {
                     verification.removeAll();
 
                     verification.setLayout(new GridLayout(4, 1));
                     verification.setBorder(new ResponsiveBorder(0, 350, 0, 350));
-                    verificationLabel = new JLabel("Verification");
+                    verificationLabel = new JLabel("Verifizierung");
                     verificationLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
                     verificationLabel.setForeground(Main.textColorDarkMode);
                     verificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -629,8 +624,8 @@ public class Setup {
                     forgotPasswordSignUpPanel.setBorder(new ResponsiveBorder(40,50,80,70));
                     forgotPasswordSignUpPanel.setBackground(Main.bodyColorDarkMode);
                     forgotPasswordSignUpPanel.setLayout(new GridLayout(1, 2, 30, 0));
-                    JButton backToLogin = new JButton("Back to Login");
-                    JButton signUpButton = new JButton("I don't have an account");
+                    JButton backToLogin = new JButton("Zurück zum Login");
+                    JButton signUpButton = new JButton("Ich habe keinen Account");
                     backToLogin.addActionListener(new ActionListener() {
                         @Override 
                         public void actionPerformed(ActionEvent e) {
@@ -653,19 +648,16 @@ public class Setup {
                     });
                     forgotPasswordSignUpPanel.add(backToLogin);
                     forgotPasswordSignUpPanel.add(signUpButton);
-                    JLabel userExistsJLabel = new JLabel("Wrong verification code!");
+                    JLabel userExistsJLabel = new JLabel("Falscher Verifizierungs-Code!");
                     JPanel resendButtonPanel = new JPanel();
                     resendButtonPanel.setLayout(new GridLayout());
                     resendButtonPanel.setBackground(Main.bodyColorDarkMode);
                     resendButtonPanel.setBorder(new ResponsiveBorder(50, 100, 60, 100));
-                    JButton resendButton = new JButton("Resend");
+                    JButton resendButton = new JButton("Erneut senden");
                     resendButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            contentPanel.removeAll();
-                            verification();
-                            contentPanel.repaint();
-                            contentPanel.revalidate();
+                            verification(email);
                         }
                     });
                     resendButtonPanel.add(resendButton);
@@ -722,8 +714,7 @@ public class Setup {
                     // Login successful, navigate to next screen or perform actions
                     // For now, let's just print a message
                     System.out.println("Login successful.");
-                    main.getNavBar().activate();
-                    main.newMainMenu();
+                    main.loggedIn();
                 } else {
                     // Login failed, display an error message or handle accordingly
                     loginWrongLabel.setVisible(true);
@@ -746,22 +737,22 @@ public class Setup {
 
     private void newUI() {
         try {
-            bodyPanel.removeAll();
+            contentPanel.removeAll();
         }
         catch (Exception e) {
             
         }
-        bodyPanel.setBackground(Main.BodyColor);
+        contentPanel.setBackground(Main.BodyColor);
     }
     private void repaint() {
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 
-    public boolean verifyUser() {
+    public boolean verifyUser(String email) {
         // Verify the user using the verification code
         String code = verificationCode.getText();
-        token = APIClient.verifyAccount(email.getText(), code);
+        token = APIClient.verifyAccount(email, code);
         return token != null && token != "";
     }
 
@@ -778,7 +769,6 @@ public class Setup {
         boolean accountCreated = APIClient.createUserAccount(userFirstName, userLastName, userEmail, userPassword, userModePreference, userClass);
         if (accountCreated) {
             System.out.println("Account created successfully.");
-            //main.getNavBar().activate();
             // Optionally, you can proceed with the verification process here
             // For now, let's just print a message
             return true;

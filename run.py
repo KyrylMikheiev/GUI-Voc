@@ -13,6 +13,8 @@ def delete():
         os.remove("minigames/*.class")
     if os.path.exists("VocabAPI/"):
         shutil.rmtree("VocabAPI/")
+    if os.path.exists("restAPI/*.class"):
+        os.remove("restAPI/*.class")
 
 def compile():
     delete()

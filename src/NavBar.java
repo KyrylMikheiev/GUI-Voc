@@ -14,11 +14,7 @@ import restAPI.APIClient;
 
 public class NavBar {
 
-    private Color DEFAULT_BUTTON_COLOR = Main.DefaultButton;
-    private Color HOVER_BUTTON_COLOR = Main.BodyColor;
-    private Color CLICK_BUTTON_COLOR = Main.ClickButton;
     private Color BODY_COLOR = Color.GRAY;
-    private Color SECOND_BODY_COLOR = Main.SecondBodyColor;
     private Color TEXT_COLOR = Main.TextColor;
 
     private boolean active = false;
@@ -31,6 +27,7 @@ public class NavBar {
     private PlaceholderTextField textArea;
     private JLabel appName;
     private JMenu burgerMenu;
+    private JButton backButton;
 
     public NavBar(JPanel globalPanel, Main main) {
         this.globalPanel = globalPanel;
@@ -50,7 +47,7 @@ public class NavBar {
         navigation_contentLeft.setBorder(BorderFactory.createEmptyBorder(9, 0, 9, 30)); // adjustment for appname
         navigation_contentLeft.setOpaque(false);
         //---------------backButton---------------
-        JButton backButton = new JButton();
+        backButton = new JButton();
         ImageIcon backIcon = new ImageIcon("resources/images/arrow.png");
         backIcon.setImage(backIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
         backButton.setIcon(backIcon);
@@ -68,6 +65,7 @@ public class NavBar {
         backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backButton.setBorder(new ResponsiveBorder(10, 100, 10, 100));
         navigation_contentLeft.add(backButton, BorderLayout.WEST);
+        backButton.setEnabled(false);
 
         //---------------appName---------------
         appName = new JLabel("Vokabeltrainer");
@@ -238,6 +236,14 @@ public class NavBar {
         appName.setEnabled(false);
     }
     
+    public void updateBackButton() {
+        if (main.getHistorySize() > 2) {
+            backButton.setEnabled(true);
+        }
+        else {
+            backButton.setEnabled(false);
+        }
+    }
 
     public boolean isActive() {
         return active;
@@ -245,11 +251,7 @@ public class NavBar {
 
     public void updateDesign() {
         // Update colors
-        DEFAULT_BUTTON_COLOR = Main.DefaultButton;
-        HOVER_BUTTON_COLOR = Main.HoverButton;
-        CLICK_BUTTON_COLOR = Main.ClickButton;
         //BODY_COLOR = Main.BodyColor;
-        SECOND_BODY_COLOR = Main.SecondBodyColor;
         TEXT_COLOR = Main.TextColor;
 
         // Update colors for components
