@@ -39,12 +39,6 @@ public class Main {
     public static Color bodyColorDarkMode = Color.decode("#111827");
     public static Color SecondBodyColorDarkMode = Color.decode("#1f2937");
     public static Color textColorDarkMode = Color.decode("#f9fafb");
-    public Color defaultButtonLightMode = Color.decode("#B7B7B7");
-    public Color hoverButtonLightMode = Color.decode("#E1E1E1");
-    public Color clickButtonLightMode = Color.decode("#FAFAFA");
-    public Color BodyColorLightMode = Color.decode("#FFFFFF");
-    public Color SecondBodyColorLightMode = Color.decode("#DDDDDD");
-    public Color TextColorLightMode = Color.decode("#000000");
 
     private JFrame frame;
     private JPanel contentPane; 
