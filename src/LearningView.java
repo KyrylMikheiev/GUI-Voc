@@ -3,8 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import VocabAPI.VocabParser;
+import VocabAPI.WordTypes.*;
 import restAPI.APIClient;
 
 public class LearningView {
@@ -26,14 +30,13 @@ public class LearningView {
         this.currentVocabIndex = 0;
         this.isFront = true;
         this.main = main;
-
-        setupUI();
-        updateFlashcard();
-
+        this.lektion = lektion;
 
         for (int i = 0; i < VocabParser.getVocabsFromLesson(lektion).size(); i++) {
-            vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID());
+            vocabs.add(VocabParser.getVocabsFromLesson(lektion).get(i).getID() - 1);
         }
+        setupUI();
+        updateFlashcard();
     }
     public LearningView(JPanel content, ArrayList<Integer> vocabs, Main main) {
         this.content = content;
@@ -208,14 +211,14 @@ public class LearningView {
                 backArrowButton.setContentAreaFilled(false);
             }
         });
-        Image image = new ImageIcon("./resources/images/arrow.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image image = new ImageIcon("./resources/images/arrowpurple.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         backArrowButton.setIcon(new ImageIcon(image)); 
         backArrowButtonPanel.add(backArrowButton, BorderLayout.CENTER);
         backArrowPanel.add(backArrowLabel, BorderLayout.CENTER);
         backArrowPanel.add(backArrowButtonPanel, BorderLayout.WEST);
 
         JButton cross = new JButton();
-        Image crossImage = new ImageIcon("./resources/images/close.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        Image crossImage = new ImageIcon("./resources/images/close.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getWidth() / 5, Image.SCALE_SMOOTH);
         cross.setIcon(new ImageIcon(crossImage));
         cross.setBorder(null);
         cross.setContentAreaFilled(false);
@@ -259,7 +262,7 @@ public class LearningView {
         
         checkmarkPanel.setLayout(new BorderLayout());
         JButton checkmark = new JButton();
-        Image checkmarkImage = new ImageIcon("./resources/images/checkmark.png").getImage().getScaledInstance(main.getFrame().getWidth() / 5, main.getFrame().getHeight() / 3, Image.SCALE_SMOOTH);
+        Image checkmarkImage = new ImageIcon("./resources/images/checkmark.png").getImage().getScaledInstance(main.getFrame().getWidth() / 4, main.getFrame().getWidth() / 4, Image.SCALE_SMOOTH);
         checkmark.setIcon(new ImageIcon(checkmarkImage));
         checkmark.setBorder(null);
         checkmark.setContentAreaFilled(false);
@@ -341,28 +344,37 @@ public class LearningView {
     private void showNextVocab() {
         // Assuming VocabParser.getVocabsFromLesson(lektion) returns a list of vocabs
         // and lektion is correctly initialized.
-        if (currentVocabIndex < vocabs.size() - 1) {
+        if (currentVocabIndex < vocabs.size()) {
             currentVocabIndex++;
             isFront = true;
-            updateFlashcard();
             updateProgressBar();
+            if (currentVocabIndex == vocabs.size()) {
+                uploadData();
+                showFinishedScreen();
+            } else {
+                updateFlashcard();
+            }
         }
     }
 
     private void updateProgressBar() {
-        int progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
-        progressBar.setValue(progress);
-        if (progress == 100) {
-            // lesson finished, upload data
-            uploadData();
-            showFinishedScreen();
+        int progress = 0;
+        if (vocabs.size() > 1) {
+            progress = (currentVocabIndex) * 100 / (vocabs.size() - 1);
         }
+        else {
+            progress = 100;
+        }
+        progressBar.setValue(progress);
     }
     private void updateFlashcard() {
+        
+        List<Vocab> sortedVocabs = VocabParser.getAllVocabs().stream().sorted(Comparator.comparingInt(Vocab::getID)).collect(Collectors.toList());
+
         if (isFront) {
-            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getBasicForm());
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex)).getBasicForm());
         } else {
-            phrase.setText(VocabParser.getAllVocabs().get(currentVocabIndex).getGerman().toString().replace("[", "").replace("]", ""));
+            phrase.setText(sortedVocabs.get(vocabs.get(currentVocabIndex)).getGerman().toString().replace("[", "").replace("]", ""));
         }
     }
 
@@ -440,11 +452,19 @@ public class LearningView {
             }
         });
 
+        statisticsPanel.add(rightVocabsLabel);
+        statisticsPanel.add(wrongVocabsLabel);
+
+        if (wrongVocabs.size() == 0) {
+            relearnVocabs.setEnabled(false);
+            JLabel noWrongVocabs = new JLabel("Prima!");
+            noWrongVocabs.setForeground(Main.TextColor);
+            statisticsPanel.add(noWrongVocabs);
+        }
         buttonsPanel.add(relearnVocabs);
         buttonsPanel.add(backMainMenu);
 
-        statisticsPanel.add(rightVocabsLabel);
-        statisticsPanel.add(wrongVocabsLabel);
+        
 
         congratulationScreen.add(congratulations);
         congratulationScreen.add(statisticsPanel);

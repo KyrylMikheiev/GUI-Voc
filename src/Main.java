@@ -9,18 +9,21 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import VocabAPI.WordTypes.Vocab;
-import minigames.GameM;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import java.lang.reflect.*;
 
+
+import VocabAPI.WordTypes.Vocab;
+import minigames.GameM;
+import restAPI.APIClient;
 
 public class Main {
 
@@ -43,6 +46,8 @@ public class Main {
     private JFrame frame;
     private JPanel contentPane; 
     private boolean isDarkmode = false;
+
+    private int selectedWidget = 0;
 
     private NavBar navBar;
 
@@ -91,6 +96,7 @@ public class Main {
 
         // Navigation bar
         navBar = new NavBar(globalPane, this);
+        navBar.updateBackButton();
 
         // create the mainMenu
         this.newSetup();
@@ -139,6 +145,10 @@ public class Main {
         return isDarkmode;
     }
 
+    public void setWidget(int w) {
+        //convert string to int
+        selectedWidget = w;
+    }
 
     public static void main(String[] args) {
         new Main();
@@ -146,6 +156,7 @@ public class Main {
 
     public JPanel newUI() {
         navigationHistory.push(new JPanel(new BorderLayout()));
+        navBar.updateBackButton();
         return navigationHistory.peek();
     }
     public void goBack() {
@@ -153,6 +164,17 @@ public class Main {
             navigationHistory.pop();
             repaint();
         }
+        navBar.updateBackButton();
+    }
+    public void resetHistory() {
+        while (navigationHistory.size() > 1) {
+            navigationHistory.remove(0);
+        }
+        repaint();
+        navBar.updateBackButton();
+    }
+    public int getHistorySize() {
+        return navigationHistory.size();
     }
     public void removeAll() {
         try {
@@ -172,6 +194,18 @@ public class Main {
         repaint();
     }
 
+    public void loggedIn() {
+        System.out.println("Logged in successfully!");
+        //get and set preferences
+        Map<String, String> prefs = APIClient.getPreferences();
+        System.out.println(prefs);
+        if (prefs.get("modePreference").equals("2")) {
+            toggleDarkmode();
+        }
+
+        getNavBar().activate();
+        newMainMenu();
+    }
 
     public void newSettingsMenu() {
         
@@ -276,9 +310,6 @@ public class Main {
         repaint();
     }
 
-
-
-    
     public JFrame getFrame() {
         return frame;
     }

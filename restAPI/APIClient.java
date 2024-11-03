@@ -83,6 +83,10 @@ public class APIClient {
                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 String errorResponse = errorReader.lines().collect(Collectors.joining());
                 System.out.println("Error Response: " + errorResponse);
+                if (errorResponse.contains("verified")) {
+                    System.out.println("Account not verified. Please verify your account.");
+                    return "VERIFY";
+                }
             }
             connection.disconnect();
         } catch (Exception e) {
@@ -337,7 +341,8 @@ public class APIClient {
         }
     }
 
-    public static boolean updatePreferences(boolean isDarkMode, int gradeLevel, int startMenuWidget) {
+    public static boolean updatePreferences(int isDarkMode, int gradeLevel, int startMenuWidget) {
+        System.out.println("Updating preferences: " + isDarkMode + ", " + gradeLevel + ", " + startMenuWidget);
         try {
             URI uri = URI.create(BASE_URL + "?action=updatePreferences");
             URL url = uri.toURL();
@@ -371,6 +376,40 @@ public class APIClient {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    public static Map<String, String> getPreferences() {
+        try 
+        {
+            URI uri = URI.create(BASE_URL + "?action=getPreferences");
+            URL url = uri.toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Auth", TokenManager.loadToken());
+            connection.setDoOutput(true);
+    
+            // Send request
+            int responseCode = connection.getResponseCode();
+    
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Read response
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                return parseFromJson(response.toString());
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Failed to get preferences: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static boolean updateUserVocabStats(ArrayList<Integer> wrongVocabIDs, ArrayList<Integer> rightVocabIDs) {
@@ -555,10 +594,12 @@ public class APIClient {
 
         // create example account
         
-        /*
-        String email = "adr.st@gmx.de";
-        String password = "123456";
+        
+        //String email = "adr.st@gmx.de";
+        //String password = "123456";
 
+
+        /*
         boolean created = createUserAccount("Adrian", "Steyer", email, password, 1, 11);
         // verify account
         if (created) {
