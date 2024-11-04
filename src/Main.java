@@ -28,12 +28,12 @@ import restAPI.APIClient;
 public class Main {
 
     //button colors Lightmode
-    public static Color DefaultButton = Color.decode("#B7B7B7");
-    public static Color HoverButton = Color.decode("#E1E1E1");
-    public static Color ClickButton = Color.decode("#FAFAFA");
-    public static Color BodyColor = Color.decode("#FFFFFF");
-    public static Color SecondBodyColor = Color.decode("#DDDDDD");
-    public static Color TextColor = Color.decode("#000000");
+    public static Color defaultButtonLightMode = Color.decode("#B7B7B7");
+    public static Color hoverButtonLightMode = Color.decode("#E1E1E1");
+    public static Color clickButtonLightMode = Color.decode("#FAFAFA");
+    public static Color BodyColorLightMode = Color.decode("#FFFFFF");
+    public static Color SecondBodyColorLightMode = Color.decode("#DDDDDD");
+    public static Color TextColorLightMode = Color.decode("#000000");
 
     //button colors Darkmode
     public Color defaultButtonDarkMode = Color.decode("#4d6190");
@@ -42,6 +42,14 @@ public class Main {
     public static Color bodyColorDarkMode = Color.decode("#111827");
     public static Color SecondBodyColorDarkMode = Color.decode("#1f2937");
     public static Color textColorDarkMode = Color.decode("#f9fafb");
+
+    //Initializing Lightmode for startup
+    public static Color DefaultButton = defaultButtonLightMode;
+    public static Color HoverButton = hoverButtonLightMode;
+    public static Color ClickButton = clickButtonLightMode;
+    public static Color BodyColor = BodyColorLightMode;
+    public static Color SecondBodyColor = SecondBodyColorDarkMode;
+    public static Color TextColor = TextColorLightMode;
 
     private JFrame frame;
     private JPanel contentPane; 
