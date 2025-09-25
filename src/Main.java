@@ -76,7 +76,7 @@ public class Main {
 
         // Window
         frame = new JFrame();
-        frame.setIconImage(new ImageIcon("resources/images/logo.png").getImage());
+        frame.setIconImage(new ImageIcon("resources/images/simplelogo.png").getImage());
         frame.setTitle("Vokabeltrainer");
         //default settings
         frame.setSize(1280, 720);
@@ -106,6 +106,7 @@ public class Main {
 
         // create the mainMenu
         this.newSetup();
+        //this.newMainMenu();
         repaint();
 
         // Refresh screen to make stuff show up

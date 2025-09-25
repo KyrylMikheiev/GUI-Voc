@@ -435,6 +435,24 @@ public class LearningView {
         JButton backMainMenu = new JButton("Zurück zum Hauptmenu");
         JButton relearnVocabs = new JButton("Falsche Vocabs lernen");
 
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (e.getComponent().isEnabled())
+                    e.getComponent().setBackground(Main.HoverButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setBackground(Main.DefaultButton);
+            }
+        };
+
+        backMainMenu.addMouseListener(mouseListener);
+        relearnVocabs.addMouseListener(mouseListener);
+        backMainMenu.setBackground(Main.DefaultButton);
+        relearnVocabs.setBackground(Main.DefaultButton);
+
         backMainMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -463,8 +481,6 @@ public class LearningView {
         }
         buttonsPanel.add(relearnVocabs);
         buttonsPanel.add(backMainMenu);
-
-        
 
         congratulationScreen.add(congratulations);
         congratulationScreen.add(statisticsPanel);

@@ -71,8 +71,8 @@ public class NavBar {
         appName = new JLabel("Vokabeltrainer");
         appName.setFont(new Font("Times New Roman", Font.PLAIN, 28));
         appName.setOpaque(false);
-        ImageIcon logoIcon = new ImageIcon("resources/images/logo.png");
-        Image logoImage = logoIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon logoIcon = new ImageIcon("resources/images/simplelogo.png");
+        Image logoImage = logoIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         appName.setIcon(new ImageIcon(logoImage));
         appName.setForeground(TEXT_COLOR);
 

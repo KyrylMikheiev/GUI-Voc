@@ -4,6 +4,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -52,6 +55,17 @@ public abstract class LessonSelector {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Main.BodyColor);
         buttonPanel.setLayout(new GridLayout(4, 1, 10, 10));
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                e.getComponent().setBackground(Main.HoverButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setBackground(Main.DefaultButton);
+            }
+        };
         //create buttons for each lesson
         for (String lesson: lessons) {
             JButton button = new JButton("Lektion " + lesson);
@@ -63,6 +77,7 @@ public abstract class LessonSelector {
                     execute(lesson);
                 }
             });
+            button.addMouseListener(mouseListener);
             buttonPanel.add(button);
         }
         bodyPanel.add(buttonPanel);

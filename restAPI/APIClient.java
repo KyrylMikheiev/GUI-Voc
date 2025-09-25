@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class APIClient {
 
-    private static final String BASE_URL = "https://vt.jo-dev.net/";
+    private static final String BASE_URL = "https://vt.jonah-emme.de/";
 
     public static boolean createUserAccount(String firstName, String lastName, String email, String password, int modePreference, int userClass) {
         try {
