@@ -88,7 +88,7 @@ public class NavBar {
         appName.setCursor(new Cursor(Cursor.HAND_CURSOR));
         navigation_contentLeft.add(appName, BorderLayout.CENTER);
 
-        
+
 
 
         //---------------textArea---------------
@@ -224,18 +224,20 @@ public class NavBar {
         active = true;
         // Enable all components
         textArea.setEnabled(true);
+        searchBar.setBorder(BorderFactory.createLineBorder(TEXT_COLOR, 2));
         burgerMenu.setEnabled(true);
         appName.setEnabled(true);
     }
-    
+
     public void deactivate() {
         active = false;
         // Disable all components
         textArea.setEnabled(false);
+        searchBar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         burgerMenu.setEnabled(false);
         appName.setEnabled(false);
     }
-    
+
     public void updateBackButton() {
         if (main.getHistorySize() > 2) {
             backButton.setEnabled(true);

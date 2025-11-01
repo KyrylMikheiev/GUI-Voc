@@ -64,7 +64,7 @@ public class APIClient {
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
 
-            String requestBody = parseToJson(Map.of("email", email, "password", password)); 
+            String requestBody = parseToJson(Map.of("email", email, "password", password));
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = requestBody.getBytes("utf-8");
@@ -189,7 +189,7 @@ public class APIClient {
         }
         return false;
     }
-    
+
     public static boolean initiatePasswordReset(String email) {
         try {
             URI uri = URI.create(BASE_URL + "?action=initiatePasswordReset");
@@ -268,7 +268,7 @@ public class APIClient {
     public static boolean logout() {
         try {
             String authToken = TokenManager.loadToken();
-    
+
             URI uri = URI.create(BASE_URL + "?action=logout");
             URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -298,7 +298,7 @@ public class APIClient {
             return false;
         }
     }
-    
+
 
     private static boolean validateToken(String authToken) {
         try {
@@ -310,10 +310,10 @@ public class APIClient {
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Auth", authToken);
             connection.setDoOutput(true);
-    
+
             // Send request
             int responseCode = connection.getResponseCode();
-    
+
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // Read response
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -323,7 +323,7 @@ public class APIClient {
                     response.append(inputLine);
                 }
                 in.close();
-    
+
                 // Parse JSON response
                 String jsonResponse = response.toString();
                 //System.out.println("Response: " + jsonResponse);
@@ -351,7 +351,7 @@ public class APIClient {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Auth", TokenManager.loadToken());
             connection.setDoOutput(true);
-            
+
             String jsonInputString = parseToJson(Map.of("mode", isDarkMode, "class", gradeLevel, "widget", startMenuWidget));
 
             OutputStream os = connection.getOutputStream();
@@ -380,7 +380,7 @@ public class APIClient {
 
 
     public static Map<String, String> getPreferences() {
-        try 
+        try
         {
             URI uri = URI.create(BASE_URL + "?action=getPreferences");
             URL url = uri.toURL();
@@ -389,10 +389,10 @@ public class APIClient {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Auth", TokenManager.loadToken());
             connection.setDoOutput(true);
-    
+
             // Send request
             int responseCode = connection.getResponseCode();
-    
+
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // Read response
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -422,11 +422,11 @@ public class APIClient {
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Auth", TokenManager.loadToken()); // Set your authentication token here
             connection.setDoOutput(true);
-    
+
             // Construct JSON payload
             Map<String, Map<String, Integer>> statUpdates = new HashMap<>();
             Map<String, Integer> stats;
-    
+
             // Add wrong vocab stats
             for (Integer vocabID : wrongVocabIDs) {
                 stats = new HashMap<>();
@@ -434,7 +434,7 @@ public class APIClient {
                 stats.put("success", 0); // Update as per your logic
                 statUpdates.put(String.valueOf(vocabID), stats);
             }
-    
+
             // Add right vocab stats
             for (Integer vocabID : rightVocabIDs) {
                 stats = new HashMap<>();
@@ -442,19 +442,19 @@ public class APIClient {
                 stats.put("success", 1); // Update as per your logic
                 statUpdates.put(String.valueOf(vocabID), stats);
             }
-    
+
             // Wrapping the statUpdates in the main JSON object
             Map<String, Map<String, Map<String, Integer>>> requestBodyMap = new HashMap<>();
             requestBodyMap.put("statUpdates", statUpdates);
-    
+
             String requestBody = parseToJsonNested(requestBodyMap);
             System.out.println("Request Body: " + requestBody);
-    
+
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = requestBody.getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
-    
+
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 System.out.println("Vocabulary statistics updated successfully.");
@@ -471,17 +471,17 @@ public class APIClient {
         }
         return false;
     }
-    
+
 
     private static Map<String, String> parseFromJson(String jsonString) {
         Map<String, String> jsonMap = new HashMap<>();
-        
+
         // Remove curly braces from the JSON string
         jsonString = jsonString.substring(1, jsonString.length() - 1);
-        
+
         // Split the key-value pairs by comma
         String[] keyValuePairs = jsonString.split(",");
-        
+
         for (String pair : keyValuePairs) {
             // Split each pair into key and value
             String[] entry = pair.split(":");
@@ -490,23 +490,23 @@ public class APIClient {
             String value = entry.length > 1 ? entry[1].trim().replaceAll("\"", "") : "";
             jsonMap.put(key, value);
         }
-        
+
         return jsonMap;
     }
-    
+
     @SuppressWarnings("unchecked")
     private static String parseToJson(Map<String, Object> jsonMap) {
         StringBuilder jsonStringBuilder = new StringBuilder();
         jsonStringBuilder.append("{");
-    
+
         // Iterate over the entries of the Map
         for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-    
+
             // Append key to the JSON string
             jsonStringBuilder.append("\"").append(key).append("\":");
-    
+
             // Append value based on its type
             if (value instanceof String) {
                 jsonStringBuilder.append("\"").append(value).append("\"");
@@ -519,82 +519,82 @@ public class APIClient {
                 // Unsupported type, you may handle or throw an exception as needed
                 throw new IllegalArgumentException("Unsupported value type: " + value.getClass().getSimpleName());
             }
-    
+
             // Append comma after each entry
             jsonStringBuilder.append(",");
         }
-    
+
         // Remove the trailing comma if there's at least one entry in the map
         if (!jsonMap.isEmpty()) {
             jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
         }
-    
+
         jsonStringBuilder.append("}");
-    
+
         return jsonStringBuilder.toString();
     }
     private static String parseToJsonNested(Map<String, Map<String, Map<String, Integer>>> jsonMap) {
         StringBuilder jsonStringBuilder = new StringBuilder();
         jsonStringBuilder.append("{");
-    
+
         // Iterate over the entries of the Map
         for (Map.Entry<String, Map<String, Map<String, Integer>>> entry : jsonMap.entrySet()) {
             String key = entry.getKey();
             Map<String, Map<String, Integer>> innerMap = entry.getValue();
-    
+
             // Append key to the JSON string
             jsonStringBuilder.append("\"").append(key).append("\":{");
-    
+
             // Iterate over the inner map
             for (Map.Entry<String, Map<String, Integer>> innerEntry : innerMap.entrySet()) {
                 String innerKey = innerEntry.getKey();
                 Map<String, Integer> innerValueMap = innerEntry.getValue();
-    
+
                 // Append inner key to the JSON string
                 jsonStringBuilder.append("\"").append(innerKey).append("\":{");
-    
+
                 // Iterate over the inner value map
                 for (Map.Entry<String, Integer> valueEntry : innerValueMap.entrySet()) {
                     String innerValueKey = valueEntry.getKey();
                     Integer innerValue = valueEntry.getValue();
-    
+
                     // Append inner value key-value pair to the JSON string
                     jsonStringBuilder.append("\"").append(innerValueKey).append("\":").append(innerValue).append(",");
                 }
-    
+
                 // Remove the trailing comma if there's at least one entry in the inner value map
                 if (!innerValueMap.isEmpty()) {
                     jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
                 }
-    
+
                 jsonStringBuilder.append("},");
             }
-    
+
             // Remove the trailing comma if there's at least one entry in the inner map
             if (!innerMap.isEmpty()) {
                 jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
             }
-    
+
             jsonStringBuilder.append("},");
         }
-    
+
         // Remove the trailing comma if there's at least one entry in the outer map
         if (!jsonMap.isEmpty()) {
             jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
         }
-    
+
         jsonStringBuilder.append("}");
-    
+
         return jsonStringBuilder.toString();
     }
-    
-    
+
+
 
     public static void main(String[] args) {
 
         // create example account
-        
-        
+
+
         //String email = "adr.st@gmx.de";
         //String password = "123456";
 
@@ -629,7 +629,7 @@ public class APIClient {
 
         // delete account
         //deleteAccount(password, TokenManager.loadToken());
-        
+
         //logout
         //logout();
         */
