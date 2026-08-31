@@ -15,6 +15,7 @@ import java.io.UncheckedIOException;
 import src.fx.FxApp;
 import src.fx.screens.StartPageScreen;
 import src.fx.screens.SearchScreen;
+import src.fx.screens.settings.SettingsScreen;
 import src.auth.AuthManager;
 
 /**
@@ -82,8 +83,7 @@ public class FxNavBar {
 
     @FXML
     private void onSettings() {
-        // TODO: port src.ui.screens.settings.Settings to JavaFX.
-        System.out.println("Settings screen not yet migrated.");
+        FxApp.switchScreen(new SettingsScreen());
     }
 
     @FXML

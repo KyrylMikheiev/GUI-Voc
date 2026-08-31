@@ -2,7 +2,6 @@ package src.fx.screens;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 
 import src.fx.ui.FxScreen;
 import src.fx.ui.Images;
@@ -11,6 +10,8 @@ import src.fx.screens.learning.LearningSelectionScreen;
 import src.fx.screens.learning.LibraryViewScreen;
 import src.fx.screens.test.TestSelectionScreen;
 import src.fx.screens.test.TextCheckerScreen;
+import src.fx.screens.settings.SettingsScreen;
+import src.fx.screens.games.GameSelectionScreen;
 
 /**
  * Controller for {@code StartPage.fxml}, replacing {@link src.ui.screens.StartPage}.
@@ -30,7 +31,6 @@ public class StartPageScreen extends FxScreen {
     @FXML private Button textButton;
     @FXML private Button gamesButton;
     @FXML private Button settingsButton;
-    @FXML private TextArea infoArea;
 
     @Override
     protected String fxmlPath() {
@@ -46,9 +46,6 @@ public class StartPageScreen extends FxScreen {
         gamesButton.setGraphic(Images.view("gamepad.png", 30, 30));
         settingsButton.setGraphic(Images.view("settings-gear-icon.png", 30, 30));
     }
-
-    // The target screens are not migrated yet; each handler is the single line
-    // that will become FxApp.switchScreen(new ...Screen()).
 
     @FXML
     private void onLearn() {
@@ -72,15 +69,11 @@ public class StartPageScreen extends FxScreen {
 
     @FXML
     private void onGames() {
-        notYetMigrated("Minispiele");
+        FxApp.switchScreen(new GameSelectionScreen());
     }
 
     @FXML
     private void onSettings() {
-        notYetMigrated("Einstellungen");
-    }
-
-    private void notYetMigrated(String screenName) {
-        infoArea.setText(screenName + " ist noch nicht auf JavaFX portiert.");
+        FxApp.switchScreen(new SettingsScreen());
     }
 }

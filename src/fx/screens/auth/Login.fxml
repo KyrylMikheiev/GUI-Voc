@@ -22,7 +22,7 @@
 
     <Label text="Login" styleClass="screen-title" />
 
-    <VBox spacing="20" alignment="CENTER" maxWidth="460">
+    <VBox spacing="20" alignment="CENTER" maxWidth="560">
         <TextField fx:id="emailField" promptText="E-Mail" styleClass="app-field" />
         <PasswordField fx:id="passwordField" promptText="Passwort" styleClass="app-field" />
 

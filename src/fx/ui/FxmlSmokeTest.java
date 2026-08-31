@@ -54,7 +54,20 @@ public class FxmlSmokeTest extends Application {
             new Object[]{"TextChecker",
                     (Supplier<FxScreen>) src.fx.screens.test.TextCheckerScreen::new},
             new Object[]{"Search",
-                    (Supplier<FxScreen>) () -> new src.fx.screens.SearchScreen("test")});
+                    (Supplier<FxScreen>) () -> new src.fx.screens.SearchScreen("test")},
+            new Object[]{"Settings",
+                    (Supplier<FxScreen>) src.fx.screens.settings.SettingsScreen::new},
+            new Object[]{"Credits",
+                    (Supplier<FxScreen>) src.fx.screens.settings.CreditsScreen::new},
+            new Object[]{"PrivacyStatement",
+                    (Supplier<FxScreen>) src.fx.screens.settings.PrivacyStatementScreen::new},
+            new Object[]{"GameSelection",
+                    (Supplier<FxScreen>) src.fx.screens.games.GameSelectionScreen::new},
+            new Object[]{"MemorySelection",
+                    (Supplier<FxScreen>) src.fx.screens.games.memory.MemorySelectionScreen::new},
+            new Object[]{"MemoryMain",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.games.memory.MemoryMainScreen(
+                            src.fx.ui.Lessons.all().get(0))});
 
     /** First vocabulary entry of the given word type, for the table screens. */
     private static VocabAPI.WordTypes.Vocab firstOfType(Class<?> type) {

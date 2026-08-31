@@ -28,7 +28,7 @@
 
     <StackPane>
         <!-- Stage 1: name + class -->
-        <VBox fx:id="stageOne" spacing="20" alignment="CENTER" maxWidth="460">
+        <VBox fx:id="stageOne" spacing="20" alignment="CENTER" maxWidth="560">
             <TextField fx:id="firstNameField" promptText="Vorname" styleClass="app-field" />
             <TextField fx:id="lastNameField" promptText="Nachname" styleClass="app-field" />
             <ComboBox fx:id="gradeLevelBox" maxWidth="Infinity" styleClass="app-combo" />
@@ -43,7 +43,7 @@
         </VBox>
 
         <!-- Stage 2: credentials -->
-        <VBox fx:id="stageTwo" spacing="20" alignment="CENTER" maxWidth="460"
+        <VBox fx:id="stageTwo" spacing="20" alignment="CENTER" maxWidth="560"
               visible="false" managed="false">
             <TextField fx:id="emailField" promptText="E-Mail" styleClass="app-field" />
             <PasswordField fx:id="passwordField" promptText="Passwort" styleClass="app-field" />

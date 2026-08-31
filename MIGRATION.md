@@ -1,8 +1,12 @@
 # Swing → JavaFX (FXML) Migration
 
-Status: **foundation spike**. The build, the navigation shell, theming and one
-screen (StartPage) are on JavaFX. The Swing UI is untouched and still runs, so
-both front-ends coexist while the remaining screens are ported.
+Status: **complete**. Every screen is on JavaFX with FXML. The Swing tree is
+untouched and still compiles, so the old UI can be run for comparison until it
+is deleted.
+
+This is a port, not a redesign: screens keep the behaviour they had, including
+the parts that were unfinished (ForgotPassword's Submit does nothing,
+TextChecker and Search are empty, TestView does not check answers).
 
 ## Running
 
@@ -27,8 +31,30 @@ raw-`javac` scripts cannot build the new UI.)
 | `src/ui/screens/_BaseScreen.java` | `src/fx/ui/FxScreen.java` | screens are FXML controllers |
 | `src/ui/ColorManager.java` | `src/fx/ui/ThemeManager.java` + `*.css` | stylesheet swap |
 | `src/ui/NavBar.java` | `src/fx/ui/NavBar.fxml` + `FxNavBar.java` | 240 lines → ~60 lines XML |
-| `src/ui/screens/StartPage.java` | `src/fx/screens/StartPage.fxml` + `StartPageScreen.java` | reference screen |
+| `src/ui/helper/LessonSelector.java` | `src/fx/ui/LessonSelectorScreen.java` + `.fxml` | shared lesson picker |
+| `src/ui/helper/LessonRoster.java` | folded into `TestSelection.fxml` | two ListViews |
 | scattered `new ImageIcon(...)` | `src/fx/ui/Images.java` | cached, scaled by view |
+| duplicated lesson sorting | `src/fx/ui/Lessons.java` | one sorted list |
+
+Every screen has an `FXML` + controller pair under `src/fx/screens/`, mirroring
+the old `src/ui/screens/` layout: `StartPage`, `auth/` (Login, SignUp,
+ForgotPassword, Verification), `learning/` (LearningSelection, LearningView,
+LibraryView, VocabView), `test/` (TestSelection, TestView, TextChecker),
+`settings/` (Settings, Credits, PrivacyStatement), `games/` (GameSelection,
+MemorySelection, MemoryMain) and `Search`.
+
+## Checking your work
+
+`FxmlSmokeTest` loads every screen in one pass. FXML binds at runtime, so a bad
+`fx:id` or a handler name that does not exist compiles fine and only fails when
+the screen is opened:
+
+```bash
+./mvnw javafx:run -DmainClass=src.fx.ui.FxmlSmokeTest   # all 22 views
+./mvnw javafx:run -DmainClass=src.fx.ui.Preview -Dscreen=LearningView
+```
+
+Add each new screen to `FxmlSmokeTest.SCREENS` and `Preview`.
 
 ## How to port the next screen
 
@@ -88,13 +114,26 @@ That same glob means `scripts/run.sh` never compiled `src/ui/screens/**` at all 
 on a clean checkout it fails with ~42 errors. `./mvnw compile` builds every
 source file, Swing tree included.
 
-## Remaining screens
+## Bugs fixed in passing
 
-`auth/` (Login, SignUp, ForgotPassword, Verification) · `learning/`
-(LearningSelection, LearningView, LibraryView, VocabView) · `test/`
-(TestSelection, TestView, TextChecker) · `games/` (GameSelection, MemoryMain,
-MemorySelection) · `settings/` (Settings, Credits, PrivacyStatement) · `Search`
-· helpers `LessonSelector` and `LessonRoster`.
+Where the Swing code could not be ported as written, the fix is noted in the
+class comment:
 
-`LearningView` (501 lines) and `TestSelection` (269) are the largest; the
-`api/` and `auth/` packages need no UI work.
+- `LibraryView` hardcoded 44 as the lesson count, so later lessons were
+  unreachable and the label showed an index rather than a lesson name; its
+  previous-button wrapped to `size() - 2`, skipping the last lesson.
+- `LearningView`'s step-back used `List.remove(Integer)`, which removes by
+  index, and threw once a vocabulary ID exceeded the list size. It also indexed
+  into an empty list when a lesson had no vocabulary.
+- `LessonSelector` added its button panel to the screen twice, so the list
+  rendered above its own scrolling copy.
+- `TestView` built its translation panel twice, adding both to
+  `BorderLayout.WEST`, so the first was discarded.
+- `MemoryMain` placed pairs by drawing random slots until two were free, and
+  compared strings with `==`.
+
+## Next steps
+
+The Swing tree under `src/ui/` and `src/Main.java` can be deleted once you are
+satisfied with the JavaFX version; nothing outside it depends on it any more.
+`src/api/` and `src/auth/` are shared and stay as they are.

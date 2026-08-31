@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<!--
+  Minigame picker. Memory is the only game, but the Swing screen laid out a
+  4x2 grid for the ones that were planned; the single button keeps that cell.
+-->
+<GridPane hgap="20" vgap="20" styleClass="body-primary"
+          xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50" />
+        <ColumnConstraints percentWidth="50" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="25" />
+        <RowConstraints percentHeight="25" />
+        <RowConstraints percentHeight="25" />
+        <RowConstraints percentHeight="25" />
+    </rowConstraints>
+
+    <Button text="Memory" styleClass="app-button" maxWidth="Infinity"
+            maxHeight="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="0"
+            onAction="#onMemory" />
+
+</GridPane>

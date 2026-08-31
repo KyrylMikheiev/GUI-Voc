@@ -289,6 +289,19 @@
     -fx-background-color: -vt-button-click;
 }
 
+/* ---------------------------------------------------------------- credits */
+
+.credits-heading {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.credits-body {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 14px;
+}
+
 /* ------------------------------------------------------------------- test */
 
 .test-word {

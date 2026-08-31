@@ -21,7 +21,7 @@
 
     <Label text="Account-Verifizierung" styleClass="screen-title" />
 
-    <VBox spacing="20" alignment="CENTER" maxWidth="460">
+    <VBox spacing="20" alignment="CENTER" maxWidth="560">
         <TextField fx:id="codeField" promptText="Verifizierungs-Code"
                    styleClass="app-field" />
 
