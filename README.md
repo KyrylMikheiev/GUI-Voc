@@ -38,13 +38,15 @@ src/main/java/de/vocabtrainer/
     ui/screens/        ein Controller pro Screen
 src/main/resources/de/vocabtrainer/
     ui/                *.fxml und *.css, jeweils neben ihrem Controller
+    images/            Icons
 ```
 
 Jeder Screen besteht aus einer `.fxml` (Layout) und einer gleichnamigen
 Java-Klasse (Verhalten). Farben stehen ausschließlich in `ui/common.css` und den
 beiden Theme-Dateien.
 
-`LatinVocabParser/` ist ein Submodul, `resources/images/` enthält die Icons.
+`LatinVocabParser/` ist ein Submodul, `drafts/` enthält Entwurfsdateien und
+`scripts/` ein Hilfsskript für die CSV-Liste — beides gehört nicht zur App.
 
 Die Oberfläche war ursprünglich in Swing geschrieben; `MIGRATION.md` beschreibt,
 was wohin gewandert ist, und wie man einen neuen Screen anlegt.
