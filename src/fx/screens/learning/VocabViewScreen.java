@@ -64,7 +64,10 @@ public class VocabViewScreen extends FxScreen {
     }
 
     private void showVerb(Verb verb) {
-        List<List<String>> tenseColumns = List.of(
+        // Arrays.asList, not List.of: the parser returns null for the tenses
+        // it cannot generate (irregular verbs such as "esse"), and List.of
+        // rejects nulls. The row loop below treats a null column as empty.
+        List<List<String>> tenseColumns = java.util.Arrays.asList(
                 verb.getPraesens(), verb.getImperfekt(), verb.getPerfekt(),
                 verb.getPlusquamperfekt(), verb.getFuturI(), verb.getFuturII());
 
