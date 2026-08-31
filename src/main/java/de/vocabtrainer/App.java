@@ -27,7 +27,25 @@ public class App {
         }
 
         // Route post-authentication navigation into the JavaFX UI.
-        switchScreen(new StartPage());
+        AuthManager.setNavigator(new AuthNavigator() {
+            @Override
+            public void toStartPage() {
+                setFreshState(new StartPage());
+            }
+
+            @Override
+            public void toLogin() {
+                setFreshState(new Login());
+            }
+        });
+
+        AuthManager.startupCheck();
+        if (AuthManager.getState() == AuthState.NOT_LOGGED_IN) {
+            switchScreen(new Login());
+        } else {
+            switchScreen(new StartPage());
+        }
+
         windowManager.show();
     }
 
