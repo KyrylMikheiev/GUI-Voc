@@ -1,14 +1,5 @@
 {
-  // Build with Maven's layout, so the Java extension resolves imports the same
-  // way the build does. Without this it guesses, and a stale guess is what made
-  // every import look broken.
-  "java.import.maven.enabled": true,
   "java.configuration.updateBuildConfiguration": "automatic",
-
-  // Compiled output belongs to Maven; keep the extension from writing its own
-  // copy into bin/, which previously shadowed the real classes.
-  "java.project.outputPath": "target/classes",
-
   "files.exclude": {
     "**/target": true
   }
