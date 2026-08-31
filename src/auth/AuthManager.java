@@ -2,13 +2,19 @@ package src.auth;
 
 import java.util.Map;
 
-import src.App;
 import src.api.APIClient;
-import src.ui.screens.auth.Login;
-import src.ui.screens.StartPage;
 
 public class AuthManager {
     private static User loggedInUser;
+    private static AuthNavigator navigator;
+
+    /**
+     * Registers the front-end that handles post-authentication navigation.
+     * Set once at startup by the Swing or JavaFX entry point.
+     */
+    public static void setNavigator(AuthNavigator nav) {
+        navigator = nav;
+    }
 
     public static void startupCheck() {
         String token = TokenManager.loadToken();
@@ -68,19 +74,25 @@ public class AuthManager {
     private static void setLoggedIn(User user) {
         loggedInUser = user;
         TokenManager.saveToken(getToken());
-        App.setFreshState(new StartPage());
+        if (navigator != null) {
+            navigator.toStartPage();
+        }
     }
 
     public static boolean deleteAccount(String password) {
         boolean success = APIClient.deleteAccount(password);
         loggedInUser = null;
-        App.setFreshState(new Login());
+        if (navigator != null) {
+            navigator.toLogin();
+        }
         return success;
     }
 
     public static void logout() {
         APIClient.logout(getToken());
         loggedInUser = null;
-        App.setFreshState(new Login());
+        if (navigator != null) {
+            navigator.toLogin();
+        }
     }
 }

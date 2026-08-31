@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Start page. Mirrors the Swing GridLayout(1, 2): a menu column on the left and
+  an explanation panel on the right.
+
+  Two Swing details are handled declaratively here:
+    - the 6-row GridLayout with equal-height buttons becomes a VBox whose
+      children each take VBox.vgrow="ALWAYS" and fill the width,
+    - ResponsiveBorder, which computed insets as a fraction of the parent size,
+      is replaced by percentage-based GridPane columns plus fixed padding.
+-->
+<GridPane styleClass="body-primary" xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50" />
+        <ColumnConstraints percentWidth="50" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <!-- Left: main menu -->
+    <VBox fx:id="menuBox" spacing="15" GridPane.columnIndex="0">
+        <padding>
+            <Insets top="100" right="80" bottom="100" left="80" />
+        </padding>
+
+        <Button fx:id="learnButton" text="Lernen" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onLearn" />
+        <Button fx:id="testButton" text="Testen" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onTest" />
+        <Button fx:id="libraryButton" text="Bibliothek" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onLibrary" />
+        <Button fx:id="textButton" text="Textchecker" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onTextChecker" />
+        <Button fx:id="gamesButton" text="Minispiele" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onGames" />
+        <Button fx:id="settingsButton" text="Einstellungen" styleClass="app-button"
+                maxWidth="Infinity" maxHeight="Infinity"
+                VBox.vgrow="ALWAYS" onAction="#onSettings" />
+    </VBox>
+
+    <!-- Right: explanation panel -->
+    <StackPane GridPane.columnIndex="1">
+        <padding>
+            <Insets top="100" right="80" bottom="100" left="30" />
+        </padding>
+        <TextArea fx:id="infoArea" editable="false" wrapText="true"
+                  styleClass="info-area"
+                  text="Hier kommt die Erklärung für jeden Button, wenn man darüber hovert, und das Widget Fenster zu" />
+    </StackPane>
+
+</GridPane>

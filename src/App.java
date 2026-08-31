@@ -12,6 +12,19 @@ public class App {
     public static void run() {
         windowManager = new WindowManager();
 
+        // Route post-authentication navigation back into the Swing UI.
+        AuthManager.setNavigator(new AuthNavigator() {
+            @Override
+            public void toStartPage() {
+                setFreshState(new StartPage());
+            }
+
+            @Override
+            public void toLogin() {
+                setFreshState(new Login());
+            }
+        });
+
         // Auth startup
         AuthManager.startupCheck();
         if (AuthManager.getState() == AuthState.NOT_LOGGED_IN) {

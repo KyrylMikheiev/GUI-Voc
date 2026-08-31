@@ -1,0 +1,198 @@
+/*
+ * Structural styling shared by both themes. Colours are referenced only through
+ * the -vt-* variables defined in theme-light.css / theme-dark.css, so switching
+ * the theme is a stylesheet swap and never touches the scene graph.
+ *
+ * This replaces a large amount of imperative Swing code:
+ *   - the MouseAdapter hover/exit/click handlers duplicated in every screen
+ *     become :hover and :pressed rules,
+ *   - PlaceholderTextField/PlaceholderPasswordField's custom paintComponent()
+ *     becomes the built-in -fx-prompt-text-fill,
+ *   - CustomProgressBarUI's paintDeterminate() becomes .progress-bar rules.
+ */
+
+.root {
+    -fx-background-color: -vt-body-primary;
+    -fx-font-family: "SansSerif";
+}
+
+/* ---------------------------------------------------------------- surfaces */
+
+.body-primary {
+    -fx-background-color: -vt-body-primary;
+}
+
+.body-secondary {
+    -fx-background-color: -vt-body-secondary;
+}
+
+/* ------------------------------------------------------------------- text */
+
+.label,
+.text-label {
+    -fx-text-fill: -vt-text;
+}
+
+.title-label {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 20px;
+}
+
+/* Read-only explanation box on the start page (was a bordered JTextArea).
+   A TextArea paints its frame on the inner .content node, so the outer
+   background/padding must be cleared to avoid a doubled border. */
+.info-area {
+    -fx-background-color: -vt-text, -vt-body-primary;
+    -fx-background-insets: 0, 3;
+    -fx-padding: 3;
+    -fx-font-size: 25px;
+}
+
+.info-area .content {
+    -fx-background-color: -vt-body-primary;
+}
+
+/* -fx-text-fill on the TextArea itself is overridden by the built-in
+   .text-input rule, so the fill is set on the rendered text node. */
+.info-area,
+.info-area .text {
+    -fx-text-fill: -vt-text;
+    -fx-fill: -vt-text;
+}
+
+/* The caret would still blink in a read-only field. */
+.info-area {
+    -fx-display-caret: false;
+}
+
+.info-area:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+.app-button {
+    -fx-background-color: -vt-button-default;
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 20px;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    /* Icon left of the label, matching setHorizontalTextPosition(RIGHT). */
+    -fx-content-display: left;
+    -fx-graphic-text-gap: 12px;
+    -fx-alignment: center;
+}
+
+.app-button:hover {
+    -fx-background-color: -vt-button-hover;
+}
+
+.app-button:pressed {
+    -fx-background-color: -vt-button-click;
+}
+
+/* Keep the Swing look, which painted no focus indicator. */
+.app-button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/* ----------------------------------------------------------------- navbar */
+
+.navbar {
+    -fx-background-color: -vt-navbar-bg;
+    -fx-min-height: 80px;
+    -fx-pref-height: 80px;
+}
+
+.navbar-title {
+    -fx-text-fill: -vt-navbar-text;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 28px;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10px;
+}
+
+/* Icon-only navbar buttons (back arrow, burger menu). */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.icon-button:hover {
+    -fx-background-color: transparent;
+}
+
+.icon-button:disabled {
+    -fx-opacity: 0.4;
+}
+
+.search-box {
+    -fx-border-color: -vt-navbar-text;
+    -fx-border-width: 2px;
+    -fx-background-color: transparent;
+    -fx-padding: 0 10px 0 10px;
+}
+
+.search-field {
+    -fx-background-color: -vt-navbar-bg;
+    -fx-text-fill: -vt-navbar-text;
+    -fx-prompt-text-fill: #E0E0E0;
+    -fx-font-size: 18px;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+.search-field:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* The burger menu, previously a JMenuBar holding a single icon JMenu. */
+.burger-menu .context-menu {
+    -fx-background-color: -vt-body-secondary;
+}
+
+.burger-menu .menu-item .label {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 20px;
+}
+
+.burger-menu .menu-item:focused {
+    -fx-background-color: -vt-button-hover;
+}
+
+/* ------------------------------------------------------------ text inputs */
+
+.app-field {
+    -fx-background-color: -vt-body-primary;
+    -fx-text-fill: -vt-text;
+    -fx-prompt-text-fill: derive(-vt-text, 45%);
+    -fx-border-color: -vt-text;
+    -fx-border-width: 2px;
+    -fx-font-size: 18px;
+}
+
+/* --------------------------------------------------------------- scrolling */
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ------------------------------------------------------------ progress bar */
+
+.progress-bar > .bar {
+    -fx-background-color: green;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.progress-bar > .track {
+    -fx-background-color: -vt-body-secondary;
+    -fx-background-radius: 0;
+}

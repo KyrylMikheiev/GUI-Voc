@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.vocabtrainer</groupId>
+  <artifactId>vocabtrainer</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>VocabTrainer</name>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.4</javafx.version>
+    <!-- Entry point of the JavaFX application. -->
+    <mainClass>src.fx.FxMain</mainClass>
+    <!-- Startup theme; override with ./mvnw javafx:run -Dvt.theme=dark -->
+    <vt.theme>light</vt.theme>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>${project.basedir}/src</sourceDirectory>
+
+    <resources>
+      <!-- FXML + CSS live next to the sources; ship them into the jar.
+           targetPath restores the "src" prefix that would otherwise be
+           stripped, so getResource() resolves them relative to the
+           src.fx.* packages the classes actually live in. -->
+      <resource>
+        <directory>${project.basedir}/src</directory>
+        <targetPath>src</targetPath>
+        <includes>
+          <include>**/*.fxml</include>
+          <include>**/*.css</include>
+        </includes>
+      </resource>
+      <!-- voc_list.csv is loaded via VocabParser.class.getResourceAsStream("voc_list.csv"),
+           so it must land in the VocabAPI package directory on the classpath. -->
+      <resource>
+        <directory>${project.basedir}/LatinVocabParser/VocabAPI</directory>
+        <targetPath>VocabAPI</targetPath>
+        <includes>
+          <include>voc_list.csv</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <plugins>
+      <!-- The vocab parser is a git submodule with its own source root. -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>add-vocabparser-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.basedir}/LatinVocabParser</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <!-- The legacy Swing tree still compiles; it is kept until the
+               JavaFX migration is complete.
+
+               These two files are pre-existing dead code: both declare
+               "package minigames" while living under src/ui/screens/games/,
+               and neither is referenced by the running application. GameM in
+               particular does not compile (missing actionPerformed, imports a
+               src.Main that is not visible from its package). The old run.sh
+               never compiled them because its src/**/*.java glob does not
+               reach that depth. Excluded so the build stays green; delete them
+               or move them into a real package to re-include. -->
+          <excludes>
+            <exclude>ui/screens/games/memory/GameM.java</exclude>
+            <exclude>ui/screens/games/fallingWords/FallingWordsGame.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>${mainClass}</mainClass>
+          <!-- javafx:run forks a JVM, so -D flags on the Maven command line do
+               not reach the app. Forward the ones the app reads.
+               Usage: ./mvnw javafx:run -Dvt.theme=dark -->
+          <options>
+            <option>-Dvt.theme=${vt.theme}</option>
+            <option>-Dfile.encoding=UTF-8</option>
+          </options>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

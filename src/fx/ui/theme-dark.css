@@ -1,0 +1,13 @@
+/*
+ * Dark palette. Values mirror ColorManager's DARK ColorMode.
+ */
+.root {
+    -vt-button-default: #4d6190;
+    -vt-button-hover:   #4255ff;
+    -vt-button-click:   #2f3990;
+    -vt-body-primary:   #111827;
+    -vt-body-secondary: #1f2937;
+    -vt-text:           #f9fafb;
+    -vt-navbar-bg:      #808080; /* Color.GRAY in both modes */
+    -vt-navbar-text:    #000000;
+}
