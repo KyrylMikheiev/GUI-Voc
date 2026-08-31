@@ -38,6 +38,25 @@
     -fx-font-size: 20px;
 }
 
+/* Heading at the top of a screen (Login, Registration, ...). */
+.screen-title {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 30px;
+}
+
+.subtitle-label {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 16px;
+}
+
+/* Validation and failure messages. The Swing screens drew these in the normal
+   text colour, which made them easy to miss; red reads as an error in both
+   themes. */
+.error-label {
+    -fx-text-fill: #e05252;
+    -fx-font-size: 16px;
+}
+
 /* Read-only explanation box on the start page (was a bordered JTextArea).
    A TextArea paints its frame on the inner .content node, so the outer
    background/padding must be cleared to avoid a doubled border. */
@@ -175,6 +194,33 @@
     -fx-border-color: -vt-text;
     -fx-border-width: 2px;
     -fx-font-size: 18px;
+}
+
+/* -------------------------------------------------------------- combo box */
+
+.app-combo {
+    -fx-background-color: -vt-button-default;
+    -fx-font-size: 16px;
+    -fx-background-radius: 0;
+}
+
+.app-combo > .list-cell {
+    -fx-text-fill: -vt-text;
+    -fx-background-color: transparent;
+}
+
+.app-combo .list-view {
+    -fx-background-color: -vt-body-secondary;
+}
+
+.app-combo .list-view .list-cell {
+    -fx-text-fill: -vt-text;
+    -fx-background-color: -vt-body-secondary;
+}
+
+.app-combo .list-view .list-cell:filled:selected,
+.app-combo .list-view .list-cell:filled:hover {
+    -fx-background-color: -vt-button-hover;
 }
 
 /* --------------------------------------------------------------- scrolling */

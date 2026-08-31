@@ -17,6 +17,8 @@
     <mainClass>src.fx.FxMain</mainClass>
     <!-- Startup theme; override with ./mvnw javafx:run -Dvt.theme=dark -->
     <vt.theme>light</vt.theme>
+    <!-- Screen shown by the src.fx.ui.Preview harness. -->
+    <screen>StartPage</screen>
   </properties>
 
   <dependencies>
@@ -115,6 +117,7 @@
                Usage: ./mvnw javafx:run -Dvt.theme=dark -->
           <options>
             <option>-Dvt.theme=${vt.theme}</option>
+            <option>-Dscreen=${screen}</option>
             <option>-Dfile.encoding=UTF-8</option>
           </options>
         </configuration>

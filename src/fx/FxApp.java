@@ -3,6 +3,7 @@ package src.fx;
 import javafx.stage.Stage;
 
 import src.fx.screens.StartPageScreen;
+import src.fx.screens.auth.LoginScreen;
 import src.fx.ui.FxScreen;
 import src.fx.ui.FxWindowManager;
 import src.auth.AuthManager;
@@ -35,16 +36,13 @@ public class FxApp {
 
             @Override
             public void toLogin() {
-                // TODO: replace with the migrated Login screen.
-                setFreshState(new StartPageScreen());
+                setFreshState(new LoginScreen());
             }
         });
 
         AuthManager.startupCheck();
         if (AuthManager.getState() == AuthState.NOT_LOGGED_IN) {
-            // TODO: show the migrated Login screen once it exists. The spike
-            // opens the start page so the shell can be evaluated.
-            switchScreen(new StartPageScreen());
+            switchScreen(new LoginScreen());
         } else {
             switchScreen(new StartPageScreen());
         }
