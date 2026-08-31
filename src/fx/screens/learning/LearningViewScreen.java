@@ -20,11 +20,10 @@ import src.fx.ui.FxScreen;
 import src.fx.ui.Images;
 
 /**
- * Controller for {@code LearningView.fxml}, replacing
- * {@link src.ui.screens.learning.LearningView}.
+ * Controller for {@code LearningView.fxml}.
  *
- * <p>The card and the results are both in the FXML; the Swing version called
- * removeAll() on the body panel and rebuilt it to show the results.
+ * <p>The flashcard and the results view are both in the FXML; the controller
+ * toggles between them.
  */
 public class LearningViewScreen extends FxScreen {
 
@@ -92,7 +91,6 @@ public class LearningViewScreen extends FxScreen {
         lessonLabel.setText(lesson.equals("Falsche Vokabeln") ? lesson : "Lektion " + lesson);
 
         if (vocabs.isEmpty()) {
-            // The Swing version indexed into an empty list here and crashed.
             showResults();
             return;
         }
@@ -116,7 +114,8 @@ public class LearningViewScreen extends FxScreen {
         showingFront = true;
 
         // Undo the answer recorded for the card we are stepping back to.
-        // remove(Integer) would be remove-by-index; remove(Object) is by value.
+        // Note remove(Object), not remove(int): these lists hold indices, so
+        // remove(int) would delete the wrong element.
         Integer vocabId = vocabs.get(currentIndex);
         wrongVocabs.remove(vocabId);
         rightVocabs.remove(vocabId);

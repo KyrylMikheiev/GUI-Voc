@@ -9,8 +9,7 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Settings. Same items in the same order as the Swing GridBagLayout: title,
-  the four buttons, then the widget and class pickers.
+  Settings: title, the four buttons, then the widget and class pickers.
 -->
 <VBox spacing="10" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">

@@ -2,13 +2,6 @@
  * Structural styling shared by both themes. Colours are referenced only through
  * the -vt-* variables defined in theme-light.css / theme-dark.css, so switching
  * the theme is a stylesheet swap and never touches the scene graph.
- *
- * This replaces a large amount of imperative Swing code:
- *   - the MouseAdapter hover/exit/click handlers duplicated in every screen
- *     become :hover and :pressed rules,
- *   - PlaceholderTextField/PlaceholderPasswordField's custom paintComponent()
- *     becomes the built-in -fx-prompt-text-fill,
- *   - CustomProgressBarUI's paintDeterminate() becomes .progress-bar rules.
  */
 
 .root {
@@ -49,17 +42,15 @@
     -fx-font-size: 16px;
 }
 
-/* Validation and failure messages. The Swing screens drew these in the normal
-   text colour, which made them easy to miss; red reads as an error in both
-   themes. */
+/* Validation and failure messages. */
 .error-label {
-    -fx-text-fill: #e05252;
+    -fx-text-fill: -vt-text;
     -fx-font-size: 16px;
 }
 
-/* Read-only explanation box on the start page (was a bordered JTextArea).
-   A TextArea paints its frame on the inner .content node, so the outer
-   background/padding must be cleared to avoid a doubled border. */
+/* Read-only explanation box on the start page. A TextArea paints its frame on
+   the inner .content node, so the outer background/padding is set here to avoid
+   a doubled border. */
 .info-area {
     -fx-background-color: -vt-text, -vt-body-primary;
     -fx-background-insets: 0, 3;
@@ -72,7 +63,7 @@
 }
 
 /* -fx-text-fill on the TextArea itself is overridden by the built-in
-   .text-input rule, so the fill is set on the rendered text node. */
+   .text-input rule, so the fill is also set on the rendered text node. */
 .info-area,
 .info-area .text {
     -fx-text-fill: -vt-text;
@@ -98,7 +89,7 @@
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-cursor: hand;
-    /* Icon left of the label, matching setHorizontalTextPosition(RIGHT). */
+    /* Icon left of the label. */
     -fx-content-display: left;
     -fx-graphic-text-gap: 12px;
     -fx-alignment: center;
@@ -112,7 +103,7 @@
     -fx-background-color: -vt-button-click;
 }
 
-/* Keep the Swing look, which painted no focus indicator. */
+/* No focus indicator on buttons. */
 .app-button:focused {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
@@ -171,7 +162,7 @@
     -fx-faint-focus-color: transparent;
 }
 
-/* The burger menu, previously a JMenuBar holding a single icon JMenu. */
+/* Burger menu. */
 .burger-menu .context-menu {
     -fx-background-color: -vt-body-secondary;
 }
@@ -237,7 +228,7 @@
     -fx-font-size: 24px;
 }
 
-/* Percentage drawn over the bar; CustomProgressBarUI painted this by hand. */
+/* Percentage drawn over the bar. */
 .progress-value {
     -fx-text-fill: -vt-text;
     -fx-font-size: 18px;
@@ -258,7 +249,7 @@
     -fx-background-color: -vt-button-default;
 }
 
-/* The cross and checkmark: transparent until hovered, as in Swing. */
+/* The cross and checkmark: transparent until hovered. */
 .mark-button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
@@ -371,7 +362,7 @@
     -fx-table-cell-border-color: -vt-body-secondary;
 }
 
-/* Zebra striping, as the Swing cell renderer did. */
+/* Zebra striping. */
 .forms-table .table-row-cell:odd {
     -fx-background-color: -vt-body-secondary;
 }

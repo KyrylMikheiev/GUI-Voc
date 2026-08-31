@@ -1,7 +1,6 @@
 /*
- * Light palette. Values mirror ColorManager's LIGHT ColorMode so the JavaFX UI
- * matches the Swing original. Only these variables differ between the themes;
- * all rules live in common.css.
+ * Light palette. Only these variables differ between the themes; all rules live
+ * in common.css.
  */
 .root {
     -vt-button-default: #B7B7B7;

@@ -10,7 +10,7 @@ public class AuthManager {
 
     /**
      * Registers the front-end that handles post-authentication navigation.
-     * Set once at startup by the Swing or JavaFX entry point.
+     * Set once at startup by the application entry point.
      */
     public static void setNavigator(AuthNavigator nav) {
         navigator = nav;

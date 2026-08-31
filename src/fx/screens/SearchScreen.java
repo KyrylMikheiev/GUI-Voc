@@ -6,11 +6,11 @@ import javafx.scene.layout.VBox;
 import src.fx.ui.FxScreen;
 
 /**
- * Replaces {@link src.ui.screens.Search}.
+ * Quick-search results.
  *
- * <p>Not implemented, as in Swing: that screen was marked "TODO: Implement" and
- * returned an empty panel. The query is kept so the search box in the navbar
- * can hand it over once this is built.
+ * <p>Not implemented; it renders an empty pane, as it did before the JavaFX
+ * port. The query is kept so the navbar's search box can hand it over once
+ * this is built.
  */
 public class SearchScreen extends FxScreen {
 

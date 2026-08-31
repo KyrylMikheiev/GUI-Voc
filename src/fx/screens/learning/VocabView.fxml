@@ -9,11 +9,7 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Word detail: conjugation for verbs, declension for adjectives and nouns.
-
-  The Swing version added a bare JTable and its header to a BorderLayout by
-  hand, and its adjective branch used a scroll pane with a -2000 bottom inset.
-  A TableView carries its own header and scrolling.
+  Word detail: a conjugation table for verbs, a declension table for adjectives.
 -->
 <VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
@@ -24,8 +20,8 @@
     <Label fx:id="wordLabel" styleClass="screen-title" wrapText="true" />
     <Label fx:id="translationLabel" styleClass="subtitle-label" wrapText="true" />
 
-    <!-- Gender switch, shown only for adjectives. The Swing buttons had their
-         listeners commented out and did nothing. -->
+    <!-- Gender switch, shown only for adjectives. Not wired up: only the
+         Maskulinum table is built. -->
     <HBox fx:id="genderBox" spacing="10" visible="false" managed="false">
         <ToggleButton text="Maskulinum" styleClass="app-toggle" selected="true">
             <toggleGroup><ToggleGroup fx:id="genderGroup" /></toggleGroup>

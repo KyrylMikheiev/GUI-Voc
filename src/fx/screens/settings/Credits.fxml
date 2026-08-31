@@ -7,8 +7,7 @@
 
 <!--
   Credits. All static text, so it lives entirely in the FXML and the controller
-  has nothing to do. The Swing version built the same seven JLabels in code and
-  wrapped the multi-line ones in <html> to get line breaks.
+  has nothing to do.
 -->
 <ScrollPane fitToWidth="true" styleClass="scroll-pane"
             xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">

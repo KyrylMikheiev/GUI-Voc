@@ -11,12 +11,8 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Registration, in two stages.
-
-  The Swing version held a signupStage field and rebuilt the whole screen on
-  each step, which is why it had to copy the entered values back into the new
-  fields. Both stages are declared here instead and the controller toggles
-  which one is visible, so the fields keep their own state.
+  Registration, in two stages. Both are declared here and the controller toggles
+  which one is visible, so the fields keep their own state across a step.
 -->
 <VBox alignment="CENTER" spacing="20" styleClass="body-primary"
       xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">

@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Lesson picker shared by the learning and test flows. The buttons are added by
+  Lesson picker shared by the learning and game flows. The buttons are added by
   LessonSelectorScreen, since their number depends on the vocabulary data.
 -->
 <VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"

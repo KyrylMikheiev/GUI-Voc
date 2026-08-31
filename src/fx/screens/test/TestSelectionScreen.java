@@ -14,13 +14,10 @@ import src.fx.ui.FxScreen;
 import src.fx.ui.Lessons;
 
 /**
- * Controller for {@code TestSelection.fxml}, replacing
- * {@link src.ui.screens.test.TestSelection} and the LessonRoster helper it used.
+ * Controller for {@code TestSelection.fxml}.
  *
- * <p>The five options were five {@code isCrossVisibleN} fields set by five
- * copied listeners; they are now read straight off the check boxes into a
- * {@link TestOptions} record, so the call to TestView no longer passes five
- * unlabelled booleans in a row.
+ * <p>The options are read off the check boxes into a {@link TestOptions}
+ * record, so the test screen is not handed five unlabelled booleans in a row.
  */
 public class TestSelectionScreen extends FxScreen {
 
@@ -60,8 +57,7 @@ public class TestSelectionScreen extends FxScreen {
 
     /**
      * Moves the selection between the two lists, keeping the destination in the
-     * canonical lesson order. LessonRoster kept a third "original" model to
-     * restore that order on removal; sorting by the known order is enough.
+     * canonical lesson order.
      */
     private void move(ListView<String> from, ListView<String> to) {
         List<String> moving = new ArrayList<>(from.getSelectionModel().getSelectedItems());

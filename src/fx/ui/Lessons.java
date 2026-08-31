@@ -9,8 +9,8 @@ import VocabAPI.WordTypes.Vocab;
 /**
  * Lesson lookup shared by the screens that offer a lesson choice.
  *
- * <p>LessonSelector, LessonRoster and LibraryView each built and sorted this
- * list themselves with the same duplicated comparator.
+ * <p>Used by the lesson picker, the test roster and the library view, which
+ * would otherwise each build and sort this list themselves.
  */
 public final class Lessons {
 

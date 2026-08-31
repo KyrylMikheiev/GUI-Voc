@@ -18,12 +18,10 @@ import VocabAPI.WordTypes.Vocab;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code VocabView.fxml}, replacing
- * {@link src.ui.screens.learning.VocabView}.
+ * Controller for {@code VocabView.fxml}.
  *
- * <p>Same content as the Swing screen: a conjugation table for verbs and a
- * declension table for adjectives. Other word types get no table, as before.
- * A TableView replaces the bare JTable plus separately-added JTableHeader.
+ * <p>A conjugation table for verbs and a declension table for adjectives.
+ * Other word types get no table.
  */
 public class VocabViewScreen extends FxScreen {
 
@@ -60,8 +58,7 @@ public class VocabViewScreen extends FxScreen {
         } else if (vocab instanceof Adjective adjective) {
             genderBox.setVisible(true);
             genderBox.setManaged(true);
-            // The Swing gender buttons had their listeners commented out, so
-            // only the Maskulinum table was ever shown.
+            // The gender switch is not wired up; only Maskulinum is shown.
             showDeclension(adjective.getMaskulinum());
         }
     }
@@ -91,7 +88,7 @@ public class VocabViewScreen extends FxScreen {
     private void showDeclension(HashMap<String, ArrayList<String>> forms) {
         if (forms == null) {
             // The parser generates forms for only some declension patterns;
-            // the Swing screen showed an empty grid in that case.
+            // the rest get an empty grid.
             forms = new HashMap<>();
         }
 

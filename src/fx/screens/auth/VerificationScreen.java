@@ -10,8 +10,7 @@ import src.fx.FxApp;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code Verification.fxml}, replacing
- * {@link src.ui.screens.auth.Verification}.
+ * Controller for {@code Verification.fxml}.
  *
  * <p>On success AuthManager navigates on through the AuthNavigator, so only the
  * failure path is handled here.

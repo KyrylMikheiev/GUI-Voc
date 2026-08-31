@@ -7,11 +7,10 @@ import src.fx.FxApp;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code ForgotPassword.fxml}, replacing
- * {@link src.ui.screens.auth.ForgotPassword}.
+ * Controller for {@code ForgotPassword.fxml}.
  *
- * <p>Password reset is not implemented, as in Swing: that screen was marked
- * "TODO: Implement functionality" and its Submit button had no listener.
+ * <p>Password reset is not implemented; the Submit button is deliberately
+ * unwired, as it was before the JavaFX port.
  */
 public class ForgotPasswordScreen extends FxScreen {
 
@@ -27,8 +26,8 @@ public class ForgotPasswordScreen extends FxScreen {
         return "ForgotPassword.fxml";
     }
 
-    // TODO: Implement functionality — the Swing Submit button had no listener
-    // either, so the FXML leaves it unwired.
+    // TODO: Implement functionality. The FXML leaves Submit unwired until
+    // APIClient exposes a reset endpoint.
 
     @FXML
     private void onToLogin() {

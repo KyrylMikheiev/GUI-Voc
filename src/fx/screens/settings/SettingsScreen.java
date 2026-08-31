@@ -18,12 +18,10 @@ import src.fx.ui.Images;
 import src.fx.ui.ThemeManager;
 
 /**
- * Controller for {@code Settings.fxml}, replacing
- * {@link src.ui.screens.settings.Settings}.
+ * Controller for {@code Settings.fxml}.
  *
- * <p>The dark-mode button now calls ThemeManager, which swaps the stylesheet;
- * the Swing version set ColorManager and then rebuilt the whole screen through
- * App.updateColors(). JOptionPane becomes TextInputDialog and Alert.
+ * <p>The dark-mode button calls ThemeManager, which swaps the stylesheet on the
+ * live Scene, so nothing has to be rebuilt.
  */
 public class SettingsScreen extends FxScreen {
 

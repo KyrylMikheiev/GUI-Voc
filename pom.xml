@@ -84,29 +84,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-        <configuration>
-          <!-- The legacy Swing tree still compiles; it is kept until the
-               JavaFX migration is complete.
-
-               These two files are pre-existing dead code: both declare
-               "package minigames" while living under src/ui/screens/games/,
-               and neither is referenced by the running application. GameM in
-               particular does not compile (missing actionPerformed, imports a
-               src.Main that is not visible from its package). The old run.sh
-               never compiled them because its src/**/*.java glob does not
-               reach that depth. Excluded so the build stays green; delete them
-               or move them into a real package to re-include. -->
-          <excludes>
-            <exclude>ui/screens/games/memory/GameM.java</exclude>
-            <exclude>ui/screens/games/fallingWords/FallingWordsGame.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-      <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>

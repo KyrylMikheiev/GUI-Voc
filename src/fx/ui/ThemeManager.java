@@ -3,11 +3,9 @@ package src.fx.ui;
 import javafx.scene.Scene;
 
 /**
- * JavaFX counterpart of {@link src.ui.ColorManager}.
+ * Light/dark palette switching.
  *
- * <p>Swing had no styling layer, so ColorManager handed out Color objects that
- * every screen applied by hand and a theme change meant rebuilding the whole UI.
- * Here the palette lives in CSS: switching the theme swaps one stylesheet on the
+ * <p>The palette lives in CSS: switching the theme swaps one stylesheet on the
  * live Scene and every node restyles itself, so no screen has to be rebuilt.
  */
 public final class ThemeManager {
@@ -61,7 +59,7 @@ public final class ThemeManager {
         apply();
     }
 
-    /** Accepts the same int encoding the Swing settings screen persisted. */
+    /** Accepts the int encoding used by the stored user preference. */
     public static void setMode(int newMode) {
         setMode(Mode.fromValue(newMode));
     }

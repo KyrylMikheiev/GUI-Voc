@@ -21,17 +21,14 @@ import src.fx.screens.StartPageScreen;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code MemoryMain.fxml}, replacing
- * {@link src.ui.screens.games.memory.MemoryMain}.
+ * Controller for {@code MemoryMain.fxml}.
  *
- * <p>Rules are unchanged: the board is shown face-up until the first click,
- * then hidden; a mismatched pair is turned back on the next click and counts a
- * fail; matching all pairs wins.
+ * <p>The board is shown face-up until the first click, then hidden; a
+ * mismatched pair is turned back on the next click and counts a fail; matching
+ * all pairs wins.
  *
- * <p>The Swing version placed pairs by drawing random slots in a
- * {@code while (!placed)} loop that retried until it hit two free ones, and
- * compared strings with {@code ==}. This shuffles a list of slots instead and
- * tracks pair membership by index, which is what {@code boardQ} was for.
+ * <p>Pairs are dealt by shuffling a list of slots, and pair membership is
+ * tracked by index rather than by comparing the face strings.
  */
 public class MemoryMainScreen extends FxScreen {
 
@@ -196,7 +193,7 @@ public class MemoryMainScreen extends FxScreen {
         }
 
         if (slot == firstPick) {
-            // Clicking the same card again counts as a miss, as in Swing.
+            // Clicking the same card twice counts as a miss.
             secondPick = slot;
             awaitingFlipBack = true;
             return;

@@ -10,14 +10,11 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 /**
- * JavaFX counterpart of {@link src.ui.WindowManager}.
+ * Owns the Stage and the single Scene, and switches between screens.
  *
- * <p>Structure carries over from Swing: a root pane holds the navbar at the top
- * and the current screen in the centre, with a history stack behind the back
- * button. What changes is how a switch happens — the Swing version rebuilt the
- * global pane, the content pane and the navbar on every navigation, then
- * revalidated and repainted. Here the Scene and its root are created once and a
- * switch only replaces the center node.
+ * <p>A root pane holds the navbar at the top and the current screen in the
+ * centre, with a history stack behind the back button. The Scene and its root
+ * are created once; a switch only replaces the center node.
  */
 public class FxWindowManager {
 
@@ -36,7 +33,7 @@ public class FxWindowManager {
         Scene scene = new Scene(root, 1280, 720);
         ThemeManager.install(scene);
 
-        // temp?: press esc to quit — carried over from the Swing version.
+        // temp?: press esc to quit
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 javafx.application.Platform.exit();
@@ -73,14 +70,6 @@ public class FxWindowManager {
         currentScreen = screen;
         screenHistory.clear();
         render();
-    }
-
-    /**
-     * Kept for API parity with the Swing App facade. A theme change no longer
-     * rebuilds anything: ThemeManager swaps the stylesheet and CSS reapplies.
-     */
-    public void updateColors() {
-        // intentionally empty — see ThemeManager
     }
 
     private void render() {

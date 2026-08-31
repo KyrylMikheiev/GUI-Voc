@@ -14,16 +14,14 @@ import src.fx.FxApp;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code SignUp.fxml}, replacing {@link src.ui.screens.auth.SignUp}.
+ * Controller for {@code SignUp.fxml}.
  *
- * <p>The Swing screen tracked a {@code signupStage} field and called
- * rebuildUI() to redraw everything on each step, carrying the entered values
- * across by hand. Both stages exist in the FXML here, so switching is a
+ * <p>Both wizard stages exist in the FXML, so switching between them is a
  * visibility toggle and the fields keep their own state.
  */
 public class SignUpScreen extends FxScreen {
 
-    /** Matches the Swing default (userModePreference = 2). */
+    /** Default mode preference sent with a new account. */
     private static final int MODE_PREFERENCE = 2;
 
     @FXML private VBox stageOne;
@@ -87,7 +85,7 @@ public class SignUpScreen extends FxScreen {
             return;
         }
 
-        // getSelectedIndex() + 1, as in the Swing version (Freshman = 1).
+        // The API numbers classes from 1 (Freshman = 1).
         int userClass = gradeLevelBox.getSelectionModel().getSelectedIndex() + 1;
 
         boolean created = APIClient.createUserAccount(

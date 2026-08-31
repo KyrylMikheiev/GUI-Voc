@@ -19,11 +19,10 @@ import src.fx.screens.settings.SettingsScreen;
 import src.auth.AuthManager;
 
 /**
- * Controller for {@code NavBar.fxml}, replacing {@link src.ui.NavBar}.
+ * Controller for {@code NavBar.fxml}.
  *
- * <p>Layout, menu entries and event wiring now live in the FXML; this class only
- * holds behaviour. The Swing version's {@code active} flag guarding every
- * handler is gone — controls are disabled directly instead.
+ * <p>Layout, menu entries and event wiring live in the FXML; this class only
+ * holds behaviour.
  */
 public class FxNavBar {
 

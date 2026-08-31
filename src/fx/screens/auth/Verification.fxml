@@ -8,10 +8,8 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Account verification. The Swing version carried a "BUG: Fix verification code
-  & next panel" note: its GridLayout(5, 1) rows plus four different
-  ResponsiveBorder insets made the field and button drift apart as the window
-  resized. A centred VBox with even spacing keeps them together at any size.
+  Account verification. A centred VBox with even spacing keeps the field and the
+  button together at any window size.
 -->
 <VBox alignment="CENTER" spacing="20" styleClass="body-primary"
       xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">

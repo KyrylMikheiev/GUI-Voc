@@ -9,10 +9,7 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Login. The Swing version stacked three GridLayout rows and pushed the fields
-  into the middle with ResponsiveBorder(0, 450, 30, 450) — a 450/1280 fraction
-  of the window width on each side. A centred, max-width VBox expresses the same
-  intent without depending on the window being 1280 wide.
+  Login. A centred, max-width VBox keeps the form together at any window size.
 -->
 <VBox alignment="CENTER" spacing="20" styleClass="body-primary"
       xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">

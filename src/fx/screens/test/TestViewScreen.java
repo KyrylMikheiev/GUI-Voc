@@ -16,12 +16,11 @@ import VocabAPI.WordTypes.Vocab;
 import src.fx.ui.FxScreen;
 
 /**
- * Controller for {@code TestView.fxml}, replacing
- * {@link src.ui.screens.test.TestView}.
+ * Controller for {@code TestView.fxml}.
  *
- * <p>Behaviour is unchanged: ten words are drawn at random from the chosen
- * lessons and "Nächste Vokabel" cycles through them. Answers are not checked
- * here either — the Swing screen never read the fields.
+ * <p>Ten words are drawn at random from the chosen lessons and
+ * "Nächste Vokabel" cycles through them. Answers are not checked; the input
+ * fields are never read, as before the JavaFX port.
  */
 public class TestViewScreen extends FxScreen {
 
@@ -78,7 +77,7 @@ public class TestViewScreen extends FxScreen {
         Vocab vocab = vocabs.get(currentIndex);
         wordLabel.setText(vocab.getBasicForm());
 
-        // One row per German translation, as in the Swing screen.
+        // One row per German translation.
         translationBox.getChildren().clear();
         for (int i = 0; i < vocab.getGerman().size(); i++) {
             Label label = new Label("Übersetzung " + (i + 1) + ":");
@@ -97,7 +96,7 @@ public class TestViewScreen extends FxScreen {
         dativeField.clear();
     }
 
-    /** The options are carried but not yet acted on, as in the Swing version. */
+    /** The options are carried but not yet acted on. */
     public TestOptions getOptions() {
         return options;
     }

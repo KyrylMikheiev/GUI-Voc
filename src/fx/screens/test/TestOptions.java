@@ -1,8 +1,7 @@
 package src.fx.screens.test;
 
 /**
- * The five test options, replacing the {@code isCrossVisible1..5} booleans that
- * {@link src.ui.screens.test.TestSelection} passed to TestView positionally.
+ * The five test options, named rather than passed positionally.
  *
  * @param allTranslations    ask for every German translation, not just one
  * @param ignoreOrder        accept translations in any order

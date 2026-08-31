@@ -12,12 +12,8 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Flashcard learning screen, with the results view stacked behind it.
-
-  The Swing version built this from twelve nested JPanels with names like
-  "contentUp_LessonAndProgressBar", then called removeAll() and rebuilt the
-  panel to show the results. Both views are declared here and the controller
-  toggles between them.
+  Flashcard learning screen, with the results view stacked behind it. The
+  controller toggles between the two.
 -->
 <StackPane styleClass="body-primary" xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml">
@@ -42,10 +38,10 @@
                 <ProgressBar fx:id="progressBar" progress="0" maxWidth="Infinity" />
                 <Label fx:id="progressLabel" styleClass="progress-value" />
             </StackPane>
-            <!-- The Swing layout left this third column empty. -->
+            <!-- Third column intentionally empty; it balances the row. -->
         </GridPane>
 
-        <!-- "one action back", top-left as in the Swing layout -->
+        <!-- "one action back" -->
         <HBox spacing="20" alignment="CENTER_LEFT">
             <padding>
                 <Insets top="10" right="0" bottom="10" left="30" />
@@ -73,7 +69,7 @@
                 <padding>
                     <Insets top="10" right="20" bottom="10" left="20" />
                 </padding>
-                <!-- The whole card flips on click, as in the Swing version. -->
+                <!-- The whole card flips on click. -->
                 <Button fx:id="flashcard" styleClass="flashcard" maxWidth="Infinity"
                         maxHeight="Infinity" onAction="#onFlip" wrapText="true" />
             </StackPane>

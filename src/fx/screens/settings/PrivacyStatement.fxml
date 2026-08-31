@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 
-<!-- Privacy statement. Static text, as in the Swing screen. -->
+<!-- Privacy statement. Static text. -->
 <VBox spacing="10" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
     <padding>

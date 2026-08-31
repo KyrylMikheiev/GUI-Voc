@@ -7,16 +7,14 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 /**
- * JavaFX counterpart of {@link src.ui.screens._BaseScreen}.
+ * Base class for every screen.
  *
- * <p>A screen is now a controller: the layout comes from an FXML file loaded by
- * {@link #getView()}, rather than from a createUI() method that assembles panels
- * in code. Subclasses declare which FXML to load and receive
+ * <p>A screen is a controller: the layout comes from an FXML file loaded by
+ * {@link #getView()}. Subclasses declare which FXML to load and receive
  * {@link #onViewLoaded()} once the {@code @FXML} fields have been injected.
  *
- * <p>The Swing base class also owned repainting and re-applied colours on every
- * theme change; both are gone. CSS restyles the live scene graph, so the view is
- * built once and cached.
+ * <p>The view is built once and cached. Nothing here repaints or re-applies
+ * colours on a theme change; CSS restyles the live scene graph instead.
  */
 public abstract class FxScreen {
 

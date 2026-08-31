@@ -8,12 +8,8 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Vocabulary library: pick a lesson, then a word.
-
-  The Swing version positioned the header with setBounds() inside a
-  BorderLayout, which ignores bounds, and used a JComboBox that was added to the
-  panel only when the lesson button was clicked and then opened by a 100ms
-  Timer. Here the picker is a plain ComboBox that is always present.
+  Vocabulary library: pick a lesson with the arrows or the drop-down, then pick
+  a word.
 -->
 <VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">

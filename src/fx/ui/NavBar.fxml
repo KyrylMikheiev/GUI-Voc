@@ -11,9 +11,8 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Navigation bar. The Swing version used a GridLayout(1, 3) with three nested
-  panels; the equivalent here is a GridPane with three evenly-weighted columns.
-  Icons are injected by the controller via Images, so no paths appear in the XML.
+  Navigation bar: three evenly-weighted columns. Icons are injected by the
+  controller via Images, so no paths appear in the XML.
 -->
 <GridPane styleClass="navbar" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml">

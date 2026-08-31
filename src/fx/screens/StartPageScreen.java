@@ -14,14 +14,11 @@ import src.fx.screens.settings.SettingsScreen;
 import src.fx.screens.games.GameSelectionScreen;
 
 /**
- * Controller for {@code StartPage.fxml}, replacing {@link src.ui.screens.StartPage}.
+ * Controller for {@code StartPage.fxml}.
  *
- * <p>The Swing screen built six buttons in a loop, then used a single shared
- * MouseAdapter that compared {@code e.getComponent()} against each button to
- * decide where to navigate, and repainted backgrounds on hover. Layout and
- * routing are now declared in the FXML ({@code onAction="#onLearn"}), and hover
- * and pressed colours come from the {@code .app-button} CSS rules, so only the
- * navigation calls remain here.
+ * <p>Layout and routing are declared in the FXML ({@code onAction="#onLearn"}),
+ * and hover and pressed colours come from the {@code .app-button} CSS rules, so
+ * only the navigation calls remain here.
  */
 public class StartPageScreen extends FxScreen {
 

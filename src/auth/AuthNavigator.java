@@ -3,10 +3,9 @@ package src.auth;
 /**
  * Navigation hook used by {@link AuthManager} after a login state change.
  *
- * <p>AuthManager previously called {@code App.setFreshState(new StartPage())}
- * directly, hard-wiring authentication to the Swing UI. Routing those calls
- * through this interface lets the Swing and JavaFX front-ends share one
- * AuthManager during the migration.
+ * <p>Keeps authentication independent of the UI: AuthManager decides that the
+ * user should now be on the start page or the login screen, and the front-end
+ * decides how to get there.
  */
 public interface AuthNavigator {
 

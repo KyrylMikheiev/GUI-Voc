@@ -15,20 +15,12 @@ import src.fx.ui.FxScreen;
 import src.fx.ui.Lessons;
 
 /**
- * Controller for {@code LibraryView.fxml}, replacing
- * {@link src.ui.screens.learning.LibraryView}.
+ * Controller for {@code LibraryView.fxml}.
  *
- * <p>Three bugs in the Swing version are fixed by construction here:
- * <ul>
- *   <li>the lesson count was hardcoded to 44 in the next-button and the combo
- *       box, so lessons past that index were unreachable and the label showed
- *       the index rather than the lesson name;</li>
- *   <li>the previous-button wrapped to {@code lessons.size() - 2}, skipping the
- *       last lesson;</li>
- *   <li>the combo box was added to the panel on each click and opened by a
- *       100 ms Timer.</li>
- * </ul>
- * All three follow from indexing {@link Lessons#all()} directly.
+ * <p>The lesson list comes from {@link Lessons#all()} and is indexed directly,
+ * so the arrows and the combo box always cover exactly the lessons that exist.
+ * The pre-JavaFX version hardcoded a count of 44 here, which made later lessons
+ * unreachable and made the previous-button skip the last one.
  */
 public class LibraryViewScreen extends FxScreen {
 

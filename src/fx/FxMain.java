@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * JavaFX entry point, replacing {@link src.Main}.
+ * Application entry point.
  *
- * <p>Swing created its window inline; JavaFX owns the lifecycle, so startup work
- * happens in {@link #start(Stage)} once the toolkit is running and the primary
- * Stage exists.
+ * <p>JavaFX owns the lifecycle, so startup work happens in
+ * {@link #start(Stage)} once the toolkit is running and the primary Stage
+ * exists.
  */
 public class FxMain extends Application {
 

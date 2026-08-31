@@ -3,10 +3,7 @@ package src.fx.screens.learning;
 import src.fx.FxApp;
 import src.fx.ui.LessonSelectorScreen;
 
-/**
- * Lesson picker for the learning flow, replacing
- * {@link src.ui.screens.learning.LearningSelection}.
- */
+/** Lesson picker for the learning flow. */
 public class LearningSelectionScreen extends LessonSelectorScreen {
 
     @Override

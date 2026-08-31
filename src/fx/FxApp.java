@@ -11,8 +11,7 @@ import src.auth.AuthNavigator;
 import src.auth.AuthState;
 
 /**
- * JavaFX counterpart of {@link src.App}: the static navigation facade the
- * screens call into.
+ * Static navigation facade the screens call into.
  */
 public class FxApp {
 

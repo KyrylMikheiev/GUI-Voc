@@ -6,10 +6,10 @@ import javafx.scene.layout.HBox;
 import src.fx.ui.FxScreen;
 
 /**
- * Replaces {@link src.ui.screens.test.TextChecker}.
+ * Text checker.
  *
- * <p>Not implemented. The Swing screen returned an empty two-column panel with
- * nothing in it; there is no FXML because there is nothing to lay out yet.
+ * <p>Not implemented; there is no FXML because there is nothing to lay out
+ * yet, as was the case before the JavaFX port.
  */
 public class TextCheckerScreen extends FxScreen {
 

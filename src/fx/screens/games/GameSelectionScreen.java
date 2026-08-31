@@ -6,10 +6,7 @@ import src.fx.FxApp;
 import src.fx.screens.games.memory.MemorySelectionScreen;
 import src.fx.ui.FxScreen;
 
-/**
- * Controller for {@code GameSelection.fxml}, replacing
- * {@link src.ui.screens.games.GameSelection}.
- */
+/** Controller for {@code GameSelection.fxml}. */
 public class GameSelectionScreen extends FxScreen {
 
     @Override

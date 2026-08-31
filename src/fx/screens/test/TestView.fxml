@@ -8,13 +8,10 @@
 <?import javafx.geometry.Insets?>
 
 <!--
-  Vocabulary test. Same shape as the Swing screen: the word on top, the
-  translation fields on the left, the noun-form fields on the right, and a
-  "next" button underneath that cycles through the drawn words.
-
-  The Swing version built its translation panel twice and added both to
-  BorderLayout.WEST, so the first was silently discarded; the rows are built
-  once here, by the controller, since their number depends on the word.
+  Vocabulary test: the word on top, the translation fields on the left, the
+  noun-form fields on the right, and a "next" button that cycles through the
+  drawn words. The translation rows are built by the controller, since their
+  number depends on the word.
 -->
 <VBox spacing="20" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
@@ -29,7 +26,7 @@
         <!-- Übersetzung 1..n; rows added by the controller -->
         <VBox fx:id="translationBox" spacing="10" HBox.hgrow="ALWAYS" />
 
-        <!-- The Swing screen's fixed Nominativ/Dativ fields -->
+        <!-- Fixed Nominativ/Dativ fields -->
         <VBox spacing="10">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />

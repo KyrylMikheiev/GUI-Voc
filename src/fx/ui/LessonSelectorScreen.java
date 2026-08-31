@@ -6,13 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Base for screens that ask the user to pick a lesson, replacing
- * {@link src.ui.helper.LessonSelector}.
+ * Base for screens that ask the user to pick a lesson.
  *
- * <p>The Swing version put the buttons in a {@code GridLayout(4, 1)} and then
- * added the panel to the screen twice — once directly and once inside a scroll
- * pane — so the list rendered above its own scrolling copy. Here the buttons go
- * into a scrolling VBox once.
+ * <p>The buttons go into a scrolling VBox, one per lesson.
  */
 public abstract class LessonSelectorScreen extends FxScreen {
 

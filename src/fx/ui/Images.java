@@ -10,10 +10,8 @@ import java.util.Map;
 /**
  * Loads icons from the {@code resources/images} directory.
  *
- * <p>The Swing code constructed {@code new ImageIcon("resources/images/x.png")}
- * at each use site and rescaled with {@code getScaledInstance}. Both are
- * centralised here: images are cached, and scaling is a view property rather
- * than a new bitmap.
+ * <p>Images are cached, and scaling is a view property rather than a new
+ * bitmap.
  */
 public final class Images {
 

@@ -3,10 +3,7 @@ package src.fx.screens.games.memory;
 import src.fx.FxApp;
 import src.fx.ui.LessonSelectorScreen;
 
-/**
- * Lesson picker for the memory game, replacing
- * {@link src.ui.screens.games.memory.MemorySelection}.
- */
+/** Lesson picker for the memory game. */
 public class MemorySelectionScreen extends LessonSelectorScreen {
 
     @Override

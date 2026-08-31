@@ -13,12 +13,7 @@
 
 <!--
   Test setup: choose lessons on the left, options below, start on the right.
-
-  The Swing version declared five separate isCrossVisibleN booleans and five
-  near-identical JCheckBox blocks with copied listeners; the checkboxes are
-  declared here and read directly. The available/selected lesson pair came from
-  LessonRoster, whose GridBagLayout used negative insets (-45) to pull the
-  labels into place.
+  The controller reads the check boxes directly when Start is pressed.
 -->
 <VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
