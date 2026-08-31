@@ -14,6 +14,7 @@ import java.io.UncheckedIOException;
 
 import src.fx.FxApp;
 import src.fx.screens.StartPageScreen;
+import src.fx.screens.SearchScreen;
 import src.auth.AuthManager;
 
 /**
@@ -75,8 +76,7 @@ public class FxNavBar {
     private void onSearch() {
         String query = searchField.getText();
         if (query != null && !query.isBlank()) {
-            // TODO: port src.ui.screens.Search to JavaFX, then navigate to it.
-            System.out.println("Search not yet migrated. Query: " + query);
+            FxApp.switchScreen(new SearchScreen(query));
         }
     }
 

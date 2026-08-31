@@ -289,6 +289,54 @@
     -fx-background-color: -vt-button-click;
 }
 
+/* ------------------------------------------------------------------- test */
+
+.test-word {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 35px;
+}
+
+.test-field {
+    -fx-background-color: -vt-button-default;
+    -fx-text-fill: -vt-text;
+    -fx-background-radius: 0;
+}
+
+.app-check {
+    -fx-text-fill: -vt-text;
+    -fx-font-size: 20px;
+}
+
+.app-check .box {
+    -fx-background-color: -vt-body-primary;
+    -fx-border-color: -vt-text;
+    -fx-border-width: 2px;
+    -fx-background-radius: 0;
+}
+
+.app-check:selected .mark {
+    -fx-background-color: -vt-text;
+}
+
+.app-list {
+    -fx-background-color: -vt-body-primary;
+    -fx-border-color: -vt-text;
+    -fx-font-size: 25px;
+}
+
+.app-list .list-cell {
+    -fx-background-color: -vt-body-primary;
+    -fx-text-fill: -vt-text;
+}
+
+.app-list .list-cell:filled:selected {
+    -fx-background-color: -vt-button-default;
+}
+
+.app-list .list-cell:filled:hover {
+    -fx-background-color: -vt-button-hover;
+}
+
 /* ------------------------------------------------------------------ table */
 
 .forms-table {

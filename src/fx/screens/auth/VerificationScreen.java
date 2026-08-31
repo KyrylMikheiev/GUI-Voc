@@ -20,7 +20,6 @@ public class VerificationScreen extends FxScreen {
 
     private final String email;
 
-    @FXML private Label emailLabel;
     @FXML private TextField codeField;
     @FXML private Label errorLabel;
 
@@ -37,9 +36,6 @@ public class VerificationScreen extends FxScreen {
 
     @FXML
     private void initialize() {
-        // The Swing screen never showed which address the code went to.
-        emailLabel.setText("Code gesendet an: " + email);
-        codeField.setOnAction(e -> onVerify());
         Platform.runLater(codeField::requestFocus);
     }
 

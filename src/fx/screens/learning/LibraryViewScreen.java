@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -37,7 +36,6 @@ public class LibraryViewScreen extends FxScreen {
 
     @FXML private ComboBox<String> lessonBox;
     @FXML private VBox vocabBox;
-    @FXML private Label emptyLabel;
 
     @Override
     protected String fxmlPath() {
@@ -81,8 +79,7 @@ public class LibraryViewScreen extends FxScreen {
             return;
         }
 
-        List<Vocab> vocabsInLesson = VocabParser.getVocabsFromLesson(lessons.get(index));
-        for (Vocab vocab : vocabsInLesson) {
+        for (Vocab vocab : VocabParser.getVocabsFromLesson(lessons.get(index))) {
             Button button = new Button(
                     vocab.getBasicForm() + " - " + String.join(", ", vocab.getGerman()));
             button.getStyleClass().add("app-button");
@@ -90,9 +87,5 @@ public class LibraryViewScreen extends FxScreen {
             button.setOnAction(e -> FxApp.switchScreen(new VocabViewScreen(vocab)));
             vocabBox.getChildren().add(button);
         }
-
-        boolean empty = vocabsInLesson.isEmpty();
-        emptyLabel.setVisible(empty);
-        emptyLabel.setManaged(empty);
     }
 }

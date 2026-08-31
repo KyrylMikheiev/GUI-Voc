@@ -44,7 +44,6 @@ public class LearningViewScreen extends FxScreen {
     @FXML private VBox resultView;
 
     @FXML private Label lessonLabel;
-    @FXML private Label remainingLabel;
     @FXML private ProgressBar progressBar;
     @FXML private Label progressLabel;
     @FXML private Button backArrowButton;
@@ -173,8 +172,6 @@ public class LearningViewScreen extends FxScreen {
         double fraction = vocabs.isEmpty() ? 1 : (double) currentIndex / vocabs.size();
         progressBar.setProgress(fraction);
         progressLabel.setText(Math.round(fraction * 100) + "%");
-        remainingLabel.setText(Math.min(currentIndex + 1, vocabs.size())
-                + " / " + vocabs.size());
     }
 
     private void showResults() {

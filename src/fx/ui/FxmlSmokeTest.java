@@ -44,7 +44,17 @@ public class FxmlSmokeTest extends Application {
                             firstOfType(VocabAPI.WordTypes.Adjective.class))},
             new Object[]{"VocabView(Noun)",
                     (Supplier<FxScreen>) () -> new src.fx.screens.learning.VocabViewScreen(
-                            firstOfType(VocabAPI.WordTypes.Noun.class))});
+                            firstOfType(VocabAPI.WordTypes.Noun.class))},
+            new Object[]{"TestSelection",
+                    (Supplier<FxScreen>) src.fx.screens.test.TestSelectionScreen::new},
+            new Object[]{"TestView",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.test.TestViewScreen(
+                            java.util.List.of("Lektion " + src.fx.ui.Lessons.all().get(0)),
+                            new src.fx.screens.test.TestOptions(false, false, false, false, false))},
+            new Object[]{"TextChecker",
+                    (Supplier<FxScreen>) src.fx.screens.test.TextCheckerScreen::new},
+            new Object[]{"Search",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.SearchScreen("test")});
 
     /** First vocabulary entry of the given word type, for the table screens. */
     private static VocabAPI.WordTypes.Vocab firstOfType(Class<?> type) {

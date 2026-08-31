@@ -27,18 +27,14 @@
     <!-- Gender switch, shown only for adjectives. The Swing buttons had their
          listeners commented out and did nothing. -->
     <HBox fx:id="genderBox" spacing="10" visible="false" managed="false">
-        <ToggleButton fx:id="maskulinumButton" text="Maskulinum" styleClass="app-toggle"
-                      selected="true" onAction="#onGenderChanged">
+        <ToggleButton text="Maskulinum" styleClass="app-toggle" selected="true">
             <toggleGroup><ToggleGroup fx:id="genderGroup" /></toggleGroup>
         </ToggleButton>
-        <ToggleButton fx:id="femininumButton" text="Femininum" styleClass="app-toggle"
-                      toggleGroup="$genderGroup" onAction="#onGenderChanged" />
-        <ToggleButton fx:id="neutrumButton" text="Neutrum" styleClass="app-toggle"
-                      toggleGroup="$genderGroup" onAction="#onGenderChanged" />
+        <ToggleButton text="Femininum" styleClass="app-toggle"
+                      toggleGroup="$genderGroup" />
+        <ToggleButton text="Neutrum" styleClass="app-toggle"
+                      toggleGroup="$genderGroup" />
     </HBox>
-
-    <Label fx:id="emptyLabel" styleClass="subtitle-label" wrapText="true"
-           visible="false" managed="false" />
 
     <TableView fx:id="formsTable" VBox.vgrow="ALWAYS" styleClass="forms-table" />
 

@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import VocabAPI.WordTypes.Adjective;
-import VocabAPI.WordTypes.Noun;
 import VocabAPI.WordTypes.Verb;
 import VocabAPI.WordTypes.Vocab;
 import src.fx.ui.FxScreen;
@@ -23,10 +21,9 @@ import src.fx.ui.FxScreen;
  * Controller for {@code VocabView.fxml}, replacing
  * {@link src.ui.screens.learning.VocabView}.
  *
- * <p>The Swing screen built a fixed 6x7 table for verbs and a separate one for
- * adjectives, and showed an empty grid for nouns and for any word whose forms
- * the parser could not generate. Here the table is built from whatever forms the
- * word actually has, and a word with none says so.
+ * <p>Same content as the Swing screen: a conjugation table for verbs and a
+ * declension table for adjectives. Other word types get no table, as before.
+ * A TableView replaces the bare JTable plus separately-added JTableHeader.
  */
 public class VocabViewScreen extends FxScreen {
 
@@ -41,10 +38,7 @@ public class VocabViewScreen extends FxScreen {
 
     @FXML private Label wordLabel;
     @FXML private Label translationLabel;
-    @FXML private Label emptyLabel;
     @FXML private HBox genderBox;
-    @FXML private ToggleButton maskulinumButton;
-    @FXML private ToggleButton femininumButton;
     @FXML private TableView<List<String>> formsTable;
 
     public VocabViewScreen(Vocab vocab) {
@@ -63,30 +57,13 @@ public class VocabViewScreen extends FxScreen {
 
         if (vocab instanceof Verb verb) {
             showVerb(verb);
-        } else if (vocab instanceof Adjective) {
+        } else if (vocab instanceof Adjective adjective) {
             genderBox.setVisible(true);
             genderBox.setManaged(true);
-            onGenderChanged();
-        } else if (vocab instanceof Noun noun) {
-            showDeclension(noun.getDeklination());
-        } else {
-            showEmpty("Für dieses Wort sind keine Formen hinterlegt.");
+            // The Swing gender buttons had their listeners commented out, so
+            // only the Maskulinum table was ever shown.
+            showDeclension(adjective.getMaskulinum());
         }
-    }
-
-    /** Adjective forms differ per gender; the Swing buttons did nothing. */
-    @FXML
-    private void onGenderChanged() {
-        Adjective adjective = (Adjective) vocab;
-        HashMap<String, ArrayList<String>> forms;
-        if (maskulinumButton.isSelected()) {
-            forms = adjective.getMaskulinum();
-        } else if (femininumButton.isSelected()) {
-            forms = adjective.getFemininum();
-        } else {
-            forms = adjective.getNeutrum();
-        }
-        showDeclension(forms);
     }
 
     private void showVerb(Verb verb) {
@@ -112,10 +89,10 @@ public class VocabViewScreen extends FxScreen {
 
     /** Renders a {"Singular": [...], "Plural": [...]} map as case rows. */
     private void showDeclension(HashMap<String, ArrayList<String>> forms) {
-        if (forms == null || forms.isEmpty()) {
-            // The parser only generates forms for some declension patterns.
-            showEmpty("Für diese Form sind keine Deklinationen hinterlegt.");
-            return;
+        if (forms == null) {
+            // The parser generates forms for only some declension patterns;
+            // the Swing screen showed an empty grid in that case.
+            forms = new HashMap<>();
         }
 
         List<String> singular = forms.getOrDefault("Singular", new ArrayList<>());
@@ -133,11 +110,6 @@ public class VocabViewScreen extends FxScreen {
 
     /** Each row is a list of cells; column i reads index i of its row. */
     private void buildTable(List<String> headers, List<List<String>> rows) {
-        emptyLabel.setVisible(false);
-        emptyLabel.setManaged(false);
-        formsTable.setVisible(true);
-        formsTable.setManaged(true);
-
         formsTable.getColumns().clear();
         for (int i = 0; i < headers.size(); i++) {
             final int columnIndex = i;
@@ -151,11 +123,4 @@ public class VocabViewScreen extends FxScreen {
         formsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
-    private void showEmpty(String message) {
-        emptyLabel.setText(message);
-        emptyLabel.setVisible(true);
-        emptyLabel.setManaged(true);
-        formsTable.setVisible(false);
-        formsTable.setManaged(false);
-    }
 }

@@ -42,8 +42,7 @@
                 <ProgressBar fx:id="progressBar" progress="0" maxWidth="Infinity" />
                 <Label fx:id="progressLabel" styleClass="progress-value" />
             </StackPane>
-            <Label fx:id="remainingLabel" styleClass="progress-heading"
-                   maxWidth="Infinity" alignment="CENTER" GridPane.columnIndex="2" />
+            <!-- The Swing layout left this third column empty. -->
         </GridPane>
 
         <!-- "one action back", top-left as in the Swing layout -->

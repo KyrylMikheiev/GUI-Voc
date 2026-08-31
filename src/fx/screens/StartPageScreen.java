@@ -9,6 +9,8 @@ import src.fx.ui.Images;
 import src.fx.FxApp;
 import src.fx.screens.learning.LearningSelectionScreen;
 import src.fx.screens.learning.LibraryViewScreen;
+import src.fx.screens.test.TestSelectionScreen;
+import src.fx.screens.test.TextCheckerScreen;
 
 /**
  * Controller for {@code StartPage.fxml}, replacing {@link src.ui.screens.StartPage}.
@@ -55,7 +57,7 @@ public class StartPageScreen extends FxScreen {
 
     @FXML
     private void onTest() {
-        notYetMigrated("Testen");
+        FxApp.switchScreen(new TestSelectionScreen());
     }
 
     @FXML
@@ -65,7 +67,7 @@ public class StartPageScreen extends FxScreen {
 
     @FXML
     private void onTextChecker() {
-        notYetMigrated("Textchecker");
+        FxApp.switchScreen(new TextCheckerScreen());
     }
 
     @FXML
