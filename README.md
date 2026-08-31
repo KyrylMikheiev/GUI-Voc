@@ -15,10 +15,26 @@ Nötig ist nur ein JDK 21. Maven und das JavaFX SDK lädt der Maven Wrapper beim
 ersten Aufruf selbst herunter — JavaFX ist seit Java 11 nicht mehr Teil des JDK,
 deshalb lässt sich das Projekt nicht mit `javac` allein bauen.
 
-Die Vokabeln kommen aus dem Submodul `LatinVocabParser`:
+### Submodul
+
+Die Vokabeln kommen aus `LatinVocabParser`, einem Git-Submodul. Ein frisch
+geklontes Repo enthält den Ordner leer — ohne ihn schlägt der Build mit
+`Package VocabAPI ist nicht vorhanden` fehl:
 
 ```bash
-make submodules
+git clone <url>
+cd GUI-Voc
+make submodules     # holt den Parser (einmalig nach dem Klonen)
+make run
+```
+
+Das Repo speichert nur URL und Commit-Hash des Parsers, nicht dessen Dateien.
+`make submodules` checkt genau den Stand aus, gegen den hier gebaut wurde.
+Um auf eine neuere Version zu wechseln:
+
+```bash
+git submodule update --remote LatinVocabParser
+git add LatinVocabParser && git commit    # der neue Hash gehört ins Repo
 ```
 
 Der Dunkelmodus lässt sich auch in der App unter *Einstellungen → Dunkelmodus*
