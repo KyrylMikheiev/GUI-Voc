@@ -11,28 +11,31 @@ wired up.
 
 ## What moved where
 
+Paths below are relative to `src/main/java/de/vocabtrainer/`; the FXML and CSS
+sit at the matching path under `src/main/resources/de/vocabtrainer/`.
+
 | Was | Is now | Notes |
 |---|---|---|
-| `src/Main.java` | `src/fx/FxMain.java` | `Application` owns the lifecycle |
-| `src/App.java` | `src/fx/FxApp.java` | same static navigation facade |
-| `src/ui/WindowManager.java` | `src/fx/ui/FxWindowManager.java` | `Stage` + one `Scene` |
-| `src/ui/screens/_BaseScreen.java` | `src/fx/ui/FxScreen.java` | screens are FXML controllers |
-| `src/ui/ColorManager.java` | `src/fx/ui/ThemeManager.java` + `*.css` | stylesheet swap |
-| `src/ui/NavBar.java` | `src/fx/ui/NavBar.fxml` + `FxNavBar.java` | 240 lines → ~60 lines of XML |
-| `src/ui/helper/LessonSelector.java` | `src/fx/ui/LessonSelectorScreen.java` + `.fxml` | shared lesson picker |
+| `src/Main.java` | `Main.java` | `Application` owns the lifecycle |
+| `src/App.java` | `App.java` | same static navigation facade |
+| `src/ui/WindowManager.java` | `ui/WindowManager.java` | `Stage` + one `Scene` |
+| `src/ui/screens/_BaseScreen.java` | `ui/Screen.java` | screens are FXML controllers |
+| `src/ui/ColorManager.java` | `ui/Theme.java` + `*.css` | stylesheet swap |
+| `src/ui/NavBar.java` | `ui/NavBar.fxml` + `NavBar.java` | 240 lines → ~60 lines of XML |
+| `src/ui/helper/LessonSelector.java` | `ui/LessonSelector.java` + `.fxml` | shared lesson picker |
 | `src/ui/helper/LessonRoster.java` | folded into `TestSelection.fxml` | two ListViews |
 | `src/ui/helper/ResponsiveBorder.java` | — | percentage `GridPane` constraints |
 | `src/ui/helper/Placeholder*Field.java` | — | `promptText` |
 | `src/ui/helper/FasterScrollPane.java` | — | plain `ScrollPane` |
 | `src/ui/helper/CustomProgressBarUI.java` | — | `.progress-bar` CSS |
-| scattered `new ImageIcon(...)` | `src/fx/ui/Images.java` | cached, scaled by view |
-| duplicated lesson sorting | `src/fx/ui/Lessons.java` | one sorted list |
+| scattered `new ImageIcon(...)` | `ui/Images.java` | cached, scaled by view |
+| duplicated lesson sorting | `ui/Lessons.java` | one sorted list |
 
-Every screen is an FXML + controller pair under `src/fx/screens/`, laid out like
-the old `src/ui/screens/`: `StartPage`, `auth/`, `learning/`, `test/`,
-`settings/`, `games/` and `Search`.
+Every screen is an FXML + controller pair under `ui/screens/`, laid out like the
+old `src/ui/screens/`: `StartPage`, `auth/`, `learning/`, `test/`, `settings/`,
+`games/` and `Search`.
 
-`src/api/` and `src/auth/` were never UI code and are unchanged, except that
+`api/` and `auth/` were never UI code and are unchanged, except that
 `AuthManager` now navigates through the `AuthNavigator` interface instead of
 calling the UI directly.
 
@@ -43,22 +46,27 @@ calling the UI directly.
 the screen is opened:
 
 ```bash
-./mvnw javafx:run -DmainClass=src.fx.ui.FxmlSmokeTest      # all 22 views
-./mvnw javafx:run -DmainClass=src.fx.ui.Preview -Dscreen=LearningView
+make test                      # both suites
+make test-views                # load all 22 screens
+make test-clicks               # click through the app
+make preview SCREEN=LearningView   # open one screen on its own
 ```
 
 ## Adding a screen
 
-1. Add `<name>.fxml` under `src/fx/screens/` describing the layout.
-2. Add `<name>Screen.java` extending `FxScreen`, returning that path from
-   `fxmlPath()`. `@FXML` fields bind by `fx:id`; `onAction="#method"` binds
-   handlers. Put per-node icon wiring in `initialize()`.
-3. Navigate to it with `FxApp.switchScreen(new <name>Screen())`, and add it to
+1. Add `<name>.fxml` under `src/main/resources/de/vocabtrainer/ui/screens/…`
+   describing the layout.
+2. Add `<name>.java` at the matching path under `src/main/java/…`, extending
+   `Screen` and returning the FXML name from `fxmlPath()`. `@FXML` fields bind
+   by `fx:id`; `onAction="#method"` binds handlers. Put per-node icon wiring in
+   `initialize()`.
+3. Navigate to it with `App.switchScreen(new <name>())`, and add it to
    `FxmlSmokeTest.SCREENS`.
 
-A screen whose FXML lives beside a shared base class (as `LessonSelectorScreen`
-does) must also override `fxmlOwner()`, since `fxmlPath()` resolves relative to
-the concrete class by default.
+The FXML is looked up next to the controller class, which is why the two trees
+mirror each other. A screen whose FXML lives beside a shared base class (as
+`LessonSelector` does) must also override `fxmlOwner()`, since `fxmlPath()`
+resolves relative to the concrete class by default.
 
 ### Conventions
 
@@ -94,7 +102,7 @@ class comment:
 
 `src/ui/`, `src/App.java`, `src/Main.java`, and the `javac`-based
 `scripts/run.sh`, `scripts/run.py` and `scripts/Makefile`, which could not build
-JavaFX.
+JavaFX. A `Makefile` in the project root replaces them.
 
 Two files under `src/ui/screens/games/` went with them: `GameM.java` and
 `FallingWordsGame.java`. Both declared `package minigames` while living

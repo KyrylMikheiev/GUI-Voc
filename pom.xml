@@ -13,11 +13,12 @@
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.version>21.0.4</javafx.version>
-    <!-- Entry point of the JavaFX application. -->
-    <mainClass>src.fx.FxMain</mainClass>
-    <!-- Startup theme; override with ./mvnw javafx:run -Dvt.theme=dark -->
+
+    <!-- Entry point. The Makefile overrides this to run the test harnesses. -->
+    <mainClass>de.vocabtrainer.Main</mainClass>
+    <!-- Startup theme; `make run-dark` sets this to dark. -->
     <vt.theme>light</vt.theme>
-    <!-- Screen shown by the src.fx.ui.Preview harness. -->
+    <!-- Screen shown by the Preview harness; see `make preview`. -->
     <screen>StartPage</screen>
   </properties>
 
@@ -35,23 +36,15 @@
   </dependencies>
 
   <build>
-    <sourceDirectory>${project.basedir}/src</sourceDirectory>
-
+    <!-- Sources and resources are in the standard Maven locations, so nothing
+         has to be configured for them. The two entries below exist only
+         because the vocabulary parser is a git submodule with its own layout. -->
     <resources>
-      <!-- FXML + CSS live next to the sources; ship them into the jar.
-           targetPath restores the "src" prefix that would otherwise be
-           stripped, so getResource() resolves them relative to the
-           src.fx.* packages the classes actually live in. -->
       <resource>
-        <directory>${project.basedir}/src</directory>
-        <targetPath>src</targetPath>
-        <includes>
-          <include>**/*.fxml</include>
-          <include>**/*.css</include>
-        </includes>
+        <directory>${project.basedir}/src/main/resources</directory>
       </resource>
-      <!-- voc_list.csv is loaded via VocabParser.class.getResourceAsStream("voc_list.csv"),
-           so it must land in the VocabAPI package directory on the classpath. -->
+      <!-- VocabParser loads this with getResourceAsStream("voc_list.csv"), so
+           it has to land in the VocabAPI package directory on the classpath. -->
       <resource>
         <directory>${project.basedir}/LatinVocabParser/VocabAPI</directory>
         <targetPath>VocabAPI</targetPath>
@@ -62,7 +55,7 @@
     </resources>
 
     <plugins>
-      <!-- The vocab parser is a git submodule with its own source root. -->
+      <!-- The vocab parser submodule keeps its sources at its own root. -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -90,8 +83,7 @@
         <configuration>
           <mainClass>${mainClass}</mainClass>
           <!-- javafx:run forks a JVM, so -D flags on the Maven command line do
-               not reach the app. Forward the ones the app reads.
-               Usage: ./mvnw javafx:run -Dvt.theme=dark -->
+               not reach the app by themselves; these forward the ones it reads. -->
           <options>
             <option>-Dvt.theme=${vt.theme}</option>
             <option>-Dscreen=${screen}</option>
