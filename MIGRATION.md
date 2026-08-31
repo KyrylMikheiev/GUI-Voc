@@ -56,16 +56,20 @@ the screen is opened:
 
 Add each new screen to `FxmlSmokeTest.SCREENS` and `Preview`.
 
-## How to port the next screen
+## Adding a screen
 
 1. Add `<name>.fxml` under `src/fx/screens/` describing the layout.
 2. Add `<name>Screen.java` extending `FxScreen`, returning that path from
    `fxmlPath()`. `@FXML` fields bind by `fx:id`; `onAction="#method"` binds
    handlers. Put per-node icon wiring in `initialize()`.
-3. Replace the `notYetMigrated(...)` call in the screen that navigates to it
-   with `FxApp.switchScreen(new <name>Screen())`.
+3. Navigate to it with `FxApp.switchScreen(new <name>Screen())`, and add it to
+   `FxmlSmokeTest.SCREENS`.
 
-### Translation rules
+A screen whose FXML lives beside a shared base class (as `LessonSelectorScreen`
+does) must also override `fxmlOwner()`, since `fxmlPath()` resolves relative to
+the concrete class by default.
+
+### Translation rules used here
 
 - **Layout.** `BorderLayout` → `BorderPane`; `GridLayout(1, n)` → `GridPane`
   with `percentWidth` columns; `GridLayout(n, 1)` → `VBox` with
