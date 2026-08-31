@@ -1,6 +1,13 @@
-**.class
-.gitmodules
-token.txt
-**.DS_Store
-bin/
+# Build output
 target/
+bin/
+**.class
+
+# Credentials — written at runtime by TokenManager
+token.txt
+
+# OS noise
+**.DS_Store
+
+# .gitmodules is deliberately NOT ignored: it records the submodule URL, and
+# without it nobody can fetch LatinVocabParser.
