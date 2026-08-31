@@ -28,7 +28,33 @@ public class FxmlSmokeTest extends Application {
             new Object[]{"ForgotPassword",
                     (Supplier<FxScreen>) src.fx.screens.auth.ForgotPasswordScreen::new},
             new Object[]{"Verification",
-                    (Supplier<FxScreen>) () -> new src.fx.screens.auth.VerificationScreen("test@example.com")});
+                    (Supplier<FxScreen>) () -> new src.fx.screens.auth.VerificationScreen("test@example.com")},
+            new Object[]{"LearningSelection",
+                    (Supplier<FxScreen>) src.fx.screens.learning.LearningSelectionScreen::new},
+            new Object[]{"LibraryView",
+                    (Supplier<FxScreen>) src.fx.screens.learning.LibraryViewScreen::new},
+            new Object[]{"LearningView",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.learning.LearningViewScreen(
+                            src.fx.ui.Lessons.all().get(0))},
+            new Object[]{"VocabView(Verb)",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.learning.VocabViewScreen(
+                            firstOfType(VocabAPI.WordTypes.Verb.class))},
+            new Object[]{"VocabView(Adjective)",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.learning.VocabViewScreen(
+                            firstOfType(VocabAPI.WordTypes.Adjective.class))},
+            new Object[]{"VocabView(Noun)",
+                    (Supplier<FxScreen>) () -> new src.fx.screens.learning.VocabViewScreen(
+                            firstOfType(VocabAPI.WordTypes.Noun.class))});
+
+    /** First vocabulary entry of the given word type, for the table screens. */
+    private static VocabAPI.WordTypes.Vocab firstOfType(Class<?> type) {
+        for (VocabAPI.WordTypes.Vocab vocab : VocabAPI.VocabParser.getAllVocabs()) {
+            if (type.isInstance(vocab)) {
+                return vocab;
+            }
+        }
+        throw new IllegalStateException("No vocabulary of type " + type.getSimpleName());
+    }
 
     public static void main(String[] args) {
         launch(args);

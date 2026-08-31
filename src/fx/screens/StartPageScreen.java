@@ -6,6 +6,9 @@ import javafx.scene.control.TextArea;
 
 import src.fx.ui.FxScreen;
 import src.fx.ui.Images;
+import src.fx.FxApp;
+import src.fx.screens.learning.LearningSelectionScreen;
+import src.fx.screens.learning.LibraryViewScreen;
 
 /**
  * Controller for {@code StartPage.fxml}, replacing {@link src.ui.screens.StartPage}.
@@ -47,7 +50,7 @@ public class StartPageScreen extends FxScreen {
 
     @FXML
     private void onLearn() {
-        notYetMigrated("Lernen");
+        FxApp.switchScreen(new LearningSelectionScreen());
     }
 
     @FXML
@@ -57,7 +60,7 @@ public class StartPageScreen extends FxScreen {
 
     @FXML
     private void onLibrary() {
-        notYetMigrated("Bibliothek");
+        FxApp.switchScreen(new LibraryViewScreen());
     }
 
     @FXML

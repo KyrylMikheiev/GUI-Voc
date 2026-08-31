@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Lesson picker shared by the learning and test flows. The buttons are added by
+  LessonSelectorScreen, since their number depends on the vocabulary data.
+-->
+<VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="30" right="60" bottom="30" left="60" />
+    </padding>
+
+    <Label fx:id="titleLabel" styleClass="title-label" />
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+        <VBox fx:id="lessonBox" spacing="10">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="0" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

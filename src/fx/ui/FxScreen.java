@@ -38,6 +38,14 @@ public abstract class FxScreen {
     }
 
     /**
+     * Class whose package {@link #fxmlPath()} is relative to. Defaults to the
+     * concrete screen; a base class that owns a shared FXML overrides this.
+     */
+    protected Class<?> fxmlOwner() {
+        return getClass();
+    }
+
+    /**
      * Builds the screen's view. The default loads {@link #fxmlPath()} with this
      * screen as the controller, so {@code @FXML} fields bind to it directly.
      */
@@ -47,7 +55,15 @@ public abstract class FxScreen {
             throw new IllegalStateException(
                     getClass().getName() + " must override fxmlPath() or createView()");
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        // Resolve against the class that declares fxmlPath(), not against
+        // getClass(): a shared base screen such as LessonSelectorScreen keeps
+        // its FXML in its own package, while getClass() is the subclass.
+        java.net.URL location = fxmlOwner().getResource(path);
+        if (location == null) {
+            throw new IllegalStateException(
+                    "FXML not found: " + path + " (relative to " + fxmlOwner().getName() + ")");
+        }
+        FXMLLoader loader = new FXMLLoader(location);
         loader.setController(this);
         try {
             return loader.load();

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Vocabulary library: pick a lesson, then a word.
+
+  The Swing version positioned the header with setBounds() inside a
+  BorderLayout, which ignores bounds, and used a JComboBox that was added to the
+  panel only when the lesson button was clicked and then opened by a 100ms
+  Timer. Here the picker is a plain ComboBox that is always present.
+-->
+<VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="prevButton" text="&lt;" styleClass="app-button"
+                minWidth="75" onAction="#onPrevious" />
+        <ComboBox fx:id="lessonBox" styleClass="app-combo" minWidth="420"
+                  maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+        <Button fx:id="nextButton" text="&gt;" styleClass="app-button"
+                minWidth="75" onAction="#onNext" />
+    </HBox>
+
+    <Label fx:id="emptyLabel" text="Keine Vokabeln in dieser Lektion."
+           styleClass="subtitle-label" visible="false" managed="false" />
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+        <VBox fx:id="vocabBox" spacing="8">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="0" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

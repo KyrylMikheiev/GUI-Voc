@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Word detail: conjugation for verbs, declension for adjectives and nouns.
+
+  The Swing version added a bare JTable and its header to a BorderLayout by
+  hand, and its adjective branch used a scroll pane with a -2000 bottom inset.
+  A TableView carries its own header and scrolling.
+-->
+<VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+
+    <Label fx:id="wordLabel" styleClass="screen-title" wrapText="true" />
+    <Label fx:id="translationLabel" styleClass="subtitle-label" wrapText="true" />
+
+    <!-- Gender switch, shown only for adjectives. The Swing buttons had their
+         listeners commented out and did nothing. -->
+    <HBox fx:id="genderBox" spacing="10" visible="false" managed="false">
+        <ToggleButton fx:id="maskulinumButton" text="Maskulinum" styleClass="app-toggle"
+                      selected="true" onAction="#onGenderChanged">
+            <toggleGroup><ToggleGroup fx:id="genderGroup" /></toggleGroup>
+        </ToggleButton>
+        <ToggleButton fx:id="femininumButton" text="Femininum" styleClass="app-toggle"
+                      toggleGroup="$genderGroup" onAction="#onGenderChanged" />
+        <ToggleButton fx:id="neutrumButton" text="Neutrum" styleClass="app-toggle"
+                      toggleGroup="$genderGroup" onAction="#onGenderChanged" />
+    </HBox>
+
+    <Label fx:id="emptyLabel" styleClass="subtitle-label" wrapText="true"
+           visible="false" managed="false" />
+
+    <TableView fx:id="formsTable" VBox.vgrow="ALWAYS" styleClass="forms-table" />
+
+</VBox>
