@@ -16,6 +16,13 @@ public class Preview extends Application {
         return VocabAPI.VocabParser.getAllVocabs().get(0);
     }
 
+    private static VocabAPI.WordTypes.Vocab byForm(String form) {
+        for (VocabAPI.WordTypes.Vocab v : VocabAPI.VocabParser.getAllVocabs()) {
+            if (form.equals(v.getBasicForm())) return v;
+        }
+        return firstVerb();
+    }
+
     @Override
     public void start(Stage stage) {
         String which = System.getProperty("screen", "SignUp");
@@ -30,6 +37,8 @@ public class Preview extends Application {
                     Lessons.all().get(0));
             case "VocabView" -> new src.fx.screens.learning.VocabViewScreen(
                     firstVerb());
+            case "VocabViewIrregular" -> new src.fx.screens.learning.VocabViewScreen(
+                    byForm("esse"));
             default -> new src.fx.screens.StartPageScreen();
         };
         BorderPane root = new BorderPane(screen.getView());
