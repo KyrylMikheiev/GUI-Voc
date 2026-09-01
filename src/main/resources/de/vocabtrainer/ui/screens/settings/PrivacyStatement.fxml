@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!-- Privacy statement. Static text. -->
+<VBox spacing="10" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+
+    <Label text="Datenschutzerklärung" styleClass="title-label" />
+    <Label styleClass="credits-body" wrapText="true"
+           text="Wir klauen und verkaufen alle Ihre Daten weil wir die DSGVO nicht akzeptieren." />
+
+</VBox>

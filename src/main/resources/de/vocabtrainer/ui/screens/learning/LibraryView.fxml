@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Vocabulary library: pick a lesson with the arrows or the drop-down, then pick
+  a word.
+-->
+<VBox spacing="15" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="prevButton" text="&lt;" styleClass="app-button"
+                minWidth="75" onAction="#onPrevious" />
+        <ComboBox fx:id="lessonBox" styleClass="app-combo" minWidth="420"
+                  maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+        <Button fx:id="nextButton" text="&gt;" styleClass="app-button"
+                minWidth="75" onAction="#onNext" />
+    </HBox>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+        <VBox fx:id="vocabBox" spacing="8">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="0" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

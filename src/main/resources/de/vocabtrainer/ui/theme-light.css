@@ -1,0 +1,14 @@
+/*
+ * Light palette. Only these variables differ between the themes; all rules live
+ * in common.css.
+ */
+.root {
+    -vt-button-default: #B7B7B7;
+    -vt-button-hover:   #E1E1E1;
+    -vt-button-click:   #FAFAFA;
+    -vt-body-primary:   #FFFFFF;
+    -vt-body-secondary: #DDDDDD;
+    -vt-text:           #000000;
+    -vt-navbar-bg:      #808080; /* Color.GRAY */
+    -vt-navbar-text:    #000000;
+}

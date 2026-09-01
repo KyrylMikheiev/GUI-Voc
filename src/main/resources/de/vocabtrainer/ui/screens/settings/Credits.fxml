@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Credits. All static text, so it lives entirely in the FXML and the controller
+  has nothing to do.
+-->
+<ScrollPane fitToWidth="true" styleClass="scroll-pane"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <VBox spacing="10" styleClass="body-primary">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+        </padding>
+
+        <Label styleClass="title-label" wrapText="true"
+               text="Ein Projekt des Informatik-Profils der Jgst. Abi 2025 im Auftrag von Herrn Grabbe und Herrn Faber" />
+
+        <Label text="Mitwirkende:" styleClass="credits-heading" />
+        <Label styleClass="credits-body" wrapText="true"
+               text="Adrian Steyer, Jonah Emme, Kyryl Mikheiev, Noah Schwichtenberg, Sten Buhlnheim, Henri Haberlach, Bela Pautzke, Emily Probst, Nick Bohdan, Lukas Borck, Jacob Loszynski, Daniel Seeman" />
+
+        <Label text="Icons von Flaticon:" styleClass="credits-heading" />
+        <Label styleClass="credits-body" wrapText="true">
+            <text>
+https://www.flaticon.com/free-icons/card-index
+https://www.flaticon.com/free-icons/library
+https://www.flaticon.com/free-icons/exam-results
+https://www.flaticon.com/free-icons/text
+https://www.flaticon.com/free-icons/gamepad
+https://www.flaticon.com/free-icons/setting
+https://www.flaticon.com/free-icons/sun
+            </text>
+        </Label>
+
+        <Label text="Lizenz" styleClass="credits-heading" />
+        <Label styleClass="credits-body" wrapText="true"
+               text="Diese Software ist lizensiert unter der Creative Commons Attribution 4.0 International Lizenz. (CC BY 4.0) ???????????????????????????????????????" />
+    </VBox>
+</ScrollPane>

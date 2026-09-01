@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.vocabtrainer</groupId>
+  <artifactId>vocabtrainer</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>VocabTrainer</name>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.4</javafx.version>
+
+    <!-- Entry point. The Makefile overrides this to run the test harnesses. -->
+    <mainClass>de.vocabtrainer.Main</mainClass>
+    <!-- Startup theme; `make run-dark` sets this to dark. -->
+    <vt.theme>light</vt.theme>
+    <!-- Screen shown by the Preview harness; see `make preview`. -->
+    <screen>StartPage</screen>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- Sources and resources are in the standard Maven locations, so nothing
+         has to be configured for them. The two entries below exist only
+         because the vocabulary parser is a git submodule with its own layout. -->
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+      <!-- VocabParser loads this with getResourceAsStream("voc_list.csv"), so
+           it has to land in the VocabAPI package directory on the classpath. -->
+      <resource>
+        <directory>${project.basedir}/LatinVocabParser/VocabAPI</directory>
+        <targetPath>VocabAPI</targetPath>
+        <includes>
+          <include>voc_list.csv</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <plugins>
+      <!-- The vocab parser submodule keeps its sources at its own root. -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>add-vocabparser-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.basedir}/LatinVocabParser</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>${mainClass}</mainClass>
+          <!-- javafx:run forks a JVM, so -D flags on the Maven command line do
+               not reach the app by themselves; these forward the ones it reads. -->
+          <options>
+            <option>-Dvt.theme=${vt.theme}</option>
+            <option>-Dscreen=${screen}</option>
+            <option>-Dfile.encoding=UTF-8</option>
+          </options>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

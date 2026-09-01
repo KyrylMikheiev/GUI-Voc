@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Login. A centred, max-width VBox keeps the form together at any window size.
+-->
+<VBox alignment="CENTER" spacing="20" styleClass="body-primary"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40" />
+    </padding>
+
+    <Label text="Login" styleClass="screen-title" />
+
+    <VBox spacing="20" alignment="CENTER" maxWidth="560">
+        <TextField fx:id="emailField" promptText="E-Mail" styleClass="app-field" />
+        <PasswordField fx:id="passwordField" promptText="Passwort" styleClass="app-field" />
+
+        <!-- managed=false so the hidden label leaves no gap; the controller
+             flips both properties together. -->
+        <Label fx:id="errorLabel" text="Ungültige E-Mail oder Passwort"
+               styleClass="error-label" visible="false" managed="false" />
+
+        <Button fx:id="loginButton" text="Login" styleClass="app-button"
+                maxWidth="Infinity" onAction="#onLogin" />
+
+        <HBox spacing="30" alignment="CENTER">
+            <Button text="Ich habe keinen Account" styleClass="app-button"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#onSignUp" />
+            <Button text="Passwort vergessen" styleClass="app-button"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#onForgotPassword" />
+        </HBox>
+    </VBox>
+
+</VBox>

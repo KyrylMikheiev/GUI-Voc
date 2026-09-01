@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<!--
+  Settings: title, the four buttons, then the widget and class pickers.
+-->
+<VBox spacing="10" styleClass="body-primary" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" right="100" bottom="60" left="100" />
+    </padding>
+
+    <Label text="Einstellungen" styleClass="screen-title" />
+
+    <Button fx:id="darkModeButton" text="Dunkelmodus" styleClass="app-button"
+            maxWidth="Infinity" onAction="#onToggleDarkMode" />
+    <Button text="Konto löschen" styleClass="app-button"
+            maxWidth="Infinity" onAction="#onDeleteAccount" />
+    <Button text="Mitwirkende und Copyright" styleClass="app-button"
+            maxWidth="Infinity" onAction="#onCredits" />
+    <Button text="Datenschutzerklärung" styleClass="app-button"
+            maxWidth="Infinity" onAction="#onPrivacy" />
+
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Widget:" styleClass="title-label"
+               GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <ComboBox fx:id="widgetSelect" styleClass="app-combo" maxWidth="Infinity"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Klasse:" styleClass="title-label"
+               GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <ComboBox fx:id="classSelect" styleClass="app-combo" maxWidth="Infinity"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    </GridPane>
+
+</VBox>
